@@ -14,5 +14,8 @@ solution: FSharp.Core.Experimental.OptionBuilder.sln
 
 dotnet: 2.0.0
 
+install:
+  - dotnet restore
+
 script:
   - dotnet test
