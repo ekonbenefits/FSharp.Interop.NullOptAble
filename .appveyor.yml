@@ -1,7 +1,14 @@
 image: Visual Studio 2017
 
+version: 0.7.0-alpha{build}
+
 install:
-  - cmd: dotnet restore
+  - ps: dotnet restore  /p:Version=$Env:APPVEYOR_BUILD_VERSION
 
 test_script:
-  - cmd: dotnet test
+  - ps: dotnet test /p:Version=$Env:APPVEYOR_BUILD_VERSION
+
+artifacts:
+  - path: 'src\**\*.nupkg'
+    name: NuGet
+
