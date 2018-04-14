@@ -93,10 +93,11 @@ let ``Rainbow string null Sequence`` () =
     let newSeq = chooseSeq {
         yield "1"
         yield! "2"
+        yield! None
         yield! Some "3"
         yield! ["4"]
-        yield! None
         let s:string = null
         yield! s
     }
     newSeq |> Seq.length |> should equal 4
+    newSeq |> Seq.toList |> should equal ["1"; "2" ; "3"; "4"]
