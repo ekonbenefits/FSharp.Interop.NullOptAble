@@ -35,14 +35,12 @@ type SeqOptionBuilder() =
     member __.Yield(x: 'T) = seq { yield x }
     member __.YieldFrom(m: 'T seq) : 'T seq = m
 
-    member __.YieldFrom(m: 'T option) : 'T seq =  m |> Option.toList
-                                                    |> List.toSeq
-    member __.YieldFrom(m: 'T Nullable) : 'T seq =  m |> Option.ofNullable
-                                                      |> Option.toList
-                                                      |> List.toSeq
-    member __.YieldFrom(m: 'T) : 'T seq = m |> Option.ofObj
-                                            |> Option.toList
-                                            |> List.toSeq
+    member this.YieldFrom(m: 'T option) =  m |> function | None -> this.Zero()
+                                                         | Some x -> this.Yield(x)
+    member this.YieldFrom(m: 'T Nullable) =  m |> Option.ofNullable
+                                               |> this.YieldFrom
+    member this.YieldFrom(m: 'T) = m |> Option.ofObj
+                                     |> this.YieldFrom
 
     member __.Combine(m1: 'T seq, m2: 'T seq) : 'T seq = Seq.append m1 m2
 

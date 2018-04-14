@@ -50,5 +50,23 @@ let ``Basic Null`` () =
 [<Fact>]
 let ``Basic sequence test`` () =
     seqOption {
-        yield! Some 3
-    } |> should equal (seq { yield 3 })
+        yield 3
+    } |> should contain 3
+
+
+let ``Basic sequence test option`` () =
+    seqOption {
+        yield! Some(3)
+    } |> should contain 3
+
+[<Fact>]
+let ``Basic Empty sequence`` () =
+    seqOption {
+        ()
+    } |> should equal (Seq.empty)
+
+[<Fact>]
+let ``Basic None empty sequence`` () =
+    seqOption {
+        yield! None
+    } |> should equal (Seq.empty)
