@@ -9,11 +9,11 @@ type OptionBuilder() =
 
     member __.ReturnFrom(m: 'T option) = m
     member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
-    member __.ReturnFrom(m: 'T) = Option.ofObj m
+    member __.ReturnFrom(m: 'T when 'T:null) = Option.ofObj m
 
     member __.Bind(m: 'T option, f) = Option.bind f m
     member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
-    member __.Bind(m: 'T, f) = m |> Option.ofObj |> Option.bind f
+    member __.Bind(m: 'T when 'T:null, f) = m |> Option.ofObj |> Option.bind f
 
     member __.Delay(f: unit -> _) = f
     member __.Run(f) = f()
@@ -29,28 +29,30 @@ type OptionBuilder() =
 
 let option = OptionBuilder()
 
-type SeqOptionBuilder() =
+type ChooseSeqBuilder() =
     member __.Zero() = Seq.empty
 
     member __.Yield(x: 'T) = Seq.singleton x
-    member __.YieldFrom(m: 'T seq) : 'T seq = m
 
     member this.YieldFrom(m: 'T option) =  m |> function | None -> this.Zero ()
                                                          | Some x -> this.Yield(x)
     member this.YieldFrom(m: 'T Nullable) =  m |> Option.ofNullable
                                                |> this.YieldFrom
-    member this.YieldFrom(m: 'T) = m |> Option.ofObj
-                                     |> this.YieldFrom
+    member this.YieldFrom(m: 'T when 'T:null) = m |> Option.ofObj
+                                                  |> this.YieldFrom
+    member __.YieldFrom(m: 'T seq) = m |> Option.ofObj
+                                       |> Option.defaultValue Seq.empty
+    member this.YieldFrom(m: string) = m |> Option.ofObj
+                                         |> this.YieldFrom
 
     member __.Bind(m: 'T option, f) = Option.bind f m
     member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
     member __.Bind(m: 'T, f) = m |> Option.ofObj |> Option.bind f
 
-
     member __.Combine(a, b) =  Seq.append a b
 
     member __.Delay(f: unit -> _) = Seq.delay f
-    member __.Run(f) : 'T seq = f |> List.ofSeq |> Seq.ofList
+    member __.Run(f) : 'T seq = f |> List.ofSeq :> 'T seq
 
     member this.While(guard, delayedExpr) =
         let mutable result = this.Zero()
@@ -71,4 +73,4 @@ type SeqOptionBuilder() =
         this.Using(sequence.GetEnumerator(), 
             fun enum -> this.While(enum.MoveNext, this.Delay(fun () -> body enum.Current)))
 
-let seqOption = SeqOptionBuilder()
+let chooseSeq = ChooseSeqBuilder()
