@@ -32,20 +32,31 @@ let option = OptionBuilder()
 type SeqOptionBuilder() =
     member __.Zero() = Seq.empty
 
-    member __.Yield(x: 'T) = seq { yield x }
+    member __.Yield(x: 'T) = Seq.singleton x
     member __.YieldFrom(m: 'T seq) : 'T seq = m
 
-    member this.YieldFrom(m: 'T option) =  m |> function | None -> this.Zero()
+    member this.YieldFrom(m: 'T option) =  m |> function | None -> this.Zero ()
                                                          | Some x -> this.Yield(x)
     member this.YieldFrom(m: 'T Nullable) =  m |> Option.ofNullable
                                                |> this.YieldFrom
     member this.YieldFrom(m: 'T) = m |> Option.ofObj
                                      |> this.YieldFrom
 
-    member __.Combine(m1: 'T seq, m2: 'T seq) : 'T seq = Seq.append m1 m2
+    member __.Bind(m: 'T option, f) = Option.bind f m
+    member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
+    member __.Bind(m: 'T, f) = m |> Option.ofObj |> Option.bind f
 
-    member __.Delay(f: unit -> _) = f
-    member __.Run(f) = f()
+
+    member __.Combine(a, b) =  Seq.append a b
+
+    member __.Delay(f: unit -> _) = Seq.delay f
+    member __.Run(f) : 'T seq = f |> List.ofSeq |> Seq.ofList
+
+    member this.While(guard, delayedExpr) =
+        let mutable result = this.Zero()
+        while guard() do
+            result <- this.Combine(result,this.Run(delayedExpr))
+        result
 
     member this.TryWith(delayedExpr, handler) =
         try this.Run(delayedExpr)
@@ -56,10 +67,6 @@ type SeqOptionBuilder() =
     member this.Using(resource:#IDisposable, body) =
         this.TryFinally(this.Delay(fun ()->body resource), fun () -> match resource with null -> () | disp -> disp.Dispose())
 
-    member this.While(guard, delayedExpr) =
-        while guard() do
-            this.Run(delayedExpr)
-        this.Zero()
     member this.For(sequence:seq<_>, body) =
         this.Using(sequence.GetEnumerator(), 
             fun enum -> this.While(enum.MoveNext, this.Delay(fun () -> body enum.Current)))

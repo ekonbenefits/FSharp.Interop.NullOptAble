@@ -48,25 +48,9 @@ let ``Basic Null`` () =
     } |> should equal None
 
 [<Fact>]
-let ``Basic sequence test`` () =
-    seqOption {
-        yield 3
-    } |> should contain 3
-
-
-let ``Basic sequence test option`` () =
-    seqOption {
-        yield! Some(3)
-    } |> should contain 3
-
-[<Fact>]
-let ``Basic Empty sequence`` () =
-    seqOption {
-        ()
-    } |> should equal (Seq.empty)
-
-[<Fact>]
-let ``Basic None empty sequence`` () =
-    seqOption {
-        yield! None
-    } |> should equal (Seq.empty)
+let ``Double bind`` () =
+    option {
+        let! x = Some(1)
+        let! y = Some(2)
+        return x,y
+    } |> should equal (Some(1,2))
