@@ -1,5 +1,4 @@
-[<AutoOpen>]
-module FSharp.Core.Experimental.OptionBuilder.TopLevel
+module FSharp.Core.Experimental.OptionBuilder
 open System
 
 type OptionBuilder() =
