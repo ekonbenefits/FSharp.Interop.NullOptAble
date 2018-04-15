@@ -16,6 +16,7 @@
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="OptionBuilder.fsi" />
     <Compile Include="OptionBuilder.fs" />
   </ItemGroup>
   <ItemGroup>
