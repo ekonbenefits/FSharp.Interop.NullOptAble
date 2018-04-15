@@ -15,3 +15,11 @@ artifacts:
   - path: 'src\**\*.nupkg'
     name: NuGet
 
+deploy:
+  provider: NuGet
+  server: https://www.myget.org/F/ci-fsharp-optionbuilder/api/v2/package
+  api_key:
+    secure: kuAmus0VoO5L9Vcqkh9n9hCZCcHnl1Q0+UsM5KX8uGpAftmkiMwtwRCrqDw1oBLR
+  skip_symbols: false
+  symbol_server: https://www.myget.org/F/ci-fsharp-optionbuilder/symbols/api/v2/package       
+  artifact: /.*\.nupkg/
