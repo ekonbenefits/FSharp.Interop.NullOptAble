@@ -101,3 +101,27 @@ let ``Rainbow string null Sequence`` () =
     }
     newSeq |> Seq.length |> should equal 4
     newSeq |> Seq.toList |> should equal ["1"; "2" ; "3"; "4"]
+
+
+[<Fact>]
+let ``Nested for loop`` () =
+    let newSeq = chooseSeq {
+        for i in 1..10 do
+            for j in 1..10 do
+                yield i * j
+    }
+    newSeq |> Seq.length |> should equal 100
+
+[<Fact>]
+let ``Delayed execution`` () =
+    let milliSeconds = 2000
+    let time = DateTime.Now
+    let newSeq = chooseSeq {
+        for _ in 1..1 do
+                yield! Some(DateTime.Now)
+    }
+    System.Threading.Thread.Sleep(milliSeconds);
+    newSeq 
+        |> Seq.head
+        |> (-) <| time 
+        |> should be (greaterThan (TimeSpan.FromMilliseconds(float(milliSeconds))))

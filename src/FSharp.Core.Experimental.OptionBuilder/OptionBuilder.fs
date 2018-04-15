@@ -41,6 +41,9 @@ type ChooseSeqBuilder() =
                                                   |> this.YieldFrom
     member __.YieldFrom(m: 'T seq) = m |> Option.ofObj
                                        |> Option.defaultValue Seq.empty
+
+    //mrg special casing string, is this really okay,
+    //it's a strange type, or is this a design issue manifesting?
     member this.YieldFrom(m: string) = m |> Option.ofObj
                                          |> this.YieldFrom
 
@@ -51,19 +54,21 @@ type ChooseSeqBuilder() =
     member __.Combine(a, b) =  Seq.append a b
 
     member __.Delay(f: unit -> _) = Seq.delay f
-    member __.Run(f) : 'T seq = f |> List.ofSeq :> 'T seq
+
+    member private __.ForceRun f = f |> List.ofSeq :> 'T seq 
+    member __.Run(f:seq<_>) = f
 
     member this.While(guard, delayedExpr) =
         let mutable result = this.Zero()
         while guard() do
-            result <- this.Combine(result,this.Run(delayedExpr))
+            result <- this.Combine(result,this.ForceRun(delayedExpr))
         result
 
     member this.TryWith(delayedExpr, handler) =
-        try this.Run(delayedExpr)
+        try this.ForceRun(delayedExpr)
         with exn -> handler exn
     member this.TryFinally(delayedExpr, compensation) =
-        try this.Run(delayedExpr)
+        try this.ForceRun(delayedExpr)
         finally compensation()
     member this.Using(resource:#IDisposable, body) =
         this.TryFinally(this.Delay(fun ()->body resource), fun () -> match resource with null -> () | disp -> disp.Dispose())
