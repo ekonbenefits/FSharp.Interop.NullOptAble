@@ -6,3 +6,4 @@ There more C# devs rely on `?.` and so nulls will only get worse on the C# side 
 
 This project creates an `option { }` computational expression and `chooseSeq { }` computational expression that allows binding `'T option`/`'T Nullable`/`'T:null` and either returns an option or a sequence respectively.
 
+With `chooseSeq` if you `yield!` a sequence it will be flatten/collect it. If you want a sequence of sequences use `let! s = nullPossibleSequence;; yield s` or `yield! Some notNullSeq`
