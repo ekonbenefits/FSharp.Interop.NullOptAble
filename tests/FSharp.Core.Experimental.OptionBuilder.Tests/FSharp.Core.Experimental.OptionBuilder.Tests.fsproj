@@ -8,6 +8,7 @@
   <ItemGroup>
     <Compile Include="Seq.fs" />
     <Compile Include="Option.fs" />
+    <Compile Include="RealWorld.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>

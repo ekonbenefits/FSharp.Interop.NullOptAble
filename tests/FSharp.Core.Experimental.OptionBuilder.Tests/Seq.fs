@@ -1,4 +1,4 @@
-module Seq
+module SeqTests
 
 open System
 open Xunit
