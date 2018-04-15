@@ -6,7 +6,7 @@
     <Authors>Jay Tuley</Authors>
     <Copyright>Copyright 2018 Ekon Benefits</Copyright>
     <PackageProjectUrl>https://github.com/ekonbenefits/FSharp.Core.Experimental.OptionBuilder</PackageProjectUrl>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageLicenseUrl>https://github.com/ekonbenefits/FSharp.Core.Experimental.OptionBuilder/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>fsharp option seq choose null conditional</PackageTags>
     <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
