@@ -4,14 +4,14 @@ CI Builds available: [![MyGet Pre Release](https://img.shields.io/myget/ci-fshar
 
 Missing OptionBuilder for F# filling the void to interop with  C#'s `?.` usage
 
-There more C# devs rely on `?.` and so nulls will only get worse on the C# side the more often null's are going to appear in APIs.
+There are more C# devs relying on `?.` and so nulls will only get worse on the C# side the more often null's are going to drop out of APIs.
 
-This project creates an `option { }` computational expression and `chooseSeq { }` computational expression that allows binding `'T option`/`'T Nullable`/`'T:null` and either returns an option or a sequence respectively.
+This project creates an `option { }` computational expression and `chooseSeq { }` computational expression that allows binding `'T option`/`'T Nullable`/`'T:null` thus either returns an option or a sequence respectively.
 
-With `chooseSeq` if you `yield!` a sequence it will be flatten/collect it. If you want a sequence of sequences use `let! s = nullPossibleSequence;; yield s` or `yield! Some notNullSeq`
+With `chooseSeq` if you `yield!` a sequence it will flatten/collect it. If you want a sequence of sequences use `let! s = nullPossibleSequence;; yield s` or `yield! Some notNullSeq`
 
 
-Example:
+General Example:
 ```
 let x = Nullable(3)
   let y = Nullable(3)
