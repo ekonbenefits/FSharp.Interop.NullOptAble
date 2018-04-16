@@ -40,8 +40,8 @@ type ChooseSeqBuilder() =
                                                |> this.YieldFrom
     member this.YieldFrom(m: 'T when 'T:null) = m |> Option.ofObj
                                                   |> this.YieldFrom
-    member __.YieldFrom(m: 'T seq) = m |> Option.ofObj
-                                       |> Option.defaultValue Seq.empty
+    member this.YieldFrom(m: 'T seq) = m |> Option.ofObj
+                                         |> Option.defaultValue (this.Zero<'T>())
 
     //mrg special casing string, is this really okay,
     //it's a strange type, or is this a design issue manifesting?
@@ -50,13 +50,15 @@ type ChooseSeqBuilder() =
 
     member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
         match m with
-                 | Some x -> x |> f
+                 | Some x -> f x
                  | None -> this.Zero<'S>()
 
-    member this.Bind(m: 'T Nullable, f) = let m' = m |> Option.ofNullable 
-                                          this.Bind(m', f)
-    member this.Bind(m: 'T when 'T:null, f) = let m' = m |> Option.ofObj
-                                              this.Bind(m', f)
+    member this.Bind(m: 'T Nullable, f) = 
+        let m' = m |> Option.ofNullable 
+        this.Bind(m', f)
+    member this.Bind(m: 'T when 'T:null, f) = 
+        let m' = m |> Option.ofObj
+        this.Bind(m', f)
 
     member __.Combine(a, b) =  Seq.append a b
 
