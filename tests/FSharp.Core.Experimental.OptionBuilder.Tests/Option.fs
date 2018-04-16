@@ -54,3 +54,25 @@ let ``Double bind`` () =
         let! y = Some(2)
         return x,y
     } |> should equal (Some(1,2))
+
+
+
+type Resource() = 
+    let mutable disposed = false
+    member __.Disposed() = disposed
+    interface System.IDisposable with
+        member __.Dispose() =
+            disposed <- true
+
+
+[<Fact>]
+let ``Cleaning up disposables when throwing exception`` () =   
+    let resource = new Resource()
+    let delayedExceptionThrow () =
+        option {
+            use! d = Some(resource)
+            raise <| Exception()
+            return d.Disposed
+        } |> ignore
+    delayedExceptionThrow |> should throw typeof<Exception>
+    resource.Disposed() |> should equal true

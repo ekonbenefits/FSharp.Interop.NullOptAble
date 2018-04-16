@@ -24,13 +24,13 @@ type OptionBuilder() =
         try this.Run(delayedExpr)
         finally compensation()
     member this.Using(resource:#IDisposable, body) =
-        this.TryFinally(this.Delay(fun ()->body resource), fun () -> match resource with null -> () | disp -> disp.Dispose())
+        this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
 
 let option = OptionBuilder()
 
 
 type ChooseSeqBuilder() =
-    member __.Zero() = Seq.empty
+    member __.Zero<'T>() = Seq.empty<'T>
 
     member __.Yield(x: 'T) = Seq.singleton x
 
@@ -48,9 +48,15 @@ type ChooseSeqBuilder() =
     member this.YieldFrom(m: string) = m |> Option.ofObj
                                          |> this.YieldFrom
 
-    member __.Bind(m: 'T option, f) = Option.bind f m
-    member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
-    member __.Bind(m: 'T, f) = m |> Option.ofObj |> Option.bind f
+    member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
+        match m with
+                 | Some x -> x |> f
+                 | None -> this.Zero<'S>()
+
+    member this.Bind(m: 'T Nullable, f) = let m' = m |> Option.ofNullable 
+                                          this.Bind(m', f)
+    member this.Bind(m: 'T when 'T:null, f) = let m' = m |> Option.ofObj
+                                              this.Bind(m', f)
 
     member __.Combine(a, b) =  Seq.append a b
 
@@ -72,7 +78,7 @@ type ChooseSeqBuilder() =
         try this.ForceRun(delayedExpr)
         finally compensation()
     member this.Using(resource:#IDisposable, body) =
-        this.TryFinally(this.Delay(fun ()->body resource), fun () -> match resource with null -> () | disp -> disp.Dispose())
+        this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
 
     member this.For(sequence:seq<_>, body) =
         this.Using(sequence.GetEnumerator(), 

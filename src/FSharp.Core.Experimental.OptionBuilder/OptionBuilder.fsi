@@ -23,19 +23,19 @@ module FSharp.Core.Experimental.OptionBuilder
       member TryWith : delayedExpr:(unit -> 'd) * handler:(exn -> 'd) -> 'd
       member
         Using : resource:'a * body:('a -> 'b) -> 'b
-                  when 'a :> System.IDisposable and 'a : null
+                  when 'a :> System.IDisposable
       member Zero : unit -> 'j option
     end
   val option : OptionBuilder
   type ChooseSeqBuilder =
     class
       new : unit -> ChooseSeqBuilder
-      member Bind : m:'T option * f:('T -> 'm option) -> 'm option
+      member Bind : m:'T option * f:('T -> seq<'S>) -> seq<'S>
       member
-        Bind : m:System.Nullable<'T> * f:('T -> 'l option) -> 'l option
+        Bind : m:System.Nullable<'T> * f:('T -> seq<'l>) -> seq<'l>
                  when 'T : (new : unit -> 'T) and 'T : struct and
                       'T :> System.ValueType
-      member Bind : m:'T * f:('T -> 'k option) -> 'k option when 'T : null
+      member Bind : m:'T * f:('T -> seq<'k>) -> seq<'k> when 'T : null
       member Combine : a:seq<'j> * b:seq<'j> -> seq<'j>
       member Delay : f:(unit -> seq<'i>) -> seq<'i>
       member For : sequence:seq<'a> * body:('a -> seq<'b>) -> seq<'b>
@@ -48,7 +48,7 @@ module FSharp.Core.Experimental.OptionBuilder
         TryWith : delayedExpr:seq<'f> * handler:(exn -> seq<'f>) -> seq<'f>
       member
         Using : resource:'c * body:('c -> seq<'d>) -> seq<'d>
-                  when 'c :> System.IDisposable and 'c : null
+                  when 'c :> System.IDisposable
       member While : guard:(unit -> bool) * delayedExpr:seq<'g> -> seq<'g>
       member Yield : x:'T -> seq<'T>
       member YieldFrom : m:'T option -> seq<'T>
@@ -59,8 +59,6 @@ module FSharp.Core.Experimental.OptionBuilder
       member YieldFrom : m:'T -> seq<'T> when 'T : null
       member YieldFrom : m:seq<'T> -> seq<'T>
       member YieldFrom : m:string -> seq<string>
-      member Zero : unit -> seq<'n>
+      member Zero : unit -> seq<'T>
     end
   val chooseSeq : ChooseSeqBuilder
-
-

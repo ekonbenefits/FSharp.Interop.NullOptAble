@@ -125,3 +125,24 @@ let ``Delayed execution`` () =
         |> Seq.head
         |> (-) <| time 
         |> should be (greaterThan (TimeSpan.FromMilliseconds(float(milliSeconds))))
+
+
+type Resource() = 
+    let mutable disposed = false
+    member __.Disposed() = disposed
+    interface System.IDisposable with
+        member __.Dispose() =
+            disposed <- true
+
+
+[<Fact>]
+let ``Cleaning up disposables when throwing exception`` () =   
+    let resource = new Resource()
+    let delayedExceptionThrow () =
+        chooseSeq {
+            use! d = Some(resource)
+            raise <| Exception()
+            yield d.Disposed
+        } |> List.ofSeq |> ignore
+    delayedExceptionThrow |> should throw typeof<Exception>
+    resource.Disposed() |> should equal true
