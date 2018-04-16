@@ -39,3 +39,20 @@ let ``RNA transcriptions `` () =
         }
     
     toRna "ACGTGGTCTTAA" |> should equal (Some "UGCACCAGAAUU")
+
+[<Fact>]
+let ``rain drops`` () =
+    //test if from exercism
+    //http://exercism.io/exercises/fsharp/raindrops/readme
+    let convert (number: int): string =
+        let drop x s = if number % x = 0 then Some s else None
+        chooseSeq {
+            yield! drop 3 "Pling"
+            yield! drop 5 "Plang"
+            yield! drop 7 "Plong"
+        } |> String.concat ""
+          |> function | "" -> string(number)
+                      | s -> s
+    convert 49 |> should equal "Plong"
+    convert 105 |> should equal "PlingPlangPlong"
+    convert 52 |> should equal "52"
