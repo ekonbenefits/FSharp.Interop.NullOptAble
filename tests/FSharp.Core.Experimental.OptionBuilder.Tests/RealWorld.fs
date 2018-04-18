@@ -17,8 +17,9 @@ let ``Basic nullable math`` () =
     } |> should equal (Some 6)
 
 [<AllowNullLiteral>]
-type Node ()=
-    member val child:Node = null with get,set
+type Node (child:Node)=
+    new() = new Node(null)
+    member val child:Node = child with get,set
     
 [<Fact>]
 let ``Safe Navigation Operator Example`` ()=
@@ -31,7 +32,21 @@ let ``Safe Navigation Operator Example`` ()=
         return c
     } |> should equal None
     
-
+[<Fact>] 
+let ``Safe Navigation Operator Seq Example`` ()=
+    let parents = [
+                    Node() //parent
+                    Node(Node()) //parent.child
+                    Node(Node(Node())) //parent.child.child
+                    Node(Node(Node(Node()))) //parent.child.child.child
+                  ]
+    chooseSeq {
+        for parent in parents  do
+            let! a = parent.child
+            let! b = a.child
+            let! c = b.child
+            yield c
+    } |> Seq.length |> should equal 1
 
 [<Fact>]
 let ``RNA transcriptions `` () =
