@@ -29,6 +29,10 @@ type OptionBuilder() =
 let option = OptionBuilder()
 
 
+module ChooseSeq =
+
+    let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
+
 type ChooseSeqBuilder() =
     member __.Zero<'T>() = Seq.empty<'T>
 
@@ -64,20 +68,19 @@ type ChooseSeqBuilder() =
 
     member __.Delay(f: unit -> _) = Seq.delay f
 
-    member private __.ForceRun f = f |> List.ofSeq :> 'T seq 
-    member __.Run(f:seq<_>) = f
+    member __.Run(f:seq<_>) = f //make this a delayed sequence
 
     member this.While(guard, delayedExpr) =
         let mutable result = this.Zero()
         while guard() do
-            result <- this.Combine(result,this.ForceRun(delayedExpr))
+            result <- this.Combine(result,ChooseSeq.forceRun(delayedExpr))
         result
 
     member this.TryWith(delayedExpr, handler) =
-        try this.ForceRun(delayedExpr)
+        try ChooseSeq.forceRun(delayedExpr)
         with exn -> handler exn
     member this.TryFinally(delayedExpr, compensation) =
-        try this.ForceRun(delayedExpr)
+        try ChooseSeq.forceRun(delayedExpr)
         finally compensation()
     member this.Using(resource:#IDisposable, body) =
         this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
