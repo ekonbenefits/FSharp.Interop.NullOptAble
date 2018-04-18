@@ -16,6 +16,23 @@ let ``Basic nullable math`` () =
         return (x' + y')
     } |> should equal (Some 6)
 
+[<AllowNullLiteral>]
+type Node ()=
+    member val child:Node = null with get,set
+    
+[<Fact>]
+let ``Safe Navigation Operator Example`` ()=
+    // https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/
+    let parent = Node()
+    option {
+        let! a = parent.child
+        let! b = a.child
+        let! c = b.child
+        return c
+    } |> should equal None
+    
+
+
 [<Fact>]
 let ``RNA transcriptions `` () =
     //test is from exercism 
