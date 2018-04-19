@@ -90,17 +90,17 @@ let ``Rainbow int none Sequence`` () =
 
 [<Fact>]
 let ``Rainbow string null Sequence`` () =
+    let s:string = null
     let newSeq = chooseSeq {
         yield "1"
-        yield! "2"
         yield! None
-        yield! Some "3"
-        yield! ["4"]
-        let s:string = null
-        yield! s
+        yield! Some "2"
+        yield! ["3"]
+        let! s' = s
+        yield s'
     }
-    newSeq |> Seq.length |> should equal 4
-    newSeq |> Seq.toList |> should equal ["1"; "2" ; "3"; "4"]
+    newSeq |> Seq.length |> should equal 3
+    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"]
 
 
 [<Fact>]

@@ -50,7 +50,8 @@ type ChooseSeqBuilder() =
     //mrg special casing string, is this really okay,
     //it's a strange type, or is this a design issue manifesting?
     member this.YieldFrom(m: string) = m |> Option.ofObj
-                                         |> this.YieldFrom
+                                         |> Option.map(Seq.toArray >> Seq.ofArray)
+                                         |> Option.defaultValue (this.Zero<char>())
 
     member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
         match m with
@@ -76,10 +77,10 @@ type ChooseSeqBuilder() =
             result <- this.Combine(result,ChooseSeq.forceRun(delayedExpr))
         result
 
-    member this.TryWith(delayedExpr, handler) =
+    member __.TryWith(delayedExpr, handler) =
         try ChooseSeq.forceRun(delayedExpr)
         with exn -> handler exn
-    member this.TryFinally(delayedExpr, compensation) =
+    member __.TryFinally(delayedExpr, compensation) =
         try ChooseSeq.forceRun(delayedExpr)
         finally compensation()
     member this.Using(resource:#IDisposable, body) =

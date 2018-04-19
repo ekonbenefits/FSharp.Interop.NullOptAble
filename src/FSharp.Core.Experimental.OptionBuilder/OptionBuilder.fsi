@@ -50,7 +50,7 @@ type ChooseSeqBuilder =
                          'T :> System.ValueType
     member YieldFrom : m:'T -> seq<'T> when 'T : null
     member YieldFrom : m:seq<'T> -> seq<'T>
-    member YieldFrom : m:string -> seq<string>
+    member YieldFrom : m:string -> seq<char>
     member Zero : unit -> seq<'T>
 val chooseSeq : ChooseSeqBuilder
 
