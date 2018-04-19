@@ -48,6 +48,21 @@ let ``Safe Navigation Operator Seq Example`` ()=
             yield c
     } |> Seq.length |> should equal 1
 
+[<Fact>] 
+let ``IsPrime Example`` ()=
+    // Recursive isprime function.
+    //modified from https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences
+    let isprime n =
+        let rec check i =
+            n <> 1 && (i > n/2 || (n % i <> 0 && check (i + 1)))
+        if check 2 then Some n else None
+
+    let prime = chooseSeq { for n in 1..100 do yield! isprime n }
+    prime |> Seq.toList
+          |> should equal [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 
+                            41; 43; 47; 53; 59; 61; 67; 71; 73; 79; 83; 89; 97]
+
+
 [<Fact>]
 let ``RNA transcriptions `` () =
     //test is from exercism 
