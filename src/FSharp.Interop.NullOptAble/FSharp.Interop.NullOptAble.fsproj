@@ -18,6 +18,7 @@
   <ItemGroup>
     <Compile Include="OptionBuilder.fsi" />
     <Compile Include="OptionBuilder.fs" />
+    <Compile Include="Operators.fsi" />
     <Compile Include="Operators.fs" />
   </ItemGroup>
   <ItemGroup>
