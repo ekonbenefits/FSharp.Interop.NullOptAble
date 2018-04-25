@@ -59,15 +59,17 @@ let ``Basic Pipe Option Unwrap`` () =
      |?|> (+) 3
      |?|> should equal 9
 
+
+
 [<Fact>]
 let ``Basic Pipe Option None`` () =
-    let x:int Option = None
+    let x = None
     x
      |?|> (+) 3
      |> should equal None
 [<Fact>]
 let ``Basic Pipe Option None Don't Runn`` () =
-    let x:int Option = None
+    let x = None
     x
      |?|> (+) 3
      |?|> (fun _ -> raise (Exception "Don't Run") |> ignore)
@@ -81,7 +83,7 @@ let ``Basic Pipe Nullable Unwrap`` () =
 
 [<Fact>]
 let ``Basic Pipe Nullable Null`` () =
-    let x : int Nullable = Nullable()
+    let x = Nullable()
     x
      |?|> (+) 3
      |> should equal None
@@ -95,7 +97,7 @@ let ``Basic Pipe Null ref Unwrap`` () =
 
 [<Fact>]
 let ``Basic Pipe Null ref Null`` () =
-    let x : string = null
+    let x = null
     x
      |?|> (+) "Hello"
      |> should equal None

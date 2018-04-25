@@ -18,19 +18,23 @@ module Operators =
 
 
 
-    type NullPipe =  
-        static member Into(a: 'a option, f: 'a -> 't option) = Option.bind f a
+    type NullMap =  
+
         static member Into(a: 'a option, f: 'a -> 't) = Option.map f a
-        static member Into(a: 'a Nullable, f: 'a -> 't option) = a |> Option.ofNullable 
-                                                                   |> Option.bind f 
+
         static member Into(a: 'a Nullable, f: 'a -> 't) = a |> Option.ofNullable
                                                             |> Option.map f 
-        static member Into(a: 'a when 'a:null, f: 'a -> 't option) = a |> Option.ofObj 
-                                                                       |> Option.bind f
         static member Into(a: 'a when 'a:null, f: 'a -> 't) = a |> Option.ofObj
                                                                 |> Option.map f
 
-    let inline nullPipeHelper< ^t, ^a, ^b, ^c when (^t or ^a) : (static member Into : ^a * ^b -> ^c)> a b = 
+    let inline nullMapHelper< ^t, ^a, ^b, ^c when (^t or ^a) : (static member Into : ^a * ^b -> ^c)> a b = 
                                                 ((^t or ^a) : (static member Into : ^a * ^b -> ^c) (a, b))
 
-    let inline (|?|>) a b = nullPipeHelper<NullPipe, _, _, _> a b
+    let inline (|?|>) a b = nullMapHelper<NullMap, _, _, _> a b
+
+    type NullBind=       
+        static member Into(a: 'a option, f: 'a -> 't option) = Option.bind f a
+        static member Into(a: 'a Nullable, f: 'a -> 't option) = a |> Option.ofNullable 
+                                                                   |> Option.bind f
+        static member Into(a: 'a when 'a:null, f: 'a -> 't option) = a |> Option.ofObj 
+                                                                       |> Option.bind f
