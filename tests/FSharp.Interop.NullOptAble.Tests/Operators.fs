@@ -56,7 +56,8 @@ let ``Basic Pipe Option Unwrap`` () =
     let x = Some(3)
     x 
      |?|> (+) 3
-     |> should equal (Some 6)
+     |?|> (+) 3
+     |?|> should equal 9
 
 [<Fact>]
 let ``Basic Pipe Option None`` () =
@@ -64,6 +65,12 @@ let ``Basic Pipe Option None`` () =
     x
      |?|> (+) 3
      |> should equal None
+[<Fact>]
+let ``Basic Pipe Option None Don't Runn`` () =
+    let x:int Option = None
+    x
+     |?|> (+) 3
+     |?|> (fun _ -> raise (Exception "Don't Run") |> ignore)
 
 [<Fact>]
 let ``Basic Pipe Nullable Unwrap`` () =
