@@ -55,49 +55,56 @@ let ``Basic not null ref`` () =
 let ``Basic Pipe Option Unwrap`` () =
     let x = Some(3)
     x 
-     |?|> (+) 3
-     |?|> (+) 3
-     |?|> should equal 9
+     |>? (+) 3
+     |>? (+) 3
+     |>? should equal 9
 
+[<Fact>]
+let ``Basic Pipe Option With option Return`` () =
+    let x = Some(3)
+    x 
+     |>?? (fun y -> Some (y + 3))
+     |>? (+) 3
+     |>? should equal 9
 
 
 [<Fact>]
 let ``Basic Pipe Option None`` () =
     let x = None
     x
-     |?|> (+) 3
+     |>? (+) 3
      |> should equal None
 [<Fact>]
 let ``Basic Pipe Option None Don't Runn`` () =
     let x = None
     x
-     |?|> (+) 3
-     |?|> (fun _ -> raise (Exception "Don't Run") |> ignore)
+     |>? (+) 3
+     |>? (fun _ -> raise (Exception "Don't Run") |> ignore)
 
 [<Fact>]
 let ``Basic Pipe Nullable Unwrap`` () =
     let x = Nullable(3)
     x 
-     |?|> (+) 3
+     |>? (+) 3
      |> should equal (Some 6)
 
 [<Fact>]
 let ``Basic Pipe Nullable Null`` () =
     let x = Nullable()
     x
-     |?|> (+) 3
+     |>? (+) 3
      |> should equal None
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap`` () =
     let x = " World"
     x 
-     |?|> (+) "Hello"
+     |>? (+) "Hello"
      |> should equal (Some "Hello World")
 
 [<Fact>]
 let ``Basic Pipe Null ref Null`` () =
     let x = null
     x
-     |?|> (+) "Hello"
+     |>? (+) "Hello"
      |> should equal None
