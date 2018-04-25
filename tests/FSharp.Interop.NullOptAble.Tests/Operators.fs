@@ -118,3 +118,10 @@ let ``Basic Pipe Null ref Null`` () =
     x
      |>? (+) "Hello"
      |> should equal None
+
+[<Fact>]
+let ``Basic nullable math`` () =
+    let x = Nullable(3)
+    let y = Nullable(3)
+    x |>?? (fun x'-> y|>? (+) x')
+    |> should equal (Some 6)
