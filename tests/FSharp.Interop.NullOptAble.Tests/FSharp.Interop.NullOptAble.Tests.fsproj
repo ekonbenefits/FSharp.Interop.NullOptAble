@@ -6,6 +6,7 @@
     <ProjectReference Include="..\..\src\FSharp.Interop.NullOptAble\FSharp.Interop.NullOptAble.fsproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Operators.fs" />
     <Compile Include="Seq.fs" />
     <Compile Include="Option.fs" />
     <Compile Include="RealWorld.fs" />
