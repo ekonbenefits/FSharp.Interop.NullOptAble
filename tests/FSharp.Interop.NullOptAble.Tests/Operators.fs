@@ -67,6 +67,16 @@ let ``Basic Pipe Option With option Return`` () =
      |>? (+) 3
      |>? should equal 9
 
+[<Fact>]
+let ``Basic All ops`` () =
+    let x = Some(3)
+    x 
+     |>?? (fun y -> Some (y + 3))
+     |>? (+) 3
+     |>?? (fun _ -> None)
+     |>? (+) 3
+     |?? lazy 2
+     |> should equal 2
 
 [<Fact>]
 let ``Basic Pipe Option None`` () =
