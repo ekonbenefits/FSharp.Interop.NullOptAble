@@ -3,7 +3,7 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\FSharp.Core.Experimental.OptionBuilder\FSharp.Core.Experimental.OptionBuilder.fsproj" />
+    <ProjectReference Include="..\..\src\FSharp.Interop.NullOptAble\FSharp.Interop.NullOptAble.fsproj" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Seq.fs" />

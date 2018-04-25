@@ -3,7 +3,7 @@ module RealWorldTests
 open System
 open Xunit
 open FsUnit.Xunit
-open FSharp.Core.Experimental.OptionBuilder
+open FSharp.Interop.NullOptAble
 open System.Text
 
 [<Fact>]

@@ -1,4 +1,4 @@
-module FSharp.Core.Experimental.OptionBuilder
+module FSharp.Interop.NullOptAble
 
 type OptionBuilder =
     new : unit -> OptionBuilder

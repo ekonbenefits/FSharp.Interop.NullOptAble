@@ -10,7 +10,7 @@ matrix:
     - os: osx
       osx_image: "xcode8.3"
 
-solution: FSharp.Core.Experimental.OptionBuilder.sln
+solution: FSharp.Interop.NullOptAble.sln
 
 dotnet: 2.0.0
 
