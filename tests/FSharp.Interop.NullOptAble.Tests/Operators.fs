@@ -50,3 +50,45 @@ let ``Basic not null ref`` () =
     let x = "original"
     let x' = x |?? lazy "new"
     x' |> should equal "original"
+
+[<Fact>]
+let ``Basic Pipe Option Unwrap`` () =
+    let x = Some(3)
+    x 
+     |?|> (+) 3
+     |> should equal (Some 6)
+
+[<Fact>]
+let ``Basic Pipe Option None`` () =
+    let x:int Option = None
+    x
+     |?|> (+) 3
+     |> should equal None
+
+[<Fact>]
+let ``Basic Pipe Nullable Unwrap`` () =
+    let x = Nullable(3)
+    x 
+     |?|> (+) 3
+     |> should equal (Some 6)
+
+[<Fact>]
+let ``Basic Pipe Nullable Null`` () =
+    let x : int Nullable = Nullable()
+    x
+     |?|> (+) 3
+     |> should equal None
+
+[<Fact>]
+let ``Basic Pipe Null ref Unwrap`` () =
+    let x = " World"
+    x 
+     |?|> (+) "Hello"
+     |> should equal (Some "Hello World")
+
+[<Fact>]
+let ``Basic Pipe Null ref Null`` () =
+    let x : string = null
+    x
+     |?|> (+) "Hello"
+     |> should equal None
