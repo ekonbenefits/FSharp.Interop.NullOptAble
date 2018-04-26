@@ -19,23 +19,42 @@ namespace FSharp.Interop.NullOptAble
                         'a :> System.ValueType
         static member Into : a:'a * f:('a -> 't) -> 't option when 'a : null
       end
-    val inline ( |>? ) : a: ^a -> b: ^b ->  ^c
+    val inline ( |>? ) :
+      a: ^a -> b: ^b ->  ^c
         when (NullMap or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
-    val inline ( <|? ) : b: ^b  -> a: ^a ->  ^c
-        when (NullMap or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
+    val inline ( <|? ) :
+      b: ^a -> a: ^b ->  ^c
+        when (NullMap or  ^b) : (static member Into :  ^b *  ^a ->  ^c)
     type NullBind =
       class
         static member Into : a:'a option * f:('a -> 't option) -> 't option
+        static member Into : a:'a option * f:('a -> System.Nullable<'t>) -> 't option
+                   when 't : (new : unit -> 't) and 't : struct and
+                        't :> System.ValueType
+        static member Into : a:'a option * f:('a -> 't) -> 't option when 't : null
         static member Into : a:System.Nullable<'a> * f:('a -> 't option) -> 't option
                    when 'a : (new : unit -> 'a) and 'a : struct and
                         'a :> System.ValueType
+        static member Into : a:System.Nullable<'a> * f:('a -> System.Nullable<'t>) ->
+                   't option
+                   when 'a : (new : unit -> 'a) and 'a : struct and
+                        'a :> System.ValueType and 't : (new : unit -> 't) and
+                        't : struct and 't :> System.ValueType
+        static member Into : a:System.Nullable<'a> * f:('a -> 't) -> 't option
+                   when 'a : (new : unit -> 'a) and 'a : struct and
+                        'a :> System.ValueType and 't : null
         static member Into : a:'a * f:('a -> 't option) -> 't option when 'a : null
+        static member Into : a:'a * f:('a -> System.Nullable<'t>) -> 't option
+                   when 'a : null and 't : (new : unit -> 't) and 't : struct and
+                        't :> System.ValueType
+        static member
+          Into : a:'a * f:('a -> 't) -> 't option when 'a : null and 't : null
       end
     val inline ( |>?? ) :
       a: ^a -> b: ^b ->  ^c
         when (NullBind or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
     val inline ( <|?? ) :
-      b: ^b -> a: ^a ->  ^c
-        when (NullBind or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
+      b: ^a -> a: ^b ->  ^c
+        when (NullBind or  ^b) : (static member Into :  ^b *  ^a ->  ^c)
   end
 

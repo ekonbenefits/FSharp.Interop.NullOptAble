@@ -33,11 +33,36 @@ module Operators =
     let inline (|>?) a b = nullIntoHelper<NullMap, _, _, _> a b
     let inline (<|?) b a = nullIntoHelper<NullMap, _, _, _> a b
 
-    type NullBind=       
-        static member Into(a: 'a option, f: 'a -> 't option) = Option.bind f a
-        static member Into(a: 'a Nullable, f: 'a -> 't option) = a |> Option.ofNullable 
-                                                                   |> Option.bind f
-        static member Into(a: 'a when 'a:null, f: 'a -> 't option) = a |> Option.ofObj 
-                                                                       |> Option.bind f
+    type NullBind=
+        static member Into(a: 'a option, f: 'a -> 't option) = 
+           Option.bind f a
+        static member Into(a: 'a option, f: 'a -> 't Nullable) = 
+           let f' = f >> Option.ofNullable 
+           Option.bind f' a
+        static member Into(a: 'a option, f: 'a -> 't when 't:null) = 
+           let f' = f >> Option.ofObj 
+           Option.bind f' a
+        static member Into(a: 'a Nullable, f: 'a -> 't option) =
+            a |> Option.ofNullable 
+              |> Option.bind f
+        static member Into(a: 'a Nullable, f: 'a -> 't Nullable) =
+            let f' = f >> Option.ofNullable
+            a |> Option.ofNullable 
+              |> Option.bind f'
+        static member Into(a: 'a Nullable, f: 'a -> 't when 't:null) =
+            let f' = f >> Option.ofObj
+            a |> Option.ofNullable 
+              |> Option.bind f'
+        static member Into(a: 'a when 'a:null, f: 'a -> 't option) =
+            a |> Option.ofObj 
+              |> Option.bind f
+        static member Into(a: 'a when 'a:null, f: 'a -> 't Nullable) =
+            let f' = f >> Option.ofNullable
+            a |> Option.ofObj 
+              |> Option.bind f'
+        static member Into(a: 'a when 'a:null, f: 'a -> 't when 't:null) =
+            let f' = f >> Option.ofObj
+            a |> Option.ofObj 
+              |> Option.bind f'    
     let inline (|>??) a b = nullIntoHelper<NullBind, _, _, _> a b
     let inline (<|??) b a = nullIntoHelper<NullBind, _, _, _> a b

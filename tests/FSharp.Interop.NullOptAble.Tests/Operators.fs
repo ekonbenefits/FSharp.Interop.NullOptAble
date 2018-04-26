@@ -154,8 +154,39 @@ let ``Basic left pipe bind`` () =
      |> should equal (Some "Hello")
 
 [<Fact>]
-let ``Basic nullable math`` () =
+let ``Basic nullable math (terrible)`` () =
     let x = Nullable(3)
     let y = Nullable(3)
     x |>?? (fun x'-> y|>? (+) x')
     |> should equal (Some 6)
+
+[<AllowNullLiteral>]
+type Node (child:Node)=
+    new() = new Node(null)
+    member val child:Node = child with get,set
+
+[<Fact>]
+let ``Safe Navigation Operator Example`` ()=
+    // https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/
+    let parent = Node()
+    let navChild (n:Node) = n.child
+    let result = 
+        parent
+            |>?? navChild
+            |>?? navChild
+            |>?? navChild
+    result |> should equal None
+
+[<Fact>]
+let ``Safe Navigation Operator Example found`` ()=
+    // https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/
+    let parent = () |> Node |> Node |> Node |> Node
+    let navChild (n:Node) = n.child
+    let result = 
+        parent
+            |>?? navChild
+            |>?? navChild
+            |>?? navChild
+    result |> should not' (equal None)
+    result |>? should not' (equal null) |> ignore
+    result |>?? navChild |> should equal None
