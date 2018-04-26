@@ -31,6 +31,7 @@ module Operators =
                                                 ((^t or ^a) : (static member Into : ^a * ^b -> ^c) (a, b))
 
     let inline (|>?) a b = nullIntoHelper<NullMap, _, _, _> a b
+    let inline (<|?) b a = nullIntoHelper<NullMap, _, _, _> a b
 
     type NullBind=       
         static member Into(a: 'a option, f: 'a -> 't option) = Option.bind f a
@@ -39,3 +40,4 @@ module Operators =
         static member Into(a: 'a when 'a:null, f: 'a -> 't option) = a |> Option.ofObj 
                                                                        |> Option.bind f
     let inline (|>??) a b = nullIntoHelper<NullBind, _, _, _> a b
+    let inline (<|??) b a = nullIntoHelper<NullBind, _, _, _> a b
