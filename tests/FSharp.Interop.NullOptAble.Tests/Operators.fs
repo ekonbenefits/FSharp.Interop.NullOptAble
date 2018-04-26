@@ -130,6 +130,30 @@ let ``Basic Pipe Null ref Null`` () =
      |> should equal None
 
 [<Fact>]
+let ``Basic Pipe Null ref Unwrap left pipe`` () =
+    let x = " World"
+    (+) "Hello" <|? x
+     |> should equal (Some "Hello World")
+
+[<Fact>]
+let ``Basic Pipe Null ref Null left pipe`` () =
+    let x = null
+    (+) "Hello" <|? x
+     |> should equal None
+
+[<Fact>]
+let ``Basic left pipe bind null`` () =
+    let x = null
+    Some <|?? x
+     |> should equal None
+
+[<Fact>]
+let ``Basic left pipe bind`` () =
+    let x = "Hello"
+    Some <|?? x
+     |> should equal (Some "Hello")
+
+[<Fact>]
 let ``Basic nullable math`` () =
     let x = Nullable(3)
     let y = Nullable(3)
