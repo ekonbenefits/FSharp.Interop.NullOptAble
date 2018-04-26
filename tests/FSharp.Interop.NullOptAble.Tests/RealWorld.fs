@@ -74,11 +74,11 @@ let ``RNA transcriptions `` () =
                     return sb'.Append(c)
                 }
             function
-                    | 'G' -> 'C' |> append
-                    | 'C' -> 'G' |> append
-                    | 'T' -> 'A' |> append
-                    | 'A' -> 'U' |> append
-                    | ___ -> None
+            | 'G' -> 'C' |> append
+            | 'C' -> 'G' |> append
+            | 'T' -> 'A' |> append
+            | 'A' -> 'U' |> append
+            | ___ -> None
         option {
             let! dna' = dna //handles if string is null
             let! sb' = dna' |> Seq.fold combine (Some <| StringBuilder())
