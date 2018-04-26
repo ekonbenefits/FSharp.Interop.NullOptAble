@@ -146,11 +146,18 @@ let ``Basic left pipe bind null`` () =
     let x = null
     Some <|?? x
      |> should equal None
-
+    Some <|? x
+     |> should equal None
+    id <|? x
+     |> should equal None
 [<Fact>]
 let ``Basic left pipe bind`` () =
     let x = "Hello"
     Some <|?? x
+     |> should equal (Some "Hello")
+    Some <|? x
+     |> should equal (Some (Some "Hello"))
+    id <|? x
      |> should equal (Some "Hello")
 
 [<Fact>]
