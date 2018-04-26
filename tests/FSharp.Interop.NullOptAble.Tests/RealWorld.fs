@@ -36,9 +36,9 @@ let ``Safe Navigation Operator Example`` ()=
 let ``Safe Navigation Operator Seq Example`` ()=
     let parents = [
                     Node() //parent = some
-                    Node(Node()) //parent.child = some
-                    Node(Node(Node())) //parent.child.child = some
-                    Node(Node(Node(Node()))) //parent.child.child.child = some
+                    Node() |> Node //parent.child = some
+                    Node() |> Node |> Node //parent.child.child = some
+                    Node() |> Node |> Node |> Node //parent.child.child.child = some
                   ]
     chooseSeq {
         for parent in parents  do
