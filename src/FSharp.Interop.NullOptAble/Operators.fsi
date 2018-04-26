@@ -8,7 +8,7 @@ namespace FSharp.Interop.NullOptAble
                             'a :> System.ValueType
         static member Coalesce : a:'a * b:System.Lazy<'a> -> 'a when 'a : null
       end
-    val inline ( |?? ) :
+    val inline ( |?-> ) :
       a: ^a -> b: ^b ->  ^c
         when (NullCoalesce or  ^a) : (static member Coalesce :  ^a *  ^b ->  ^c)
     type NullMap =

@@ -8,13 +8,13 @@ open FSharp.Interop.NullOptAble.Operators
 [<Fact>]
 let ``Basic Nulled Nullable`` () =
     let x = Nullable()
-    let x' = x |?? lazy 6
+    let x' = x |?-> lazy 6
     x' |> should equal  6
 
 [<Fact>]
 let ``Basic not null Nullable`` () =
     let x = Nullable(3)
-    let x' = x |?? lazy 6
+    let x' = x |?-> lazy 6
     x' |> should equal  3
 
 
@@ -24,31 +24,31 @@ let ``Basic not null delay test Nullable`` () =
         raise <| Exception("Don't run.")
         6
     let x = Nullable(3)
-    let x' = x |?? lazy (delayRunTest ())
+    let x' = x |?-> lazy (delayRunTest ())
     x' |> should equal  3
 
 [<Fact>]
 let ``Basic None Option`` () =
     let x = None
-    let x' = x |?? lazy 6
+    let x' = x |?-> lazy 6
     x' |> should equal  6
 
 [<Fact>]
 let ``Basic Some Option`` () =
     let x = Some(3)
-    let x' = x |?? lazy 6
+    let x' = x |?-> lazy 6
     x' |> should equal  3
 
 [<Fact>]
 let ``Basic Nulled Ref`` () =
     let x:string = null
-    let x' = x |?? lazy "okay"
+    let x' = x |?-> lazy "okay"
     x' |> should equal "okay"
 
 [<Fact>]
 let ``Basic not null ref`` () =
     let x = "original"
-    let x' = x |?? lazy "new"
+    let x' = x |?-> lazy "new"
     x' |> should equal "original"
 
 [<Fact>]
@@ -75,7 +75,7 @@ let ``Basic All ops`` () =
      |>? (+) 3
      |>?? (fun _ -> None)
      |>? (+) 3
-     |?? lazy 2
+     |?-> lazy 2
      |> should equal 2
 
 [<Fact>]
@@ -85,7 +85,7 @@ let ``Basic All ops 2`` () =
      |>?? (fun y -> Some (y + 3))
      |>? (+) 3
      |>? (+) 3
-     |?? lazy 2
+     |?-> lazy 2
      |> should equal 12
 
 [<Fact>]
