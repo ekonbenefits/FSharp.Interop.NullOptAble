@@ -164,7 +164,7 @@ let ``Basic left pipe bind`` () =
 let ``Basic nullable math (terrible)`` () =
     let x = Nullable(3)
     let y = Nullable(3)
-    x |>?? (fun x'-> y|>? (+) x')
+    x |>?? (fun x'-> y |>? (+) x')
     |> should equal (Some 6)
 
 [<AllowNullLiteral>]
