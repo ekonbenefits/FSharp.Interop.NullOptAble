@@ -13,12 +13,14 @@ let ``Basic nullable math`` () =
     let y = Nullable(3)
     (x,y) ||>?@ ( + )
           |> should equal (Some 6)
+[<Fact>]          
 let ``Basic concat`` () =
     let x = "Hello "
     let y = "World"
     (x,y) ||>? ( + )
-          |> should equal (Some 6)
+          |> should equal (Some "Hello World")
 
+[<Fact>]
 let ``Basic concat none`` () =
     let x = "Hello "
     let y:string = null

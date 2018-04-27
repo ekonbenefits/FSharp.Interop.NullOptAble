@@ -200,7 +200,7 @@ let ``Safe Navigation Operator Example found`` ()=
 
 
 [<Fact>]
-let ``Basic map`` () =
+let ``Basic map homegenous ||>`` () =
     let y = Some <| Map.ofList [("Here", "Hello World")]
     let x = Some "Here"
     (x,y) ||>? Map.tryFind
@@ -208,4 +208,22 @@ let ``Basic map`` () =
 
     (Some("nope"),y) 
         ||>? Map.tryFind
-        |> should equal None     
+        |> should equal None 
+
+[<Fact>]
+let ``Basic map heterogenous ||>`` () =
+    let y = Some <| Map.ofList [("Here", "Hello World")]
+    let x = "Here"
+    (x,y) ||>? Map.tryFind
+          |> should equal (Some "Hello World")
+
+    ("nope",y) 
+        ||>? Map.tryFind
+        |> should equal None 
+
+[<Fact>]
+let ``Basic nullable math heterogenous`` () =
+    let x = Nullable(3)
+    let y = Some(3)
+    (x,y) ||>?@ ( + )
+          |> should equal (Some 6)

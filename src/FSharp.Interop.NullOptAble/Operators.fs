@@ -36,9 +36,35 @@ module Operators =
     type NullMap2 =  
         static member Into(a: 'a option * 'b option, f: 'a -> 'b -> 't) =
             a ||> Option.map2 f
+
+        static member Into(a: 'a option * 'b Nullable, f: 'a -> 'b -> 't) = 
+            a ||> (fun x y -> x, Option.ofNullable y)
+              ||> Option.map2 f
+
+        static member Into(a: 'a Nullable * 'b option, f: 'a -> 'b -> 't) = 
+            a ||> (fun x y -> Option.ofNullable x, y)
+              ||> Option.map2 f
+
+        static member Into(a: 'a option * 'b when 'b:null, f: 'a -> 'b -> 't) =
+            a ||> (fun x y -> x, Option.ofObj y)
+              ||> Option.map2 f
+
+        static member Into(a: 'a * 'b option when 'a:null, f: 'a -> 'b -> 't) =
+            a ||> (fun x y -> Option.ofObj x, y)
+              ||> Option.map2 f
+
         static member Into(a: 'a Nullable * 'b Nullable, f: 'a -> 'b -> 't) = 
             a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y)
               ||> Option.map2 f
+
+        static member Into(a: 'a Nullable * 'b when 'b:null, f: 'a -> 'b -> 't) =
+            a ||> (fun x y -> Option.ofNullable x, Option.ofObj y)
+              ||> Option.map2 f
+
+        static member Into(a: 'a * 'b Nullable when 'a:null, f: 'a -> 'b -> 't) =
+            a ||> (fun x y -> Option.ofObj x, Option.ofNullable y)
+              ||> Option.map2 f
+
         static member Into(a: 'a * 'b when 'a:null and 'b:null, f: 'a -> 'b -> 't) =
             a ||> (fun x y -> Option.ofObj x, Option.ofObj y)
               ||> Option.map2 f
@@ -94,6 +120,53 @@ module Operators =
         static member Into(a: 'a option * 'b option, f: 'a -> 'b -> 't when 't:null) = 
            let f' a b = f a b |> Option.ofObj 
            a ||> bind2 f'
+
+        static member Into(a: 'a option * 'b Nullable, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> x, Option.ofNullable y) 
+              ||> bind2 f
+        static member Into(a: 'a option * 'b Nullable, f: 'a -> 'b ->  't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> x, Option.ofNullable y) 
+              ||> bind2 f'
+        static member Into(a: 'a option * 'b Nullable, f: 'a -> 'b ->  't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> x, Option.ofNullable y) 
+              ||> bind2 f'
+        
+        static member Into(a: 'a Nullable * 'b option, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> Option.ofNullable x, y) 
+              ||> bind2 f
+        static member Into(a: 'a Nullable * 'b option, f: 'a -> 'b ->  't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> Option.ofNullable x, y) 
+              ||> bind2 f'
+        static member Into(a: 'a Nullable * 'b option, f: 'a -> 'b ->  't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> Option.ofNullable x, y) 
+              ||> bind2 f'
+
+        static member Into(a: 'a option * 'b when 'b:null, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> x, Option.ofObj y) 
+              ||> bind2 f
+        static member Into(a: 'a option  * 'b when 'b:null, f: 'a -> 'b -> 't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> x, Option.ofObj y) 
+              ||> bind2 f'
+        static member Into(a: 'a option  * 'b when 'b:null, f: 'a -> 'b -> 't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> x, Option.ofObj y) 
+              ||> bind2 f'   
+        static member Into(a: 'a * 'b option when 'a:null, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> Option.ofObj x, y) 
+              ||> bind2 f
+        static member Into(a: 'a * 'b option when 'a:null, f: 'a -> 'b -> 't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> Option.ofObj x, y) 
+              ||> bind2 f'
+        static member Into(a: 'a * 'b option when 'a:null, f: 'a -> 'b -> 't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> Option.ofObj x, y) 
+              ||> bind2 f'   
         static member Into(a: 'a Nullable * 'b Nullable, f: 'a -> 'b -> 't option) =
             a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y) 
               ||> bind2 f
@@ -105,6 +178,28 @@ module Operators =
             let f' a b = f a b |> Option.ofObj 
             a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y) 
               ||> bind2 f'
+
+        static member Into(a: 'a Nullable * 'b when 'b:null, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> Option.ofNullable x, Option.ofObj y) 
+              ||> bind2 f
+        static member Into(a: 'a Nullable * 'b when 'b:null, f: 'a -> 'b -> 't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> Option.ofNullable x, Option.ofObj y) 
+              ||> bind2 f'
+        static member Into(a: 'a Nullable * 'b when 'b:null, f: 'a -> 'b -> 't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> Option.ofNullable x, Option.ofObj y) 
+        static member Into(a: 'a * 'b Nullable when 'a:null, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> Option.ofObj x, Option.ofNullable y) 
+              ||> bind2 f
+        static member Into(a: 'a * 'b Nullable when 'a:null, f: 'a -> 'b -> 't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> Option.ofObj x, Option.ofNullable y) 
+              ||> bind2 f'
+        static member Into(a: 'a * 'b Nullable when 'a:null, f: 'a -> 'b -> 't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> Option.ofObj x, Option.ofNullable y) 
+
         static member Into(a: 'a * 'b when 'a:null and 'b:null, f: 'a -> 'b -> 't option) =
             a ||> (fun x y -> Option.ofObj x, Option.ofObj y) 
               ||> bind2 f
