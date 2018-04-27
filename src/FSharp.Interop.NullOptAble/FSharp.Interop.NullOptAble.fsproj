@@ -16,10 +16,10 @@
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="NullOptAble.fsi" />
-    <Compile Include="NullOptAble.fs" />
     <Compile Include="TopLevelBuilders.fsi" />
     <Compile Include="TopLevelBuilders.fs" />
+    <Compile Include="NullOptAble.fsi" />
+    <Compile Include="NullOptAble.fs" />
     <Compile Include="Operators.fsi" />
     <Compile Include="Operators.fs" />
   </ItemGroup>
