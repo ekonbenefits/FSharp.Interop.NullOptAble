@@ -197,3 +197,15 @@ let ``Safe Navigation Operator Example found`` ()=
     result |> should not' (equal None)
     result |>?@ should not' (equal null) |> ignore
     result |>? navChild |> should equal None
+
+
+[<Fact>]
+let ``Basic map`` () =
+    let y = Some <| Map.ofList [("Here", "Hello World")]
+    let x = Some "Here"
+    (x,y) ||>? Map.tryFind
+          |> should equal (Some "Hello World")
+
+    (Some("nope"),y) 
+        ||>? Map.tryFind
+        |> should equal None     

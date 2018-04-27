@@ -6,17 +6,24 @@ open FsUnit.Xunit
 open FSharp.Interop.NullOptAble.Operators
 open System.Text
 
-(*
+
 [<Fact>]
 let ``Basic nullable math`` () =
     let x = Nullable(3)
     let y = Nullable(3)
-    option {
-        let! x' = x
-        let! y' = y
-        return (x' + y')
-    } |> should equal (Some 6)
-*)
+    (x,y) ||>?@ ( + )
+          |> should equal (Some 6)
+let ``Basic concat`` () =
+    let x = "Hello "
+    let y = "World"
+    (x,y) ||>? ( + )
+          |> should equal (Some 6)
+
+let ``Basic concat none`` () =
+    let x = "Hello "
+    let y:string = null
+    (x,y) ||>? ( + )
+          |> should equal (None)
 
 [<AllowNullLiteral>]
 type Node (child:Node)=

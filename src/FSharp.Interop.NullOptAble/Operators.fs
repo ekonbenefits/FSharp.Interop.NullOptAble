@@ -1,5 +1,6 @@
 namespace FSharp.Interop.NullOptAble
 
+open System
 module Operators =
     open System
 
@@ -31,6 +32,19 @@ module Operators =
 
     let inline ( |>?@ ) a b = nullIntoHelper<NullMap, _, _, _> a b
     let inline ( @?<| ) b a = nullIntoHelper<NullMap, _, _, _> a b
+
+    type NullMap2 =  
+        static member Into(a: 'a option * 'b option, f: 'a -> 'b -> 't) =
+            a ||> Option.map2 f
+        static member Into(a: 'a Nullable * 'b Nullable, f: 'a -> 'b -> 't) = 
+            a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y)
+              ||> Option.map2 f
+        static member Into(a: 'a * 'b when 'a:null and 'b:null, f: 'a -> 'b -> 't) =
+            a ||> (fun x y -> Option.ofObj x, Option.ofObj y)
+              ||> Option.map2 f
+
+    let inline ( ||>?@ ) a b = nullIntoHelper<NullMap2, _, _, _> a b
+    let inline ( @?<|| ) b a = nullIntoHelper<NullMap2, _, _, _> a b
 
     type NullBind=
         static member Into(a: 'a option, f: 'a -> 't option) = 
@@ -65,3 +79,42 @@ module Operators =
               |> Option.bind f'    
     let inline ( |>? ) a b = nullIntoHelper<NullBind, _, _, _> a b
     let inline ( ?<| ) b a = nullIntoHelper<NullBind, _, _, _> a b
+
+    let inline private bind2 binder a b =
+            match a,b with
+            |Some x, Some y -> binder x y
+            | _ -> None
+
+    type NullBind2=
+        static member Into(a: 'a option * 'b option, f: 'a -> 'b -> 't option) = 
+           a ||> bind2 f
+        static member Into(a: 'a option * 'b option, f: 'a -> 'b -> 't Nullable) = 
+           let f' a b = f a b |> Option.ofNullable 
+           a ||> bind2 f'
+        static member Into(a: 'a option * 'b option, f: 'a -> 'b -> 't when 't:null) = 
+           let f' a b = f a b |> Option.ofObj 
+           a ||> bind2 f'
+        static member Into(a: 'a Nullable * 'b Nullable, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y) 
+              ||> bind2 f
+        static member Into(a: 'a Nullable * 'b Nullable, f: 'a -> 'b ->  't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y) 
+              ||> bind2 f'
+        static member Into(a: 'a Nullable * 'b Nullable, f: 'a -> 'b ->  't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> Option.ofNullable x, Option.ofNullable y) 
+              ||> bind2 f'
+        static member Into(a: 'a * 'b when 'a:null and 'b:null, f: 'a -> 'b -> 't option) =
+            a ||> (fun x y -> Option.ofObj x, Option.ofObj y) 
+              ||> bind2 f
+        static member Into(a: 'a * 'b when 'a:null and 'b:null, f: 'a -> 'b -> 't Nullable) =
+            let f' a b = f a b |> Option.ofNullable 
+            a ||> (fun x y -> Option.ofObj x, Option.ofObj y) 
+              ||> bind2 f'
+        static member Into(a: 'a * 'b when 'a:null and 'b:null, f: 'a -> 'b -> 't when 't:null) =
+            let f' a b = f a b |> Option.ofObj 
+            a ||> (fun x y -> Option.ofObj x, Option.ofObj y) 
+              ||> bind2 f'   
+    let inline ( ||>? ) a b = nullIntoHelper<NullBind2, _, _, _> a b
+    let inline ( ?<|| ) b a = nullIntoHelper<NullBind2, _, _, _> a b
