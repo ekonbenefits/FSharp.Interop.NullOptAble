@@ -19,10 +19,10 @@ namespace FSharp.Interop.NullOptAble
                         'a :> System.ValueType
         static member Into : a:'a * f:('a -> 't) -> 't option when 'a : null
       end
-    val inline ( |>? ) :
+    val inline ( |>?@ ) :
       a: ^a -> b: ^b ->  ^c
         when (NullMap or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
-    val inline ( ?<| ) :
+    val inline ( @?<| ) :
       b: ^a -> a: ^b ->  ^c
         when (NullMap or  ^b) : (static member Into :  ^b *  ^a ->  ^c)
     type NullBind =
@@ -50,10 +50,10 @@ namespace FSharp.Interop.NullOptAble
         static member
           Into : a:'a * f:('a -> 't) -> 't option when 'a : null and 't : null
       end
-    val inline ( |>?? ) :
+    val inline ( |>? ) :
       a: ^a -> b: ^b ->  ^c
         when (NullBind or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
-    val inline ( ??<| ) :
+    val inline ( ?<| ) :
       b: ^a -> a: ^b ->  ^c
         when (NullBind or  ^b) : (static member Into :  ^b *  ^a ->  ^c)
   end

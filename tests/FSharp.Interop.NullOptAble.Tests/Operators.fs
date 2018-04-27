@@ -55,26 +55,26 @@ let ``Basic not null ref`` () =
 let ``Basic Pipe Option Unwrap`` () =
     let x = Some(3)
     x 
-     |>? (+) 3
-     |>? (+) 3
-     |>? should equal 9
+     |>?@ (+) 3
+     |>?@ (+) 3
+     |>?@ should equal 9
 
 [<Fact>]
 let ``Basic Pipe Option With option Return`` () =
     let x = Some(3)
     x 
-     |>?? (fun y -> Some (y + 3))
-     |>? (+) 3
-     |>? should equal 9
+     |>? (fun y -> Some (y + 3))
+     |>?@ (+) 3
+     |>?@ should equal 9
 
 [<Fact>]
 let ``Basic All ops`` () =
     let x = Some(3)
     x 
-     |>?? (fun y -> Some (y + 3))
-     |>? (+) 3
-     |>?? (fun _ -> None)
-     |>? (+) 3
+     |>? (fun y -> Some (y + 3))
+     |>?@ (+) 3
+     |>? (fun _ -> None)
+     |>?@ (+) 3
      |?-> lazy 2
      |> should equal 2
 
@@ -82,9 +82,9 @@ let ``Basic All ops`` () =
 let ``Basic All ops 2`` () =
     let x = Some(3)
     x 
-     |>?? (fun y -> Some (y + 3))
-     |>? (+) 3
-     |>? (+) 3
+     |>? (fun y -> Some (y + 3))
+     |>?@ (+) 3
+     |>?@ (+) 3
      |?-> lazy 2
      |> should equal 12
 
@@ -92,79 +92,79 @@ let ``Basic All ops 2`` () =
 let ``Basic Pipe Option None`` () =
     let x = None
     x
-     |>? (+) 3
+     |>?@ (+) 3
      |> should equal None
 [<Fact>]
 let ``Basic Pipe Option None Don't Runn`` () =
     let x = None
     x
-     |>? (+) 3
-     |>? (fun _ -> raise (Exception "Don't Run") |> ignore)
+     |>?@ (+) 3
+     |>?@ (fun _ -> raise (Exception "Don't Run") |> ignore)
 
 [<Fact>]
 let ``Basic Pipe Nullable Unwrap`` () =
     let x = Nullable(3)
     x 
-     |>? (+) 3
+     |>?@ (+) 3
      |> should equal (Some 6)
 
 [<Fact>]
 let ``Basic Pipe Nullable Null`` () =
     let x = Nullable()
     x
-     |>? (+) 3
+     |>?@ (+) 3
      |> should equal None
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap`` () =
     let x = " World"
     x 
-     |>? (+) "Hello"
+     |>?@ (+) "Hello"
      |> should equal (Some "Hello World")
 
 [<Fact>]
 let ``Basic Pipe Null ref Null`` () =
     let x = null
     x
-     |>? (+) "Hello"
+     |>?@ (+) "Hello"
      |> should equal None
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap left pipe`` () =
     let x = " World"
-    (+) "Hello" ?<| x
+    (+) "Hello" @?<| x
      |> should equal (Some "Hello World")
 
 [<Fact>]
 let ``Basic Pipe Null ref Null left pipe`` () =
     let x = null
-    (+) "Hello" ?<| x
+    (+) "Hello" @?<| x
      |> should equal None
 
 [<Fact>]
 let ``Basic left pipe bind null`` () =
     let x = null
-    Some ??<| x
-     |> should equal None
     Some ?<| x
      |> should equal None
-    id ?<| x
+    Some @?<| x
+     |> should equal None
+    id @?<| x
      |> should equal None
 [<Fact>]
 let ``Basic left pipe bind`` () =
     let x = "Hello"
-    Some ??<| x
-     |> should equal (Some "Hello")
     Some ?<| x
+     |> should equal (Some "Hello")
+    Some @?<| x
      |> should equal (Some (Some "Hello"))
-    id ?<| x
+    id @?<| x
      |> should equal (Some "Hello")
 
 [<Fact>]
 let ``Basic nullable math (terrible)`` () =
     let x = Nullable(3)
     let y = Nullable(3)
-    x |>?? (fun x'-> y |>? (+) x')
+    x |>? (fun x'-> y |>?@ (+) x')
     |> should equal (Some 6)
 
 [<AllowNullLiteral>]
@@ -179,9 +179,9 @@ let ``Safe Navigation Operator Example`` ()=
     let navChild (n:Node) = n.child
     let result = 
         parent
-            |>?? navChild
-            |>?? navChild
-            |>?? navChild
+            |>? navChild
+            |>? navChild
+            |>? navChild
     result |> should equal None
 
 [<Fact>]
@@ -191,9 +191,9 @@ let ``Safe Navigation Operator Example found`` ()=
     let navChild (n:Node) = n.child
     let result = 
         parent
-            |>?? navChild
-            |>?? navChild
-            |>?? navChild
+            |>? navChild
+            |>? navChild
+            |>? navChild
     result |> should not' (equal None)
-    result |>? should not' (equal null) |> ignore
-    result |>?? navChild |> should equal None
+    result |>?@ should not' (equal null) |> ignore
+    result |>? navChild |> should equal None
