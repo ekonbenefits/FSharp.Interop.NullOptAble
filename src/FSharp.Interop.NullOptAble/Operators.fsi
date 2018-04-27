@@ -22,7 +22,7 @@ namespace FSharp.Interop.NullOptAble
     val inline ( |>? ) :
       a: ^a -> b: ^b ->  ^c
         when (NullMap or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
-    val inline ( <|? ) :
+    val inline ( ?<| ) :
       b: ^a -> a: ^b ->  ^c
         when (NullMap or  ^b) : (static member Into :  ^b *  ^a ->  ^c)
     type NullBind =
@@ -53,7 +53,7 @@ namespace FSharp.Interop.NullOptAble
     val inline ( |>?? ) :
       a: ^a -> b: ^b ->  ^c
         when (NullBind or  ^a) : (static member Into :  ^a *  ^b ->  ^c)
-    val inline ( <|?? ) :
+    val inline ( ??<| ) :
       b: ^a -> a: ^b ->  ^c
         when (NullBind or  ^b) : (static member Into :  ^b *  ^a ->  ^c)
   end

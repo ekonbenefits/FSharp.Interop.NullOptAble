@@ -132,32 +132,32 @@ let ``Basic Pipe Null ref Null`` () =
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap left pipe`` () =
     let x = " World"
-    (+) "Hello" <|? x
+    (+) "Hello" ?<| x
      |> should equal (Some "Hello World")
 
 [<Fact>]
 let ``Basic Pipe Null ref Null left pipe`` () =
     let x = null
-    (+) "Hello" <|? x
+    (+) "Hello" ?<| x
      |> should equal None
 
 [<Fact>]
 let ``Basic left pipe bind null`` () =
     let x = null
-    Some <|?? x
+    Some ??<| x
      |> should equal None
-    Some <|? x
+    Some ?<| x
      |> should equal None
-    id <|? x
+    id ?<| x
      |> should equal None
 [<Fact>]
 let ``Basic left pipe bind`` () =
     let x = "Hello"
-    Some <|?? x
+    Some ??<| x
      |> should equal (Some "Hello")
-    Some <|? x
+    Some ?<| x
      |> should equal (Some (Some "Hello"))
-    id <|? x
+    id ?<| x
      |> should equal (Some "Hello")
 
 [<Fact>]
