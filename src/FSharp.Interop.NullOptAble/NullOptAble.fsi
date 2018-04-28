@@ -3,7 +3,7 @@
 type NullOptAble =
     class
         (* DefaultWith overloads *)
-        
+
         static member DefaultWith : 'a option * System.Lazy<'a> -> 'a
 
         static member DefaultWith : System.Nullable<'a> * System.Lazy<'a> -> 'a
@@ -14,7 +14,7 @@ type NullOptAble =
         (* Map overloads *)
 
         static member Map : 'a option * ('a -> 'c) -> 'c option
-                
+               
 
         static member Map : System.Nullable<'a> * ('a -> 'c) -> 'c option
                 when 'a : (new : unit -> 'a) and 'a : struct and 'a :> System.ValueType
@@ -25,7 +25,7 @@ type NullOptAble =
         (* Map2 overloads *)
 
         static member Map2 : ('a option * 'b option) * ('a -> 'b -> 'c) -> 'c option
-                
+               
 
         static member Map2 : ('a option * System.Nullable<'b>) * ('a -> 'b -> 'c) -> 'c option
                 when 'b : (new : unit -> 'b) and 'b : struct and 'b :> System.ValueType
@@ -54,7 +54,7 @@ type NullOptAble =
         (* bind overloads *)
 
         static member Bind : a:'a option * ('a -> 'c option) -> 'c option
-                
+               
 
         static member Bind : a:'a option * ('a -> System.Nullable<'c>) -> 'c option
                 when 'c : (new : unit -> 'c) and 'c : struct and 'c :> System.ValueType
@@ -83,7 +83,7 @@ type NullOptAble =
         (* bind2 overloads *)
 
         static member Bind2 : ('a option * 'b option) * ('a -> 'b -> 'c option) -> 'c option
-                
+               
 
         static member Bind2 : ('a option * 'b option) * ('a -> 'b -> System.Nullable<'c>) -> 'c option
                 when 'c : (new : unit -> 'c) and 'c : struct and 'c :> System.ValueType

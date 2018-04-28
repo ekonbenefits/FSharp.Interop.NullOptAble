@@ -38,14 +38,14 @@ type NullOptAble =
 
         (* Map2 overloads *)
 
-        static member Map2((a: 'a option, b: 'b option ), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a option, b: 'b Nullable ), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -59,14 +59,14 @@ type NullOptAble =
                 return f a' b'
             }
 
-        static member Map2((a: 'a Nullable, b: 'b option ), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a Nullable, b: 'b Nullable ), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -159,42 +159,42 @@ type NullOptAble =
 
         (* bind2 overloads *)
 
-        static member Bind2((a: 'a option, b: 'b option ), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c option) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b option ), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c Nullable) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b option ), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b Nullable ), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c option) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b Nullable ), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b Nullable ), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -215,49 +215,49 @@ type NullOptAble =
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b when 'b:null), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a option, b: 'b when 'b:null), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b option ), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c option) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b option ), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c Nullable) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b option ), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b Nullable ), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c option) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b Nullable ), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b Nullable ), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -278,7 +278,7 @@ type NullOptAble =
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b when 'b:null), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a Nullable, b: 'b when 'b:null), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -299,7 +299,7 @@ type NullOptAble =
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b option when 'a:null), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a, b: 'b option when 'a:null), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -320,7 +320,7 @@ type NullOptAble =
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b Nullable when 'a:null), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a, b: 'b Nullable when 'a:null), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -341,7 +341,7 @@ type NullOptAble =
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b when 'a:null and 'b:null), f: 'a -> 'b -> 'c) =
+        static member Bind2((a: 'a, b: 'b when 'a:null and 'b:null), f: 'a -> 'b -> 'c when 'c:null) =
             option { 
                 let! a' = a 
                 let! b' = b

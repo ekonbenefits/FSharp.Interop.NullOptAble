@@ -23,7 +23,7 @@ module Run =
 type NullOptAble =
     class
         (* DefaultWith overloads *)
-        
+
         static member DefaultWith : 'a option * System.Lazy<'a> -> 'a
 
         static member DefaultWith : System.Nullable<'a> * System.Lazy<'a> -> 'a
@@ -80,19 +80,19 @@ type NullOptAble =
 
         let when' w1 w2 w3 =
             match w1, w2, w3 with
-            | Some w1, Some w2, Some w3 -> sprintf "when %s and %s and %s" w1 w2 w3
+            | Some w1, Some w2, Some w3 -> sprintf " when %s and %s and %s" w1 w2 w3
             | Some w1, Some w2, _
             | Some w1, _,  Some w2
-            | _, Some w1, Some w2 -> sprintf "when %s and %s" w1 w2
+            | _, Some w1, Some w2 -> sprintf " when %s and %s" w1 w2
             | Some w1, _ , _
             | _, Some w1, _
-            | _, _ ,Some w1-> sprintf "when %s" w1
+            | _, _ ,Some w1-> sprintf " when %s" w1
             | None, None, None -> ""
 
         for a, _, sa, sw in aTypes do
             sigWriter.WriteLine(sprintf """
         static member Map : %s * (%s -> %s) -> %s option
-                %s""" sa A C C (when' sw None None))
+               %s""" sa A C C (when' sw None None))
             fsWriter.WriteLine(sprintf """
         static member Map(a: %s, f: %s -> %s) =
             option { 
@@ -115,11 +115,11 @@ type NullOptAble =
                 sigWriter.WriteLine(
                     sprintf """
         static member Map2 : (%s * %s) * (%s -> %s -> %s) -> %s option
-                %s""" sa sb A B C C (when' swa swb None))
+               %s""" sa sb A B C C (when' swa swb None))
                 //implementation
                 fsWriter.WriteLine(
                     sprintf """
-        static member Map2((a: %s, b: %s %s), f: %s -> %s -> %s) =
+        static member Map2((a: %s, b: %s%s), f: %s -> %s -> %s) =
             option { 
                 let! a' = a 
                 let! b' = b
@@ -140,7 +140,7 @@ type NullOptAble =
                 //Signature
                 sigWriter.WriteLine(sprintf """
         static member Bind : a:%s * (%s -> %s) -> %s option
-                %s""" sa A sc C (when' swa swc None))
+               %s""" sa A sc C (when' swa swc None))
                 //Implementation
                 fsWriter.WriteLine(
                     sprintf """        
@@ -159,20 +159,20 @@ type NullOptAble =
 
         for a,wa,sa,swa in aTypes do
             for b,wb,sb,swb in bTypes do
-                for c,_,sc,swc in tTypes do
+                for c,wc,sc,swc in tTypes do
                     //Signature
                     sigWriter.WriteLine(sprintf """
         static member Bind2 : (%s * %s) * (%s -> %s -> %s) -> %s option
-                %s""" sa sb A B sc C (when' swa swb swc))
+               %s""" sa sb A B sc C (when' swa swb swc))
                     //Implementation
                     fsWriter.WriteLine(
                         sprintf """
-        static member Bind2((a: %s, b: %s %s), f: %s -> %s -> %s) =
+        static member Bind2((a: %s, b: %s%s), f: %s -> %s -> %s%s) =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
-            } """ a b (when' wa wb None) A B c)
+            } """ a b (when' wa wb None) A B c (when' wc None None) )
         sigWriter.WriteLine("""
     end""")
 
