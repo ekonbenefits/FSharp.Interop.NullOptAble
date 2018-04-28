@@ -36,30 +36,17 @@
         <div class="span9" id="main">
           
 <h1>Real World-ish examples</h1>
-<p>*</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">module</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="m">RealWorldTests</span>
-</code></pre></td>
-</tr>
-</table>
-<p>hide*</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
 </pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">System</span>
-<span class="k">open</span> <span class="id">Xunit</span>
-<span class="k">open</span> <span class="id">FsUnit</span><span class="pn">.</span><span class="id">Xunit</span>
-<span class="k">open</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="id">NullOptAble</span>
-<span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 6)" onmouseover="showTip(event, 'fs2', 6)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">Text</span>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">module</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="m">RealWorldTests</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">System</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">Text</span>
 </code></pre></td>
 </tr>
 </table>
-<p>Just your basic bind of two nullable variables.
-*</p>
+<p>Just your basic bind of two nullable variables.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -82,30 +69,8 @@
 </code></pre></td>
 </tr>
 </table>
-<p>Hide*</p>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-<span class="l">3: </span>
-<span class="l">4: </span>
-<span class="l">5: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span onmouseout="hideTip(event, 'fs13', 17)" onmouseover="showTip(event, 'fs13', 17)" class="rt">AllowNullLiteral</span><span class="pn">&gt;]</span>
-<span class="k">type</span> <span onmouseout="hideTip(event, 'fs14', 18)" onmouseover="showTip(event, 'fs14', 18)" class="rt">Node</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs15', 19)" onmouseover="showTip(event, 'fs15', 19)" class="id">child</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs14', 20)" onmouseover="showTip(event, 'fs14', 20)" class="rt">Node</span><span class="pn">)</span><span class="o">=</span>
-    <span class="k">new</span><span class="pn">(</span><span class="pn">)</span> <span class="o">=</span> <span class="k">new</span> <span onmouseout="hideTip(event, 'fs14', 21)" onmouseover="showTip(event, 'fs14', 21)" class="rt">Node</span><span class="pn">(</span><span class="k">null</span><span class="pn">)</span>
-    <span class="k">member</span> <span class="k">val</span> <span onmouseout="hideTip(event, 'fs15', 22)" onmouseover="showTip(event, 'fs15', 22)" class="prop">child</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs14', 23)" onmouseover="showTip(event, 'fs14', 23)" class="rt">Node</span> <span class="o">=</span> <span class="id">child</span> <span class="k">with</span> <span class="id">get</span><span class="pn">,</span><span onmouseout="hideTip(event, 'fs16', 24)" onmouseover="showTip(event, 'fs16', 24)" class="id">set</span>
- 
-</code></pre></td>
-</tr>
-</table>
-<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
-<span class="l">2: </span>
-</pre></td>
-<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="id">Doing</span> <span class="id">the</span> <span class="id">things</span> <span class="id">found</span> <span class="k">in</span> <span class="id">this</span> <span class="pn">[</span><span class="id">MSDN</span> <span class="id">Blog</span> <span class="id">Post</span><span class="pn">]</span><span class="pn">[</span><span class="n">1</span><span class="pn">]</span> <span class="id">did</span> <span class="k">with</span> <span class="id">the</span> <span class="id">Safe</span> <span class="id">Nav</span> <span class="id">operator</span><span class="pn">.</span>
-<span class="pn">[</span><span class="n">1</span><span class="pn">]</span><span class="pn">:</span><span class="id">https</span><span class="pn">:</span><span class="c">//blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/</span>
-</code></pre></td>
-</tr>
-</table>
-<p>*</p>
+<p>Doing the things found in this [MSDN Blog Post][1] did with the Safe Nav operator.
+[1]:<a href="https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/">https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/</a></p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -277,10 +242,10 @@
 
 <div class="tip" id="fs1">module RealWorldTests</div>
 <div class="tip" id="fs2">namespace System</div>
-<div class="tip" id="fs3">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp</div>
-<div class="tip" id="fs4">namespace FSharp.Interop</div>
-<div class="tip" id="fs5">namespace FSharp.Interop.NullOptAble</div>
-<div class="tip" id="fs6">namespace System.Text</div>
+<div class="tip" id="fs3">namespace System.Text</div>
+<div class="tip" id="fs4">Multiple items<br />namespace FSharp<br /><br />--------------------<br />namespace Microsoft.FSharp</div>
+<div class="tip" id="fs5">namespace FSharp.Interop</div>
+<div class="tip" id="fs6">namespace FSharp.Interop.NullOptAble</div>
 <div class="tip" id="fs7">val ( Basic nullable math ) : unit -&gt; &#39;a</div>
 <div class="tip" id="fs8">val x : Nullable&lt;int&gt;</div>
 <div class="tip" id="fs9">Multiple items<br />type Nullable =<br />&#160;&#160;static member Compare&lt;&#39;T&gt; : n1:Nullable&lt;&#39;T&gt; * n2:Nullable&lt;&#39;T&gt; -&gt; int<br />&#160;&#160;static member Equals&lt;&#39;T&gt; : n1:Nullable&lt;&#39;T&gt; * n2:Nullable&lt;&#39;T&gt; -&gt; bool<br />&#160;&#160;static member GetUnderlyingType : nullableType:Type -&gt; Type<br /><br />--------------------<br />type Nullable&lt;&#39;T (requires default constructor and value type and &#39;T :&gt; ValueType)&gt; =<br />&#160;&#160;struct<br />&#160;&#160;&#160;&#160;new : value:&#39;T -&gt; Nullable&lt;&#39;T&gt;<br />&#160;&#160;&#160;&#160;member Equals : other:obj -&gt; bool<br />&#160;&#160;&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;&#160;&#160;member GetValueOrDefault : unit -&gt; &#39;T + 1 overload<br />&#160;&#160;&#160;&#160;member HasValue : bool<br />&#160;&#160;&#160;&#160;member ToString : unit -&gt; string<br />&#160;&#160;&#160;&#160;member Value : &#39;T<br />&#160;&#160;end<br /><br />--------------------<br />Nullable ()<br />Nullable(value: &#39;T) : Nullable&lt;&#39;T&gt;</div>
