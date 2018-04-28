@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>FSharp.Interop.NullOptAble <a href="https://ci.appveyor.com/project/jbtule/fsharp-interop-nulloptable/branch/master"><img src="https://ci.appveyor.com/api/projects/status/57yssc1q22p7j0y7/branch/master?svg=true" alt="Build status" /></a> <a href="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble"><img src="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master" alt="Build Status" /></a>
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="description">
+    <meta name="author" content="authors">
+
+    <script src="https://code.jquery.com/jquery-1.8.0.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link href="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <link type="text/css" rel="stylesheet" href="projectUrl/content/style.css" />
+    <script type="text/javascript" src="projectUrl/content/tips.js"></script>
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li><a href="http://fsharp.org">fsharp.org</a></li>
+          <li><a href="http://fsprojects.github.io/FSharp.Formatting/"><img height="16" width="16" src="https://matthid.github.io/Yaaf.AdvancedBuilding/content/img/FSharp.Formatting.png" /> F# Formatting</a></li>
+        </ul>
+        <h3 class="muted"><a href="projectUrl/index.html">projectName</a></h3>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="span9" id="main">
+          
+<h1>FSharp.Interop.NullOptAble <a href="https://ci.appveyor.com/project/jbtule/fsharp-interop-nulloptable/branch/master"><img src="https://ci.appveyor.com/api/projects/status/57yssc1q22p7j0y7/branch/master?svg=true" alt="Build status" /></a> <a href="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble"><img src="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master" alt="Build Status" /></a></h1>
+<p>CI Builds available: <a href="https://www.myget.org/feed/ci-fsharp-optionbuilder/package/nuget/FSharp.Interop.NullOptAble"><img src="https://img.shields.io/myget/ci-fsharp-optionbuilder/vpre/FSharp.Interop.NullOptAble.svg" alt="MyGet Pre Release" /></a></p>
+<p>Missing OptionBuilder for F# filling the void to interop with  C#'s <code>?.</code> usage</p>
+<p>There are more C# devs relying on <code>?.</code> and so nulls will only get worse on the C# side the more often null's are going to drop out of APIs.</p>
+<p>This project creates an <code>option { }</code> computational expression and <code>chooseSeq { }</code> computational expression that allows binding <code>'T option</code>/<code>'T Nullable</code>/<code>'T:null</code> thus either returns an option or a sequence respectively.</p>
+<p>With <code>chooseSeq</code> if you <code>yield!</code> a sequence it will flatten/collect it. If you want a sequence of sequences use <code>let! s = nullPossibleSequence;; yield s</code> or <code>yield! Some notNullSeq</code></p>
+<p>General Example:</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
+<span class="l">2: </span>
+<span class="l">3: </span>
+<span class="l">4: </span>
+<span class="l">5: </span>
+<span class="l">6: </span>
+<span class="l">7: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">let</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="id">x</span> <span class="o">=</span> <span class="id">Nullable</span><span class="pn">(</span><span class="n">3</span><span class="pn">)</span>
+  <span class="k">let</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">y</span> <span class="o">=</span> <span class="id">Nullable</span><span class="pn">(</span><span class="n">3</span><span class="pn">)</span>
+  <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="id">option</span> <span class="pn">{</span>
+      <span class="k">let!</span> <span class="id">x&#39;</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs1', 4)" onmouseover="showTip(event, 'fs1', 4)" class="id">x</span>
+      <span class="k">let!</span> <span class="id">y&#39;</span> <span class="o">=</span> <span class="id">y</span>
+      <span class="k">return</span> <span class="pn">(</span><span class="id">x&#39;</span> <span class="o">+</span> <span class="id">y&#39;</span><span class="pn">)</span>
+  <span class="pn">}</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">Some</span> <span class="n">6</span><span class="pn">)</span>
+</code></pre></td>
+</tr>
+</table>
+<p>See more examples in <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/blob/master/tests/FSharp.Interop.NullOptAble.Tests/RealWorld.fs">Tests/RealWorld.fs</a></p>
+
+<div class="tip" id="fs1">val x : obj</div>
+<div class="tip" id="fs2">val y : obj</div>
+<div class="tip" id="fs3">type &#39;T option = Option&lt;&#39;T&gt;</div>
+<div class="tip" id="fs4">union case Option.Some: Value: &#39;T -&gt; Option&lt;&#39;T&gt;</div>
+
+        </div>
+        <div class="span3">
+          <a href="projectUrl/index.html">
+            <img src="projectUrl/images/logo.png" style="width:140px;height:140px;margin:10px 0px 0px 35px;border-style:none;" />
+          </a>
+
+          <ul class="nav nav-list" id="menu">
+
+            <li class="nav-header">projectName</li>
+
+            <li class="divider"></li>
+
+            <li><a href="nugetUrl">Get projectName package via NuGet</a></li>
+            <li><a href="gitHubProjectUrl">Source Code on GitHub</a></li>
+            <li><a href="gitHubProjectUrl/blob/master/LICENSE.md">License (Apache 2.0)</a></li>
+            <li><a href="gitHubProjectUrl/blob/master/RELEASE_NOTES.md">Release Notes</a></li>
+            <li><a href="gitHubProjectUrl/blob/master/CONTRIBUTING.md">Contributing to projectName</a></li>
+
+            <li class="nav-header">Documentation</li>
+
+            <li><a href="projectUrl/index.html">Introduction</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="projectUrl/feature1.html">Feature 1</a></li>
+            <li><a href="projectUrl/feature2.html">Feature 2</a></li>
+
+            <li class="divider"></li>
+
+            <li><a href="projectUrl/feature3.html">Feature 3</a></li>
+            <li><a href="projectUrl/feature4.html">Feature 4</a></li>
+
+            <li class="nav-header">Tutorials</li>
+
+            <li><a href="projectUrl/tutorial1.html">Tutorial 1</a></li>
+            <li><a href="projectUrl/tutorial2.html">Tutorial 2</a></li>
+
+            <li class="nav-header">Reference</li>
+
+            <li><a href="projectUrl/reference/index.html">API Reference</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <a href="gitHubProjectUrl"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
+  </body>
+  </html>

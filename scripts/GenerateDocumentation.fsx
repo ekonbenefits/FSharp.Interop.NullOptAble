@@ -56,10 +56,8 @@ exec paketPath ["install"]
 #r "FSharp.MetadataFormat.dll"
 #r "FSharp.Literate.dll"
 #r "FSharp.CodeFormat.dll"
-
-open FSharp.MetadataFormat
-open FSharp.Literate
-
+#r "FSharp.Formatting.Razor.dll"
+open FSharp.Formatting.Razor
 let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
 
 let outputDir = Path.Combine(root, "docs")
@@ -99,8 +97,23 @@ let projInfo =
       "project-name", "projectName"
       "root" , "projectUrl" ]
 
-Literate.ProcessMarkdown(
-      Path.Combine(root,"README.md"),
+RazorLiterate.ProcessMarkdown(
+      Path.Combine(root,"Readme.md"),
+      templateFile = template,
       output = Path.Combine(outputDir, "index.html"),
+      replacements = projInfo,
       compilerOptions = options,
+      layoutRoots = templateDirs,
       includeSource = true )
+
+let refDir = Path.Combine(outputDir, "reference")
+
+createDir(refDir)
+RazorMetadataFormat.Generate( dll, 
+                              refDir,
+                              templateDirs,
+                              parameters = projInfo,
+                              sourceRepo = "todo",
+                              sourceFolder = root)
+
+printfn "Finished Generating Docs."
