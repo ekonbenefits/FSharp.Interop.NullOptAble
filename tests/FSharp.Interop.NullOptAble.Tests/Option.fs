@@ -3,7 +3,7 @@ module OptionTests
 open System
 open Xunit
 open FsUnit.Xunit
-open FSharp.Core.Experimental.OptionBuilder
+open FSharp.Interop.NullOptAble
 
 [<Fact>]
 let ``Basic Option Unwrap`` () =

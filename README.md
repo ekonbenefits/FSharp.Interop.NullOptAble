@@ -1,6 +1,6 @@
-# FSharp.Core.Experimental.OptionBuilder [![Build status](https://ci.appveyor.com/api/projects/status/fr0n9r2qucbxrbyi?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-core-experimental-optionbuilder) [![Build Status](https://travis-ci.org/ekonbenefits/FSharp.Core.Experimental.OptionBuilder.svg?branch=master)](https://travis-ci.org/ekonbenefits/FSharp.Core.Experimental.OptionBuilder)
+# FSharp.Interop.NullOptAble [![Build status](https://ci.appveyor.com/api/projects/status/fr0n9r2qucbxrbyi?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-core-experimental-optionbuilder) [![Build Status](https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master)](https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble)
 
-CI Builds available: [![MyGet Pre Release](https://img.shields.io/myget/ci-fsharp-optionbuilder/vpre/FSharp.Core.Experimental.OptionBuilder.svg)](https://www.myget.org/feed/ci-fsharp-optionbuilder/package/nuget/FSharp.Core.Experimental.OptionBuilder)
+CI Builds available: [![MyGet Pre Release](https://img.shields.io/myget/ci-fsharp-optionbuilder/vpre/FSharp.Interop.NullOptAble.svg)](https://www.myget.org/feed/ci-fsharp-optionbuilder/package/nuget/FSharp.Interop.NullOptAble)
 
 Missing OptionBuilder for F# filling the void to interop with  C#'s `?.` usage
 
@@ -21,4 +21,4 @@ let x = Nullable(3)
       return (x' + y')
   } |> should equal (Some 6)
 ```
-See more examples in [Tests/RealWorld.fs](https://github.com/ekonbenefits/FSharp.Core.Experimental.OptionBuilder/blob/master/tests/FSharp.Core.Experimental.OptionBuilder.Tests/RealWorld.fs)
+See more examples in [Tests/RealWorld.fs](https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/blob/master/tests/FSharp.Interop.NullOptAble.Tests/RealWorld.fs)

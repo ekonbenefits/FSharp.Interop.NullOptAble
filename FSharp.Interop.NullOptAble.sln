@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CE986D9F-81D4-4B51-B1E7-5B63BA6A4AB4}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Core.Experimental.OptionBuilder", "src\FSharp.Core.Experimental.OptionBuilder\FSharp.Core.Experimental.OptionBuilder.fsproj", "{D727B067-0AC1-4DAD-AF78-252369DD3A14}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.NullOptAble", "src\FSharp.Interop.NullOptAble\FSharp.Interop.NullOptAble.fsproj", "{D727B067-0AC1-4DAD-AF78-252369DD3A14}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{76DBD9CB-C5B4-4692-9937-509DDDA6CFE9}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Core.Experimental.OptionBuilder.Tests", "tests\FSharp.Core.Experimental.OptionBuilder.Tests\FSharp.Core.Experimental.OptionBuilder.Tests.fsproj", "{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.NullOptAble.Tests", "tests\FSharp.Interop.NullOptAble.Tests\FSharp.Interop.NullOptAble.Tests.fsproj", "{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

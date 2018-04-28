@@ -3,7 +3,7 @@ module RealWorldTests
 open System
 open Xunit
 open FsUnit.Xunit
-open FSharp.Core.Experimental.OptionBuilder
+open FSharp.Interop.NullOptAble
 open System.Text
 
 [<Fact>]
@@ -36,9 +36,9 @@ let ``Safe Navigation Operator Example`` ()=
 let ``Safe Navigation Operator Seq Example`` ()=
     let parents = [
                     Node() //parent = some
-                    Node(Node()) //parent.child = some
-                    Node(Node(Node())) //parent.child.child = some
-                    Node(Node(Node(Node()))) //parent.child.child.child = some
+                    Node() |> Node //parent.child = some
+                    Node() |> Node |> Node //parent.child.child = some
+                    Node() |> Node |> Node |> Node //parent.child.child.child = some
                   ]
     chooseSeq {
         for parent in parents  do
@@ -74,11 +74,11 @@ let ``RNA transcriptions `` () =
                     return sb'.Append(c)
                 }
             function
-                    | 'G' -> 'C' |> append
-                    | 'C' -> 'G' |> append
-                    | 'T' -> 'A' |> append
-                    | 'A' -> 'U' |> append
-                    | ___ -> None
+            | 'G' -> 'C' |> append
+            | 'C' -> 'G' |> append
+            | 'T' -> 'A' |> append
+            | 'A' -> 'U' |> append
+            | ___ -> None
         option {
             let! dna' = dna //handles if string is null
             let! sb' = dna' |> Seq.fold combine (Some <| StringBuilder())
