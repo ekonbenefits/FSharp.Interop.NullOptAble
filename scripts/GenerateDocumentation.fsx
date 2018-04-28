@@ -106,7 +106,7 @@ let projInfo =
       "project-github",  fsProj.PropertyGroup.PackageProjectUrl
       "project-nuget", "nugetUrl"
       "project-name", "FSharp.Interop.NullOptAble"
-      "root", "FSharp.Interop.NullOptAble"
+      "root", "/FSharp.Interop.NullOptAble"
       ]
 
 printfn "Generate Readme."
