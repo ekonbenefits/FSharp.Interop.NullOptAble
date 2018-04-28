@@ -12,8 +12,7 @@ open Xunit
 open FsUnit.Xunit
 
 
-
-(*** HIDE ***)
+(*** hide ***)
 [<Fact>]
 let ``Basic nullable math`` () =
     let x = Nullable(3)
@@ -63,7 +62,7 @@ let ``Safe Navigation Operator Seq Example`` ()=
 
 
 (** 
-Simplifed this Recursive F# docs [example].(https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences)
+Modified this recursive prime fucntion from F# docs [example](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences#examples).
 *)
 [<Fact>] 
 let ``IsPrime Example`` ()=
