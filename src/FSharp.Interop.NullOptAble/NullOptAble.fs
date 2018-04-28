@@ -38,67 +38,330 @@ type NullOptAble =
 
         (* Map2 overloads *)
 
-        static member Map2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a option, b: 'b when 'b:null), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c) : 'c option
+                when 'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a Nullable, b: 'b when 'b:null), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c) : 'c option
+                when 'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a, b: 'b option when 'a:null), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
+                when 'a:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a, b: 'b Nullable when 'a:null), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
+                when 'a:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
             }
 
-        static member Map2((a: 'a, b: 'b when 'a:null and 'b:null), f: 'a -> 'b -> 'c) =
+        static member Map2((a: 'a, b: 'b), f: 'a -> 'b -> 'c) : 'c option
+                when 'a:null
+                and  'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
+            }
+
+        (* Map3 overloads *)
+
+        static member Map3((a: 'a option, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }
+
+        static member Map3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'b:null 
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
             }
 
         (* bind overloads *)
@@ -159,191 +422,1000 @@ type NullOptAble =
 
         (* bind2 overloads *)
 
-        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c option) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c Nullable) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
+                when 'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c option) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
+                when 'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b when 'b:null), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c option) : 'c option
+                when 'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b when 'b:null), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c Nullable) : 'c option
+                when 'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a option, b: 'b when 'b:null), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c) : 'c option
+                when 'b:null
+                and  'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c option) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c Nullable) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
+                when 'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c option) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) : 'c option
+                =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
+                when 'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b when 'b:null), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c option) : 'c option
+                when 'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b when 'b:null), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c Nullable) : 'c option
+                when 'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a Nullable, b: 'b when 'b:null), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c) : 'c option
+                when 'b:null
+                and  'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b option when 'a:null), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c option) : 'c option
+                when 'a:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b option when 'a:null), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c Nullable) : 'c option
+                when 'a:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b option when 'a:null), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
+                when 'a:null
+                and  'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b Nullable when 'a:null), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c option) : 'c option
+                when 'a:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b Nullable when 'a:null), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) : 'c option
+                when 'a:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b Nullable when 'a:null), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
+                when 'a:null
+                and  'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b when 'a:null and 'b:null), f: 'a -> 'b -> 'c option) =
+        static member Bind2((a: 'a, b: 'b), f: 'a -> 'b -> 'c option) : 'c option
+                when 'a:null
+                and  'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b when 'a:null and 'b:null), f: 'a -> 'b -> 'c Nullable) =
+        static member Bind2((a: 'a, b: 'b), f: 'a -> 'b -> 'c Nullable) : 'c option
+                when 'a:null
+                and  'b:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
             } 
 
-        static member Bind2((a: 'a, b: 'b when 'a:null and 'b:null), f: 'a -> 'b -> 'c when 'c:null) =
+        static member Bind2((a: 'a, b: 'b), f: 'a -> 'b -> 'c) : 'c option
+                when 'a:null
+                and  'b:null 
+                and  'c:null =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
+            } 
+
+        (* bind3 overloads *)
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'b:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'b:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'c:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'c:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'b:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'b:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'b:null
+                and  'c:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'c:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'c:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null
+                and  'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null
+                and  'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'b:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null
+                and  'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null
+                and  'b:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'b:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
+                when 'a:null
+                and  'b:null 
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
+                when 'a:null
+                and  'b:null 
+                and  'c:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } 
+
+        static member Bind3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
+                when 'a:null
+                and  'b:null
+                and  'c:null 
+                and  'd:null =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
             } 

@@ -4,11 +4,29 @@
   exec fsharpi --exec $0 $*
 #endif
 
+open System
 open System.IO
 open System.Text
-open System
-open System.ComponentModel
-open System.Diagnostics
+
+type When =
+    static member And ([<ParamArray>] ws)  =
+            let vals = ws |> Array.toList |> List.choose id
+            match vals with
+            | v1::v2::v3::[v4] -> 
+                sprintf """ when %s
+                and  %s
+                and  %s 
+                and  %s""" v1 v2 v3 v4
+            | v1::v2::[v3] -> 
+                sprintf """ when %s
+                and  %s 
+                and  %s""" v1 v2 v3
+            | v1::[v2] -> 
+                sprintf """ when %s
+                and  %s""" v1 v2
+            | [v1] -> sprintf " when %s" v1
+            | [] -> ""
+            | _ -> failwithf "too many args %i." vals.Length
 
 module Run =
     let execute () =
@@ -69,6 +87,7 @@ type NullOptAble =
         let A = "'a"
         let B = "'b"
         let C = "'c"
+        let D = "'d"
 
         let aTypes = createTypes A
 
@@ -78,21 +97,10 @@ type NullOptAble =
         sigWriter.WriteLine(mapHeader)
         fsWriter.WriteLine(mapHeader)
 
-        let when' w1 w2 w3 =
-            match w1, w2, w3 with
-            | Some w1, Some w2, Some w3 -> sprintf " when %s and %s and %s" w1 w2 w3
-            | Some w1, Some w2, _
-            | Some w1, _,  Some w2
-            | _, Some w1, Some w2 -> sprintf " when %s and %s" w1 w2
-            | Some w1, _ , _
-            | _, Some w1, _
-            | _, _ ,Some w1-> sprintf " when %s" w1
-            | None, None, None -> ""
-
         for a, _, sa, sw in aTypes do
             sigWriter.WriteLine(sprintf """
         static member Map : %s * (%s -> %s) -> %s option
-               %s""" sa A C C (when' sw None None))
+               %s""" sa A C C (When.And(sw)))
             fsWriter.WriteLine(sprintf """
         static member Map(a: %s, f: %s -> %s) =
             option { 
@@ -115,19 +123,48 @@ type NullOptAble =
                 sigWriter.WriteLine(
                     sprintf """
         static member Map2 : (%s * %s) * (%s -> %s -> %s) -> %s option
-               %s""" sa sb A B C C (when' swa swb None))
+               %s""" sa sb A B C C (When.And(swa,swb)))
                 //implementation
                 fsWriter.WriteLine(
                     sprintf """
-        static member Map2((a: %s, b: %s%s), f: %s -> %s -> %s) =
+        static member Map2((a: %s, b: %s), f: %s -> %s -> %s) : %s option
+               %s =
             option { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
-            }""" a b (when' wa wb None) A B C)
+            }""" a b A B C C (When.And(wa,wb)))
+
+//map3
+        let cTypes = createTypes C
+      
+        let map3Header ="""
+        (* Map3 overloads *)"""
+
+        sigWriter.WriteLine(map3Header)
+        fsWriter.WriteLine(map3Header)
+
+        for a, wa, sa, swa in aTypes do
+            for b, wb, sb, swb in bTypes do
+                for c, wc, sc, swc in cTypes do
+                    //signature
+                    sigWriter.WriteLine(
+                        sprintf """
+        static member Map3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s option
+               %s""" sa sb sc A B C D D (When.And(swa,swb,swc)))
+                    //implementation
+                    fsWriter.WriteLine(
+                        sprintf """
+        static member Map3((a: %s, b: %s, c: %s), f: %s -> %s -> %s -> %s) : %s option
+               %s =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return f a' b' c'
+            }""" a b c A B C D D (When.And(wa,wb,wc)))
 
 //bind
-        let tTypes = createTypes C
        
         let bindHeader ="""
         (* bind overloads *)"""
@@ -136,11 +173,11 @@ type NullOptAble =
         fsWriter.WriteLine(bindHeader)
 
         for a,_,sa,swa in aTypes do
-            for c,_,sc,swc in tTypes do
+            for c,_,sc,swc in cTypes do
                 //Signature
                 sigWriter.WriteLine(sprintf """
         static member Bind : a:%s * (%s -> %s) -> %s option
-               %s""" sa A sc C (when' swa swc None))
+               %s""" sa A sc C (When.And(swa,swc)))
                 //Implementation
                 fsWriter.WriteLine(
                     sprintf """        
@@ -150,7 +187,7 @@ type NullOptAble =
                 return! f a'
             }""" a A c)
 
-//bind2
+//Bind2
         let bind2Header ="""
         (* bind2 overloads *)"""
 
@@ -159,20 +196,53 @@ type NullOptAble =
 
         for a,wa,sa,swa in aTypes do
             for b,wb,sb,swb in bTypes do
-                for c,wc,sc,swc in tTypes do
+                for c,wc,sc,swc in cTypes do
                     //Signature
                     sigWriter.WriteLine(sprintf """
         static member Bind2 : (%s * %s) * (%s -> %s -> %s) -> %s option
-               %s""" sa sb A B sc C (when' swa swb swc))
+               %s""" sa sb A B sc C (When.And(swa,swb,swc)))
                     //Implementation
                     fsWriter.WriteLine(
                         sprintf """
-        static member Bind2((a: %s, b: %s%s), f: %s -> %s -> %s%s) =
+        static member Bind2((a: %s, b: %s), f: %s -> %s -> %s) : %s option
+               %s =
             option { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
-            } """ a b (when' wa wb None) A B c (when' wc None None) )
+            } """ a b A B c C (When.And(wa,wb,wc)))
+
+//Bind3
+        let dTypes = createTypes D
+
+        let bind3Header ="""
+        (* bind3 overloads *)"""
+
+        sigWriter.WriteLine(bind3Header)
+        fsWriter.WriteLine(bind3Header)
+
+
+        for a,wa,sa,swa in aTypes do
+            for b,wb,sb,swb in bTypes do
+                for c,wc,sc,swc in cTypes do
+                    for d,wd,sd,swd in dTypes do
+                        //Signature
+                        sigWriter.WriteLine(sprintf """
+        static member Bind3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s option
+               %s""" sa sb sc A B C sd D (When.And(swa,swb,swc,swd)))
+                        //Implementation
+                        fsWriter.WriteLine(sprintf """
+        static member Bind3((a: %s, b: %s, c: %s), f: %s -> %s -> %s -> %s) : %s option
+               %s =
+            option { 
+                let! a' = a 
+                let! b' = b
+                let! c' = c
+                return! f a' b' c'
+            } """ 
+                                              a b c A B C d D (When.And(wa,wb,wc,wd)))
+
+//end
         sigWriter.WriteLine("""
     end""")
 
