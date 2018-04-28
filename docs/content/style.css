@@ -1,3 +1,4 @@
+@import url(https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css);
 @import url(https://fonts.googleapis.com/css?family=Droid+Sans|Droid+Sans+Mono|Open+Sans:400,600,700);
 
 /*--------------------------------------------------------------------------
@@ -83,7 +84,7 @@ table.pre, pre.fssnip, pre {
   border:1px solid #d8d8d8;
   border-collapse:separate;
   white-space:pre;
-  font: 9pt 'Droid Sans Mono',consolas,monospace;
+  font: 9pt 'Fira Code','Droid Sans Mono',consolas,monospace;
   width:90%;
   margin:10px 20px 20px 20px;
   background-color:#212d30;
@@ -93,7 +94,7 @@ table.pre, pre.fssnip, pre {
   max-width: none;
 }
 pre.fssnip code {
-  font: 9pt 'Droid Sans Mono',consolas,monospace;
+  font: 9pt 'Fira Code','Droid Sans Mono',consolas,monospace;
 }
 table.pre pre {
   padding:0px;
