@@ -48,6 +48,7 @@ let exec (exePath:string) (args:string seq) =
     ()
 
 exec paketPath ["install"]
+printfn "Finished Paket install."
 
 #I "packages/FSharp.Compiler.Service/lib/net45/"
 #r "FSharp.Compiler.Service.dll"
@@ -57,9 +58,15 @@ exec paketPath ["install"]
 #r "FSharp.Literate.dll"
 #r "FSharp.CodeFormat.dll"
 #r "FSharp.Formatting.Razor.dll"
+#I "packages/FSharp.Data/lib/net45/"
+#r "FSharp.Data.dll"
+#r "System.Xml.Linq.dll"
 open FSharp.Formatting.Razor
+open FSharp.Data
+
 let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
 
+printfn "Copy Doc Content."
 let outputDir = Path.Combine(root, "docs")
 createDir outputDir
 
@@ -83,19 +90,26 @@ let dll = Path.Combine(root,
                         "netstandard1.6", 
                         "FSharp.Interop.NullOptAble.dll")
 
-let options = "--reference:\"" + dll + "\""
+let options = sprintf "--reference:\"%s\"" dll
 
 let template = "docpage.cshtml"
 let templateDirs = [ Path.Combine(docContent, "templates");
         Path.Combine(docContent, "templates", "reference") ]
 
+type FsProj = XmlProvider<"../src/FSharp.Interop.NullOptAble/FSharp.Interop.NullOptAble.fsproj">
+
+let fsProj = FsProj.GetSample()
+
 let projInfo =
-    [ "project-author",  ["authors"] |> String.concat ", "
-      "project-summary", "description"
-      "project-github",  "gitHubProjectUrl"
+    [ "project-author",  fsProj.PropertyGroup.Authors
+      "project-summary", fsProj.PropertyGroup.Description
+      "project-github",  fsProj.PropertyGroup.PackageProjectUrl
       "project-nuget", "nugetUrl"
-      "project-name", "projectName"
-      "root" , "projectUrl" ]
+      "project-name", "FSharp.Interop.NullOptAble"
+      "root", ""
+      ]
+
+printfn "Generate Readme."
 
 RazorLiterate.ProcessMarkdown(
       Path.Combine(root,"Readme.md"),
@@ -107,13 +121,14 @@ RazorLiterate.ProcessMarkdown(
       includeSource = true )
 
 let refDir = Path.Combine(outputDir, "reference")
-
+printfn "Generate API Reference."
 createDir(refDir)
+let sourceRepo = sprintf "%s/tree/master/" fsProj.PropertyGroup.PackageProjectUrl
 RazorMetadataFormat.Generate( dll, 
                               refDir,
                               templateDirs,
                               parameters = projInfo,
-                              sourceRepo = "todo",
+                              sourceRepo = sourceRepo,
                               sourceFolder = root)
 
 printfn "Finished Generating Docs."
