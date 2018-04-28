@@ -39,14 +39,15 @@
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
+<span class="l">4: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="k">module</span> <span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="m">RealWorldTests</span>
 <span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="id">System</span>
 <span class="k">open</span> <span onmouseout="hideTip(event, 'fs2', 3)" onmouseover="showTip(event, 'fs2', 3)" class="id">System</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs3', 4)" onmouseover="showTip(event, 'fs3', 4)" class="id">Text</span>
+<span class="k">open</span> <span onmouseout="hideTip(event, 'fs4', 5)" onmouseover="showTip(event, 'fs4', 5)" class="id">FSharp</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs5', 6)" onmouseover="showTip(event, 'fs5', 6)" class="id">Interop</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="id">NullOptAble</span>
 </code></pre></td>
 </tr>
 </table>
-<p>Just your basic bind of two nullable variables.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>
 <span class="l">3: </span>
@@ -69,8 +70,7 @@
 </code></pre></td>
 </tr>
 </table>
-<p>Doing the things found in this [MSDN Blog Post][1] did with the Safe Nav operator.
-[1]:<a href="https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/">https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/</a></p>
+<p>Doing the things found in this <a href="https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/">MSDN Blog Post did with the Safe Nav operator</a></p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -97,62 +97,6 @@
 <span class="l">24: </span>
 <span class="l">25: </span>
 <span class="l">26: </span>
-<span class="l">27: </span>
-<span class="l">28: </span>
-<span class="l">29: </span>
-<span class="l">30: </span>
-<span class="l">31: </span>
-<span class="l">32: </span>
-<span class="l">33: </span>
-<span class="l">34: </span>
-<span class="l">35: </span>
-<span class="l">36: </span>
-<span class="l">37: </span>
-<span class="l">38: </span>
-<span class="l">39: </span>
-<span class="l">40: </span>
-<span class="l">41: </span>
-<span class="l">42: </span>
-<span class="l">43: </span>
-<span class="l">44: </span>
-<span class="l">45: </span>
-<span class="l">46: </span>
-<span class="l">47: </span>
-<span class="l">48: </span>
-<span class="l">49: </span>
-<span class="l">50: </span>
-<span class="l">51: </span>
-<span class="l">52: </span>
-<span class="l">53: </span>
-<span class="l">54: </span>
-<span class="l">55: </span>
-<span class="l">56: </span>
-<span class="l">57: </span>
-<span class="l">58: </span>
-<span class="l">59: </span>
-<span class="l">60: </span>
-<span class="l">61: </span>
-<span class="l">62: </span>
-<span class="l">63: </span>
-<span class="l">64: </span>
-<span class="l">65: </span>
-<span class="l">66: </span>
-<span class="l">67: </span>
-<span class="l">68: </span>
-<span class="l">69: </span>
-<span class="l">70: </span>
-<span class="l">71: </span>
-<span class="l">72: </span>
-<span class="l">73: </span>
-<span class="l">74: </span>
-<span class="l">75: </span>
-<span class="l">76: </span>
-<span class="l">77: </span>
-<span class="l">78: </span>
-<span class="l">79: </span>
-<span class="l">80: </span>
-<span class="l">81: </span>
-<span class="l">82: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs17', 25)" onmouseover="showTip(event, 'fs17', 25)" class="fn">``Safe Navigation Operator Example``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
@@ -180,11 +124,24 @@
             <span class="k">let!</span> <span class="id">c</span> <span class="o">=</span> <span class="id">b</span><span class="pn">.</span><span class="id">child</span>
             <span class="k">yield</span> <span class="id">c</span>
     <span class="pn">}</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs24', 46)" onmouseover="showTip(event, 'fs24', 46)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs25', 47)" onmouseover="showTip(event, 'fs25', 47)" class="id">length</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="n">1</span>
-
-<span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span> 
+</code></pre></td>
+</tr>
+</table>
+<p>Simplifed this Recursive F# docs [example].(<a href="https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences)">https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences)</a></p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span> 
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs26', 48)" onmouseover="showTip(event, 'fs26', 48)" class="fn">``IsPrime Example``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
-    <span class="c">// Recursive isprime function.</span>
-    <span class="c">//modified from https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences</span>
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs27', 49)" onmouseover="showTip(event, 'fs27', 49)" class="fn">isprime</span> <span onmouseout="hideTip(event, 'fs28', 50)" onmouseover="showTip(event, 'fs28', 50)" class="id">n</span> <span class="o">=</span>
         <span class="k">let</span> <span class="k">rec</span> <span onmouseout="hideTip(event, 'fs29', 51)" onmouseover="showTip(event, 'fs29', 51)" class="fn">check</span> <span onmouseout="hideTip(event, 'fs30', 52)" onmouseover="showTip(event, 'fs30', 52)" class="id">i</span> <span class="o">=</span>
             <span onmouseout="hideTip(event, 'fs28', 53)" onmouseover="showTip(event, 'fs28', 53)" class="id">n</span> <span class="o">&lt;&gt;</span> <span class="n">1</span> <span class="o">&amp;&amp;</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs30', 54)" onmouseover="showTip(event, 'fs30', 54)" class="id">i</span> <span class="o">&gt;</span> <span onmouseout="hideTip(event, 'fs28', 55)" onmouseover="showTip(event, 'fs28', 55)" class="id">n</span><span class="o">/</span><span class="n">2</span> <span class="o">||</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs28', 56)" onmouseover="showTip(event, 'fs28', 56)" class="id">n</span> <span class="o">%</span> <span onmouseout="hideTip(event, 'fs30', 57)" onmouseover="showTip(event, 'fs30', 57)" class="id">i</span> <span class="o">&lt;&gt;</span> <span class="n">0</span> <span class="o">&amp;&amp;</span> <span onmouseout="hideTip(event, 'fs29', 58)" onmouseover="showTip(event, 'fs29', 58)" class="fn">check</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs30', 59)" onmouseover="showTip(event, 'fs30', 59)" class="id">i</span> <span class="o">+</span> <span class="n">1</span><span class="pn">)</span><span class="pn">)</span><span class="pn">)</span>
@@ -194,12 +151,34 @@
     <span onmouseout="hideTip(event, 'fs31', 67)" onmouseover="showTip(event, 'fs31', 67)" class="id">prime</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs24', 68)" onmouseover="showTip(event, 'fs24', 68)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs32', 69)" onmouseover="showTip(event, 'fs32', 69)" class="id">toList</span>
           <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">[</span><span class="n">2</span><span class="pn">;</span> <span class="n">3</span><span class="pn">;</span> <span class="n">5</span><span class="pn">;</span> <span class="n">7</span><span class="pn">;</span> <span class="n">11</span><span class="pn">;</span> <span class="n">13</span><span class="pn">;</span> <span class="n">17</span><span class="pn">;</span> <span class="n">19</span><span class="pn">;</span> <span class="n">23</span><span class="pn">;</span> <span class="n">29</span><span class="pn">;</span> <span class="n">31</span><span class="pn">;</span> <span class="n">37</span><span class="pn">;</span> 
                             <span class="n">41</span><span class="pn">;</span> <span class="n">43</span><span class="pn">;</span> <span class="n">47</span><span class="pn">;</span> <span class="n">53</span><span class="pn">;</span> <span class="n">59</span><span class="pn">;</span> <span class="n">61</span><span class="pn">;</span> <span class="n">67</span><span class="pn">;</span> <span class="n">71</span><span class="pn">;</span> <span class="n">73</span><span class="pn">;</span> <span class="n">79</span><span class="pn">;</span> <span class="n">83</span><span class="pn">;</span> <span class="n">89</span><span class="pn">;</span> <span class="n">97</span><span class="pn">]</span>
-
-
-<span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Solution using <code>option {}</code> for this <a href="http://exercism.io/exercises/fsharp/rna-transcription/readme">RNA Transcription problem from exercism</a>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
+<span class="l">17: </span>
+<span class="l">18: </span>
+<span class="l">19: </span>
+<span class="l">20: </span>
+<span class="l">21: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs33', 70)" onmouseover="showTip(event, 'fs33', 70)" class="fn">``RNA transcriptions ``</span> <span class="pn">(</span><span class="pn">)</span> <span class="o">=</span>
-    <span class="c">//test is from exercism </span>
-    <span class="c">//http://exercism.io/exercises/fsharp/rna-transcription/readme</span>
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs34', 71)" onmouseover="showTip(event, 'fs34', 71)" class="fn">toRna</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs35', 72)" onmouseover="showTip(event, 'fs35', 72)" class="id">dna</span><span class="pn">:</span> <span onmouseout="hideTip(event, 'fs36', 73)" onmouseover="showTip(event, 'fs36', 73)" class="rt">string</span><span class="pn">)</span><span class="pn">:</span> <span onmouseout="hideTip(event, 'fs36', 74)" onmouseover="showTip(event, 'fs36', 74)" class="rt">string</span> <span onmouseout="hideTip(event, 'fs11', 75)" onmouseover="showTip(event, 'fs11', 75)" class="rt">option</span> <span class="o">=</span> 
         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs37', 76)" onmouseover="showTip(event, 'fs37', 76)" class="fn">combine</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs38', 77)" onmouseover="showTip(event, 'fs38', 77)" class="id">sb</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs39', 78)" onmouseover="showTip(event, 'fs39', 78)" class="rt">StringBuilder</span> <span onmouseout="hideTip(event, 'fs11', 79)" onmouseover="showTip(event, 'fs11', 79)" class="rt">option</span><span class="pn">)</span> <span class="o">=</span>
             <span class="k">let</span> <span onmouseout="hideTip(event, 'fs40', 80)" onmouseover="showTip(event, 'fs40', 80)" class="fn">append</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs41', 81)" onmouseover="showTip(event, 'fs41', 81)" class="id">c</span><span class="pn">:</span><span onmouseout="hideTip(event, 'fs42', 82)" onmouseover="showTip(event, 'fs42', 82)" class="vt">char</span><span class="pn">)</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs11', 83)" onmouseover="showTip(event, 'fs11', 83)" class="k">option</span> <span class="pn">{</span>
@@ -219,11 +198,27 @@
         <span class="pn">}</span>
     
     <span onmouseout="hideTip(event, 'fs34', 99)" onmouseover="showTip(event, 'fs34', 99)" class="fn">toRna</span> <span class="s">&quot;ACGTGGTCTTAA&quot;</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs12', 100)" onmouseover="showTip(event, 'fs12', 100)" class="id">Some</span> <span class="s">&quot;UGCACCAGAAUU&quot;</span><span class="pn">)</span>
-
-<span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
+</code></pre></td>
+</tr>
+</table>
+<p>Solution using <code>chooseSeq {}</code> for this <a href="http://exercism.io/exercises/fsharp/raindrops/readme">Rain Drops (Fizz buzz) problem from exercism</a>.</p>
+<table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
+<span class="l"> 2: </span>
+<span class="l"> 3: </span>
+<span class="l"> 4: </span>
+<span class="l"> 5: </span>
+<span class="l"> 6: </span>
+<span class="l"> 7: </span>
+<span class="l"> 8: </span>
+<span class="l"> 9: </span>
+<span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
+</pre></td>
+<td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs45', 101)" onmouseover="showTip(event, 'fs45', 101)" class="fn">``rain drops``</span> <span class="pn">(</span><span class="pn">)</span> <span class="o">=</span>
-    <span class="c">//test if from exercism</span>
-    <span class="c">//http://exercism.io/exercises/fsharp/raindrops/readme</span>
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs46', 102)" onmouseover="showTip(event, 'fs46', 102)" class="fn">convert</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs47', 103)" onmouseover="showTip(event, 'fs47', 103)" class="id">number</span><span class="pn">:</span> <span onmouseout="hideTip(event, 'fs48', 104)" onmouseover="showTip(event, 'fs48', 104)" class="vt">int</span><span class="pn">)</span><span class="pn">:</span> <span onmouseout="hideTip(event, 'fs36', 105)" onmouseover="showTip(event, 'fs36', 105)" class="rt">string</span> <span class="o">=</span>
         <span class="k">let</span> <span onmouseout="hideTip(event, 'fs49', 106)" onmouseover="showTip(event, 'fs49', 106)" class="fn">drop</span> <span onmouseout="hideTip(event, 'fs50', 107)" onmouseover="showTip(event, 'fs50', 107)" class="id">x</span> <span onmouseout="hideTip(event, 'fs51', 108)" onmouseover="showTip(event, 'fs51', 108)" class="id">s</span> <span class="o">=</span> <span class="k">if</span> <span onmouseout="hideTip(event, 'fs47', 109)" onmouseover="showTip(event, 'fs47', 109)" class="id">number</span> <span class="o">%</span> <span onmouseout="hideTip(event, 'fs50', 110)" onmouseover="showTip(event, 'fs50', 110)" class="id">x</span> <span class="o">=</span> <span class="n">0</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs12', 111)" onmouseover="showTip(event, 'fs12', 111)" class="uc">Some</span> <span onmouseout="hideTip(event, 'fs51', 112)" onmouseover="showTip(event, 'fs51', 112)" class="id">s</span> <span class="k">else</span> <span onmouseout="hideTip(event, 'fs20', 113)" onmouseover="showTip(event, 'fs20', 113)" class="uc">None</span>
         <span onmouseout="hideTip(event, 'fs23', 114)" onmouseover="showTip(event, 'fs23', 114)" class="k">chooseSeq</span> <span class="pn">{</span>

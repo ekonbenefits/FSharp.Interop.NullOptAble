@@ -10,15 +10,14 @@ This project creates an `option { }` computational expression and `chooseSeq { }
 
 With `chooseSeq` if you `yield!` a sequence it will flatten/collect it. If you want a sequence of sequences use `let! s = nullPossibleSequence;; yield s` or `yield! Some notNullSeq`
 
-
 General Example:
 ```
 let x = Nullable(3)
-  let y = Nullable(3)
-  option {
-      let! x' = x
-      let! y' = y
-      return (x' + y')
-  } |> should equal (Some 6)
+let y = Nullable(3)
+option {
+    let! x' = x
+    let! y' = y
+    return (x' + y')
+} |> should equal (Some 6)
 ```
-See more examples in [Tests/RealWorld.fs](https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/blob/master/tests/FSharp.Interop.NullOptAble.Tests/RealWorld.fs)
+See more examples in [Tests/RealWorld.fs](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html)

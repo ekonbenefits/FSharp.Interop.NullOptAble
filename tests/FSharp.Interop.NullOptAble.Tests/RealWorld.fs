@@ -6,16 +6,14 @@ Real World-ish examples
 module RealWorldTests
 open System
 open System.Text
+open FSharp.Interop.NullOptAble
 (*** hide ***)
 open Xunit
-(*** hide ***)
 open FsUnit.Xunit
-open FSharp.Interop.NullOptAble
 
 
-(**
-Just your basic bind of two nullable variables.
-*)
+
+(*** HIDE ***)
 [<Fact>]
 let ``Basic nullable math`` () =
     let x = Nullable(3)
@@ -33,8 +31,8 @@ type Node (child:Node)=
     member val child:Node = child with get,set
  
 (**
-Doing the things found in this [MSDN Blog Post][1] did with the Safe Nav operator.
-[1]:https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/
+Doing the things found in this [MSDN Blog Post did with the Safe Nav operator](https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/)
+
 *)
 [<Fact>]
 let ``Safe Navigation Operator Example`` ()=
@@ -63,10 +61,12 @@ let ``Safe Navigation Operator Seq Example`` ()=
             yield c
     } |> Seq.length |> should equal 1
 
+
+(** 
+Simplifed this Recursive F# docs [example].(https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences)
+*)
 [<Fact>] 
 let ``IsPrime Example`` ()=
-    // Recursive isprime function.
-    //modified from https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences
     let isprime n =
         let rec check i =
             n <> 1 && (i > n/2 || (n % i <> 0 && check (i + 1)))
@@ -77,11 +77,11 @@ let ``IsPrime Example`` ()=
           |> should equal [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 
                             41; 43; 47; 53; 59; 61; 67; 71; 73; 79; 83; 89; 97]
 
-
+(** 
+Solution using `option {}` for this [RNA Transcription problem from exercism](http://exercism.io/exercises/fsharp/rna-transcription/readme).
+*)
 [<Fact>]
 let ``RNA transcriptions `` () =
-    //test is from exercism 
-    //http://exercism.io/exercises/fsharp/rna-transcription/readme
     let toRna (dna: string): string option = 
         let combine (sb:StringBuilder option) =
             let append (c:char) = option {
@@ -102,10 +102,11 @@ let ``RNA transcriptions `` () =
     
     toRna "ACGTGGTCTTAA" |> should equal (Some "UGCACCAGAAUU")
 
+(** 
+Solution using `chooseSeq {}` for this [Rain Drops (Fizz buzz) problem from exercism](http://exercism.io/exercises/fsharp/raindrops/readme).
+*)
 [<Fact>]
 let ``rain drops`` () =
-    //test if from exercism
-    //http://exercism.io/exercises/fsharp/raindrops/readme
     let convert (number: int): string =
         let drop x s = if number % x = 0 then Some s else None
         chooseSeq {
