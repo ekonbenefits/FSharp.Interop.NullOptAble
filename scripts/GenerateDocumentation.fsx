@@ -120,6 +120,18 @@ RazorLiterate.ProcessMarkdown(
       layoutRoots = templateDirs,
       includeSource = true )
 
+printfn "Generate Other Docs."
+let testDir = Path.Combine(root, "tests", "FSharp.Interop.NullOptAble.Tests")
+
+RazorLiterate.ProcessScriptFile(
+      Path.Combine(testDir,"RealWorld.fs"),
+      templateFile = template,
+      output = Path.Combine(outputDir, "RealWorld.html"),
+      replacements = projInfo,
+      compilerOptions = options,
+      layoutRoots = templateDirs,
+      includeSource = true )
+
 let refDir = Path.Combine(outputDir, "reference")
 printfn "Generate API Reference."
 createDir(refDir)
