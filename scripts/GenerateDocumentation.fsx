@@ -65,7 +65,7 @@ createDir outputDir
 
 let docContent = "doc-content"
 let docStyles = Path.Combine(docContent, "styles")
-let baseOutput = Path.Combine(outputDir, "styles")
+let baseOutput = Path.Combine(outputDir, "content")
 createDir docStyles
 for dir in Directory.GetDirectories(docStyles) do
     let outputContentDir = Path.Combine(baseOutput, Path.GetFileName(dir))
