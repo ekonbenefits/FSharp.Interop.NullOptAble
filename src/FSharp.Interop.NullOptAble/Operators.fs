@@ -19,6 +19,8 @@ module Operators =
     let inline bind3OverloadHelper< ^t, ^a, ^b, ^c when (^t or ^a) : (static member Bind3 : ^a * ^b -> ^c)> a b = 
         ((^t or ^a) : (static member Bind3 : ^a * ^b -> ^c) (a, b))
 
+
+    
     (* default with *)
     let inline ( |?-> ) a b = defaultWithOverloadHelper<NullOptAble, _, _, _> a b
     (* map *)

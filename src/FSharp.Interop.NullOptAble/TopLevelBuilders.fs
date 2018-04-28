@@ -29,12 +29,10 @@ module TopLevelBuilders =
             finally compensation()
         member this.Using(resource:#IDisposable, body) =
             this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
-
     let option = OptionBuilder()
 
 
     module ChooseSeq =
-
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
 
     type ChooseSeqBuilder() =
@@ -93,5 +91,4 @@ module TopLevelBuilders =
         member this.For(sequence:seq<_>, body) =
             this.Using(sequence.GetEnumerator(), 
                 fun enum -> this.While(enum.MoveNext, this.Delay(fun () -> body enum.Current)))
-
     let chooseSeq = ChooseSeqBuilder()

@@ -23,9 +23,21 @@ module TopLevelBuilders =
         member Using : resource:'a * body:('a -> 'b) -> 'b
                     when 'a :> System.IDisposable
         member Zero : unit -> 'j option
+    
+    ///**Description**
+    /// option computation expression
+    ///**Output Type**
+    ///  * `_ option`
     val option : OptionBuilder
 
     module ChooseSeq =
+      ///**Description**
+      /// forces a chooseSeq to run. normally delayed if not used.
+      ///**Parameters**
+      ///  * `delayedSeq` - parameter of type `seq<'T>`
+      ///
+      ///**Output Type**
+      ///  * `seq<'T>`
       val forceRun : delayedSeq:seq<'T> -> seq<'T>
       
     type ChooseSeqBuilder =
@@ -54,5 +66,9 @@ module TopLevelBuilders =
         member YieldFrom : m:seq<'T> -> seq<'T>
         member YieldFrom : m:string -> seq<char>
         member Zero : unit -> seq<'T>
+    ///**Description**
+    /// choose sequence computation expression
+    ///**Output Type**
+    ///  * `_ seq`
     val chooseSeq : ChooseSeqBuilder
 

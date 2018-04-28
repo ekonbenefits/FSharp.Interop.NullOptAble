@@ -30,14 +30,22 @@ type When =
 
 module Run =
     let execute () =
-        use sigWriter = new StreamWriter("NullOptAble.fsi", append = false, encoding =Encoding.UTF8)
-        use fsWriter = new StreamWriter("NullOptAble.fs", append = false, encoding =Encoding.UTF8)
+        let basePath = Path.Combine(__SOURCE_DIRECTORY__, "..", "src", "FSharp.Interop.NullOptAble")
+
+        use sigWriter = new StreamWriter(Path.Combine(basePath,"NullOptAble.fsi"), 
+                                         append = false, 
+                                         encoding =Encoding.UTF8)
+        use fsWriter = new StreamWriter(Path.Combine(basePath,"NullOptAble.fs"), 
+                                        append = false, 
+                                        encoding =Encoding.UTF8)
         let ns = "namespace FSharp.Interop.NullOptAble"
         sigWriter.WriteLine(ns)
         fsWriter.WriteLine(ns)
 
 //Write Type and DefaultWith Overloads
         sigWriter.WriteLine("""
+///**Description**
+/// Overloads used as the basis for operators
 type NullOptAble =
     class
         (* DefaultWith overloads *)
