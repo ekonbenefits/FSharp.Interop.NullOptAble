@@ -1,21 +1,21 @@
 (**
 Real World-ish examples
 ===============
-**)
+*)
 
 module RealWorldTests
 open System
 open System.Text
-(**hide**)
+(*** hide ***)
 open Xunit
-(**hide**)
+(*** hide ***)
 open FsUnit.Xunit
 open FSharp.Interop.NullOptAble
 
 
 (**
 Just your basic bind of two nullable variables.
-**)
+*)
 [<Fact>]
 let ``Basic nullable math`` () =
     let x = Nullable(3)
@@ -26,16 +26,16 @@ let ``Basic nullable math`` () =
         return (x' + y')
     } |> should equal (Some 6)
 
-(**Hide**)
+(*** hide ***)
 [<AllowNullLiteral>]
 type Node (child:Node)=
     new() = new Node(null)
     member val child:Node = child with get,set
  
 (**
-    Doing the things found in this [MSDN Blog Post][1] did with the Safe Nav operator.
-    [1]:https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/
-**)
+Doing the things found in this [MSDN Blog Post][1] did with the Safe Nav operator.
+[1]:https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/
+*)
 [<Fact>]
 let ``Safe Navigation Operator Example`` ()=
     
