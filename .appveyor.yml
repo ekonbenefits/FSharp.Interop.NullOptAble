@@ -11,10 +11,10 @@ test: off
 
 install:
   - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
-  - ps: dotnet restore /p:Version=$Env:APPVEYOR_BUILD_VERSION
+  - ps: dotnet restore /p:Version=$Env:APPVEYOR_BUILD_VERSION /p:Configuration=$Env:CONFIGURATION
 
 test_script:
-  - ps: dotnet test /p:Version=$Env:APPVEYOR_BUILD_VERSION
+  - ps: dotnet test /p:Version=$Env:APPVEYOR_BUILD_VERSION /p:Configuration=$Env:CONFIGURATION
 
 artifacts:
   - path: 'src\**\*.nupkg'
@@ -37,7 +37,7 @@ deploy:
     draft: true
     prerelease: $(is_prerelease)
     on:
-      githubdeploy: true
+      github_deploy: true
 
 
 for:
