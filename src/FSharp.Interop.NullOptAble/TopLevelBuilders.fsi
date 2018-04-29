@@ -1,5 +1,11 @@
 namespace FSharp.Interop.NullOptAble
 
+
+///**Description**
+///
+/// Computation expressions `option {}` and `chooseSeq {}`.
+/// See [examples](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html) for usage.
+///
 [<AutoOpen>]
 module TopLevelBuilders =
     type OptionBuilder =
@@ -25,19 +31,29 @@ module TopLevelBuilders =
         member Zero : unit -> 'j option
     
     ///**Description**
-    /// option computation expression
+    ///
+    /// `option` computation expression
+    /// ! will bind types that accept null, nullables, and options
+    ///
     ///**Output Type**
+    ///
     ///  * `_ option`
+    ///
     val option : OptionBuilder
 
     module ChooseSeq =
       ///**Description**
+      ///
       /// forces a chooseSeq to run. normally delayed if not used.
+      ///
       ///**Parameters**
+      ///
       ///  * `delayedSeq` - parameter of type `seq<'T>`
       ///
       ///**Output Type**
+      ///
       ///  * `seq<'T>`
+      ///
       val forceRun : delayedSeq:seq<'T> -> seq<'T>
       
     type ChooseSeqBuilder =
@@ -66,9 +82,17 @@ module TopLevelBuilders =
         member YieldFrom : m:seq<'T> -> seq<'T>
         member YieldFrom : m:string -> seq<char>
         member Zero : unit -> seq<'T>
+
     ///**Description**
+    ///
     /// choose sequence computation expression
+    /// ! will bind types that accept null, nullables, and options.
+    /// yield only chooses values.
+    /// yield a sequence will flatten it.
+    ///
     ///**Output Type**
+    ///
     ///  * `_ seq`
+    ///
     val chooseSeq : ChooseSeqBuilder
 

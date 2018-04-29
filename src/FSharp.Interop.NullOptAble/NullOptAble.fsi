@@ -1,7 +1,9 @@
 ﻿namespace FSharp.Interop.NullOptAble
 
 ///**Description**
-/// Overloads used as the basis for operators
+///
+/// Overloads used as the basis for the operators
+///
 type NullOptAble =
     class
         (* DefaultWith overloads *)

@@ -42,6 +42,10 @@
   <span>Namespace: FSharp.Interop.NullOptAble</span><br />
 </p>
 <div class="xmldoc">
+<p><strong>Description</strong></p>
+<p>Computation expressions <code>option {}</code> and <code>chooseSeq {}</code>.
+See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html">examples</a> for usage.</p>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -84,10 +88,15 @@
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p><strong>Description</strong>
-choose sequence computation expression
-<strong>Output Type</strong>
-* <code>_ seq</code></p>
+          <p><strong>Description</strong></p>
+<p>choose sequence computation expression
+! will bind types that accept null, nullables, and options.
+yield only chooses values.
+yield a sequence will flatten it.</p>
+<p><strong>Output Type</strong></p>
+<ul>
+<li><code>_ seq</code></li>
+</ul>
 
 
         </td>
@@ -107,10 +116,13 @@ choose sequence computation expression
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p><strong>Description</strong>
-option computation expression
-<strong>Output Type</strong>
-* <code>_ option</code></p>
+          <p><strong>Description</strong></p>
+<p><code>option</code> computation expression
+! will bind types that accept null, nullables, and options</p>
+<p><strong>Output Type</strong></p>
+<ul>
+<li><code>_ option</code></li>
+</ul>
 
 
         </td>
@@ -136,11 +148,11 @@ option computation expression
             <li class="nav-header">Documentation</li>
 
             <li><a href="/FSharp.Interop.NullOptAble/index.html">Introduction</a></li>
-
+            <li><a href="/FSharp.Interop.NullOptAble/RealWorld.html">Computation Expression Examples</a></li>
+            <li><a href="/FSharp.Interop.NullOptAble/RealWorldOperators.html">Operator Examples</a></li>
             <li class="divider"></li>
 
-
-            <li class="nav-header">Reference</li>
+            <li class="nav-header"> Reference</li>
 
             <li><a href="/FSharp.Interop.NullOptAble/reference/index.html">API Reference</a></li>
           </ul>

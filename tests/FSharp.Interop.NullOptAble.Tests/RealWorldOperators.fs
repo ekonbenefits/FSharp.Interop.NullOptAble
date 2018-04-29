@@ -12,7 +12,19 @@ open Xunit
 open FsUnit.Xunit
 
 (**
-    Binding operator means function isn't applied if a `None` parameter.
+    DefaultWith operator. Handy abbreviation of matching a null/nullable/none case.
+*)
+[<Fact>] 
+let ``null defaultWith`` () =
+    let x = Nullable()
+    x |?-> lazy 3 |> should equal 3
+let `` defaultWith not called if not needed`` () =
+    let x = Nullable(3)
+    x |?-> lazy (failwith "doesn't get run") |> should equal 3
+
+(**
+    Binding operator means function isn't applied if a `None` parameter. 
+    However I suggest using [computational expressions](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html) over the bind operators
 *)
 [<Fact>]          
 let ``Basic concat`` () =

@@ -132,6 +132,16 @@ RazorLiterate.ProcessScriptFile(
       layoutRoots = templateDirs,
       includeSource = true )
 
+RazorLiterate.ProcessScriptFile(
+      Path.Combine(testDir,"RealWorldOperators.fs"),
+      templateFile = template,
+      output = Path.Combine(outputDir, "RealWorldOperators.html"),
+      replacements = projInfo,
+      compilerOptions = options,
+      layoutRoots = templateDirs,
+      includeSource = true )
+
+
 let refDir = Path.Combine(outputDir, "reference")
 printfn "Generate API Reference."
 createDir(refDir)
