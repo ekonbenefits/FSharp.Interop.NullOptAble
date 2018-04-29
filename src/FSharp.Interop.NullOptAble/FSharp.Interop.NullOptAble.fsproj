@@ -7,7 +7,7 @@
     <Copyright>Copyright 2018 Ekon Benefits</Copyright>
     <PackageProjectUrl>https://github.com/ekonbenefits/FSharp.Interop.NullOptAble</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageTags>fsharp option seq choose null conditional</PackageTags>
+    <PackageTags>fsharp option seq null nullable monads</PackageTags>
     <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
     <GeneratePackageOnBuild Condition="'$(APPVEYOR)' == 'True'">True</GeneratePackageOnBuild>
