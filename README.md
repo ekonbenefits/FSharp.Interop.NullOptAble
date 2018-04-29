@@ -1,6 +1,9 @@
-# FSharp.Interop.NullOptAble [![Build status](https://ci.appveyor.com/api/projects/status/57yssc1q22p7j0y7/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-interop-nulloptable/branch/master) [![Build Status](https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master)](https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble)
+# FSharp.Interop.NullOptAble [![NuGet Status](http://img.shields.io/nuget/v/FSharp.Interop.NullOptAble.svg?style=flat)](https://www.nuget.org/packages/FSharp.Interop.NullOptAble/)
 
 CI Builds available: [![MyGet Pre Release](https://img.shields.io/myget/ci-fsharp-optionbuilder/vpre/FSharp.Interop.NullOptAble.svg)](https://www.myget.org/feed/ci-fsharp-optionbuilder/package/nuget/FSharp.Interop.NullOptAble)
+
+Windows: [![Build status](https://ci.appveyor.com/api/projects/status/57yssc1q22p7j0y7/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/fsharp-interop-nulloptable/branch/master)
+Mac & Linux: [![Build Status](https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master)](https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble)
 
 Missing OptionBuilder for F# filling the void to interop with  C#'s `?.` usage
 
