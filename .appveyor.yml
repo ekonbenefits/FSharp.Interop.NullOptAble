@@ -11,7 +11,7 @@ test: off
 
 install:
   - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
-  - ps: dotnet restore /p:Version=$Env:APPVEYOR_BUILD_VERSION -c $Env:CONFIGURATION
+  - ps: dotnet restore /p:Version=$Env:APPVEYOR_BUILD_VERSION
 
 test_script:
   - ps: dotnet test /p:Version=$Env:APPVEYOR_BUILD_VERSION -c $Env:CONFIGURATION
