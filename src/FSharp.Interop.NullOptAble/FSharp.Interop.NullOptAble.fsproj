@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-    <Description>option &amp; chooseSeq computational expressions works with Null/Option/Nullable</Description>
+    <Description>option &amp; chooseSeq computational expressions that work with Null/Option/Nullable</Description>
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
     <Copyright>Copyright 2018 Ekon Benefits</Copyright>

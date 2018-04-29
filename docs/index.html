@@ -5,7 +5,7 @@
     <title>FSharp.Interop.NullOptAble <a href="https://www.nuget.org/packages/FSharp.Interop.NullOptAble/"><img src="http://img.shields.io/nuget/v/FSharp.Interop.NullOptAble.svg?style=flat" alt="NuGet Status" /></a>
 </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="option & chooseSeq computational expressions works with Null/Option/Nullable">
+    <meta name="description" content="option & chooseSeq computational expressions that work with Null/Option/Nullable">
     <meta name="author" content="Jay Tuley">
     <script src="https://unpkg.com/jquery@1.12.4/dist/jquery.js" integrity="sha384-KcyRSlC9FQog/lJsT+QA8AUIFBgnwKM7bxm7/YaX+NTr4D00npYawrX0h+oXI3a2" crossorigin="anonymous"></script>
     <script src="https://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js" integrity="sha384-qJ8AGIuPqPo4I2zhyRYO6vQaJrGBbTpIiXGihDsGpfMCHJD0IKH0gkPQToGD5ek3" crossorigin="anonymous"></script>
@@ -36,11 +36,16 @@
         <div class="span9" id="main">
           
 <h1>FSharp.Interop.NullOptAble <a href="https://www.nuget.org/packages/FSharp.Interop.NullOptAble/"><img src="http://img.shields.io/nuget/v/FSharp.Interop.NullOptAble.svg?style=flat" alt="NuGet Status" /></a></h1>
+<p>Missing OptionBuilder for F# filling the void to interop with  C#'s <code>?.</code> usage.
+It works with Nulls, Options, Nullables.</p>
 <p>CI Builds available: <a href="https://www.myget.org/feed/ci-fsharp-optionbuilder/package/nuget/FSharp.Interop.NullOptAble"><img src="https://img.shields.io/myget/ci-fsharp-optionbuilder/vpre/FSharp.Interop.NullOptAble.svg" alt="MyGet Pre Release" /></a></p>
-<p>Windows: <a href="https://ci.appveyor.com/project/jbtule/fsharp-interop-nulloptable/branch/master"><img src="https://ci.appveyor.com/api/projects/status/57yssc1q22p7j0y7/branch/master?svg=true" alt="Build status" /></a>
-Mac &amp; Linux: <a href="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble"><img src="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master" alt="Build Status" /></a></p>
-<p>Missing OptionBuilder for F# filling the void to interop with  C#'s <code>?.</code> usage</p>
-<p>There are more C# devs relying on <code>?.</code> and so nulls will only get worse on the C# side the more often null's are going to drop out of APIs.</p>
+<p>Build Statuses:</p>
+<ul>
+<li>Windows: <a href="https://ci.appveyor.com/project/jbtule/fsharp-interop-nulloptable/branch/master"><img src="https://ci.appveyor.com/api/projects/status/57yssc1q22p7j0y7/branch/master?svg=true" alt="Build status" /></a></li>
+<li>Mac &amp; Linux: <a href="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble"><img src="https://travis-ci.org/ekonbenefits/FSharp.Interop.NullOptAble.svg?branch=master" alt="Build Status" /></a></li>
+</ul>
+<h2>Description</h2>
+<p>There are more C# devs relying on the safe nav operator <code>?.</code> and so nulls will only get worse on the C# side, making it more likely null's are going to drop out of APIs.</p>
 <p>This project creates an <code>option { }</code> computational expression and <code>chooseSeq { }</code> computational expression that allows binding <code>'T option</code>/<code>'T Nullable</code>/<code>'T:null</code> thus either returns an option or a sequence respectively.</p>
 <p>With <code>chooseSeq</code> if you <code>yield!</code> a sequence it will flatten/collect it. If you want a sequence of sequences use <code>let! s = nullPossibleSequence;; yield s</code> or <code>yield! Some notNullSeq</code></p>
 <p>General Example:</p>
@@ -63,7 +68,7 @@ Mac &amp; Linux: <a href="https://travis-ci.org/ekonbenefits/FSharp.Interop.Null
 </tr>
 </table>
 <p>See more examples in <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html">Tests/RealWorld.fs</a></p>
-<p>Also some more examples of optional operators that also provide a workflow
+<p>Also some more examples of operators that you can open the will also provide a workflow
 for working with nulls/options/nullables in <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorldOperators.html">Tests/RealWorldOperators.fs</a></p>
 
 <div class="tip" id="fs1">val x : obj</div>
