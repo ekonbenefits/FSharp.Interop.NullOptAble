@@ -21,3 +21,6 @@ option {
 } |> should equal (Some 6)
 ```
 See more examples in [Tests/RealWorld.fs](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html)
+
+Also some more examples of optional operators that also provide a workflow
+for working with nulls/options/nullables in [Tests/RealWorldOperators.fs](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorldOperators.html)
