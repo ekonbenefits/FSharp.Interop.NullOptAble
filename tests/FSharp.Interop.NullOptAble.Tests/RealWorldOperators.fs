@@ -108,4 +108,5 @@ let ``RNA transcriptions `` () =
            |>? Seq.fold combine (Some <| StringBuilder())
            |>? string
 
+    //test case from exercism
     toRna "ACGTGGTCTTAA" |> should equal (Some "UGCACCAGAAUU")

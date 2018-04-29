@@ -70,7 +70,7 @@
 </tr>
 </table>
 <p>Binding operator means function isn't applied if a <code>None</code> parameter.
-However I suggest using <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html">computational expressions</a> over the bind operators</p>
+However I suggest using <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html">computational expressions</a> over these bind operators in most cases.</p>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l"> 1: </span>
 <span class="l"> 2: </span>
 <span class="l"> 3: </span>
@@ -190,6 +190,7 @@ However I suggest using <a href="https://ekonbenefits.github.io/FSharp.Interop.N
 <span class="l">15: </span>
 <span class="l">16: </span>
 <span class="l">17: </span>
+<span class="l">18: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs39', 89)" onmouseover="showTip(event, 'fs39', 89)" class="fn">``RNA transcriptions ``</span> <span class="pn">(</span><span class="pn">)</span> <span class="o">=</span>
@@ -207,6 +208,7 @@ However I suggest using <a href="https://ekonbenefits.github.io/FSharp.Interop.N
            <span class="o">|&gt;?</span> <span onmouseout="hideTip(event, 'fs35', 115)" onmouseover="showTip(event, 'fs35', 115)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs52', 116)" onmouseover="showTip(event, 'fs52', 116)" class="id">fold</span> <span onmouseout="hideTip(event, 'fs43', 117)" onmouseover="showTip(event, 'fs43', 117)" class="fn">combine</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs17', 118)" onmouseover="showTip(event, 'fs17', 118)" class="uc">Some</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs45', 119)" onmouseover="showTip(event, 'fs45', 119)" class="rt">StringBuilder</span><span class="pn">(</span><span class="pn">)</span><span class="pn">)</span>
            <span class="o">|&gt;?</span> <span onmouseout="hideTip(event, 'fs19', 120)" onmouseover="showTip(event, 'fs19', 120)" class="fn">string</span>
 
+    <span class="c">//test case from exercism</span>
     <span onmouseout="hideTip(event, 'fs40', 121)" onmouseover="showTip(event, 'fs40', 121)" class="fn">toRna</span> <span class="s">&quot;ACGTGGTCTTAA&quot;</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs17', 122)" onmouseover="showTip(event, 'fs17', 122)" class="id">Some</span> <span class="s">&quot;UGCACCAGAAUU&quot;</span><span class="pn">)</span>
 </code></pre></td>
 </tr>

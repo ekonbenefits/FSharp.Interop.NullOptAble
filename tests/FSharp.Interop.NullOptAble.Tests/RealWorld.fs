@@ -72,6 +72,8 @@ let ``IsPrime Example`` ()=
         if check 2 then Some n else None
 
     let prime = chooseSeq { for n in 1..100 do yield! isprime n }
+
+    //verified against list
     prime |> Seq.toList
           |> should equal [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 
                             41; 43; 47; 53; 59; 61; 67; 71; 73; 79; 83; 89; 97]
@@ -98,7 +100,8 @@ let ``RNA transcriptions `` () =
             let! sb' = dna' |> Seq.fold combine (Some <| StringBuilder())
             return sb'.ToString()
         }
-    
+        
+    //test case from exercism
     toRna "ACGTGGTCTTAA" |> should equal (Some "UGCACCAGAAUU")
 
 (** 
@@ -115,6 +118,8 @@ let ``rain drops`` () =
         } |> String.concat ""
           |> function | "" -> string(number)
                       | s -> s
+
+    //test cases from exercism
     convert 49 |> should equal "Plong"
     convert 105 |> should equal "PlingPlangPlong"
     convert 52 |> should equal "52"

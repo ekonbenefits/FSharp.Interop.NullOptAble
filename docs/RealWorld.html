@@ -117,6 +117,8 @@
 <span class="l"> 9: </span>
 <span class="l">10: </span>
 <span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span> 
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs26', 48)" onmouseover="showTip(event, 'fs26', 48)" class="fn">``IsPrime Example``</span> <span class="pn">(</span><span class="pn">)</span><span class="o">=</span>
@@ -126,6 +128,8 @@
         <span class="k">if</span> <span onmouseout="hideTip(event, 'fs29', 60)" onmouseover="showTip(event, 'fs29', 60)" class="fn">check</span> <span class="n">2</span> <span class="k">then</span> <span onmouseout="hideTip(event, 'fs12', 61)" onmouseover="showTip(event, 'fs12', 61)" class="uc">Some</span> <span onmouseout="hideTip(event, 'fs28', 62)" onmouseover="showTip(event, 'fs28', 62)" class="id">n</span> <span class="k">else</span> <span onmouseout="hideTip(event, 'fs20', 63)" onmouseover="showTip(event, 'fs20', 63)" class="uc">None</span>
 
     <span class="k">let</span> <span onmouseout="hideTip(event, 'fs31', 64)" onmouseover="showTip(event, 'fs31', 64)" class="id">prime</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs23', 65)" onmouseover="showTip(event, 'fs23', 65)" class="k">chooseSeq</span> <span class="pn">{</span> <span class="k">for</span> <span class="id">n</span> <span class="k">in</span> <span class="n">1..</span><span class="n">100</span> <span class="k">do</span> <span class="k">yield!</span> <span onmouseout="hideTip(event, 'fs27', 66)" onmouseover="showTip(event, 'fs27', 66)" class="id">isprime</span> <span class="id">n</span> <span class="pn">}</span>
+
+    <span class="c">//verified against list</span>
     <span onmouseout="hideTip(event, 'fs31', 67)" onmouseover="showTip(event, 'fs31', 67)" class="id">prime</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs24', 68)" onmouseover="showTip(event, 'fs24', 68)" class="m">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs32', 69)" onmouseover="showTip(event, 'fs32', 69)" class="id">toList</span>
           <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">[</span><span class="n">2</span><span class="pn">;</span> <span class="n">3</span><span class="pn">;</span> <span class="n">5</span><span class="pn">;</span> <span class="n">7</span><span class="pn">;</span> <span class="n">11</span><span class="pn">;</span> <span class="n">13</span><span class="pn">;</span> <span class="n">17</span><span class="pn">;</span> <span class="n">19</span><span class="pn">;</span> <span class="n">23</span><span class="pn">;</span> <span class="n">29</span><span class="pn">;</span> <span class="n">31</span><span class="pn">;</span> <span class="n">37</span><span class="pn">;</span> 
                             <span class="n">41</span><span class="pn">;</span> <span class="n">43</span><span class="pn">;</span> <span class="n">47</span><span class="pn">;</span> <span class="n">53</span><span class="pn">;</span> <span class="n">59</span><span class="pn">;</span> <span class="n">61</span><span class="pn">;</span> <span class="n">67</span><span class="pn">;</span> <span class="n">71</span><span class="pn">;</span> <span class="n">73</span><span class="pn">;</span> <span class="n">79</span><span class="pn">;</span> <span class="n">83</span><span class="pn">;</span> <span class="n">89</span><span class="pn">;</span> <span class="n">97</span><span class="pn">]</span>
@@ -154,6 +158,7 @@
 <span class="l">19: </span>
 <span class="l">20: </span>
 <span class="l">21: </span>
+<span class="l">22: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs33', 70)" onmouseover="showTip(event, 'fs33', 70)" class="fn">``RNA transcriptions ``</span> <span class="pn">(</span><span class="pn">)</span> <span class="o">=</span>
@@ -174,7 +179,8 @@
             <span class="k">let!</span> <span class="id">sb&#39;</span> <span class="o">=</span> <span class="id">dna&#39;</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs24', 94)" onmouseover="showTip(event, 'fs24', 94)" class="id">Seq</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs44', 95)" onmouseover="showTip(event, 'fs44', 95)" class="id">fold</span> <span onmouseout="hideTip(event, 'fs37', 96)" onmouseover="showTip(event, 'fs37', 96)" class="id">combine</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs12', 97)" onmouseover="showTip(event, 'fs12', 97)" class="id">Some</span> <span class="o">&lt;|</span> <span onmouseout="hideTip(event, 'fs39', 98)" onmouseover="showTip(event, 'fs39', 98)" class="id">StringBuilder</span><span class="pn">(</span><span class="pn">)</span><span class="pn">)</span>
             <span class="k">return</span> <span class="id">sb&#39;</span><span class="pn">.</span><span class="id">ToString</span><span class="pn">(</span><span class="pn">)</span>
         <span class="pn">}</span>
-    
+        
+    <span class="c">//test case from exercism</span>
     <span onmouseout="hideTip(event, 'fs34', 99)" onmouseover="showTip(event, 'fs34', 99)" class="fn">toRna</span> <span class="s">&quot;ACGTGGTCTTAA&quot;</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="pn">(</span><span onmouseout="hideTip(event, 'fs12', 100)" onmouseover="showTip(event, 'fs12', 100)" class="id">Some</span> <span class="s">&quot;UGCACCAGAAUU&quot;</span><span class="pn">)</span>
 </code></pre></td>
 </tr>
@@ -194,6 +200,8 @@
 <span class="l">12: </span>
 <span class="l">13: </span>
 <span class="l">14: </span>
+<span class="l">15: </span>
+<span class="l">16: </span>
 </pre></td>
 <td class="snippet"><pre class="fssnip highlighted"><code lang="fsharp"><span class="pn">[&lt;</span><span class="id">Fact</span><span class="pn">&gt;]</span>
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs45', 101)" onmouseover="showTip(event, 'fs45', 101)" class="fn">``rain drops``</span> <span class="pn">(</span><span class="pn">)</span> <span class="o">=</span>
@@ -206,6 +214,8 @@
         <span class="pn">}</span> <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs52', 118)" onmouseover="showTip(event, 'fs52', 118)" class="m">String</span><span class="pn">.</span><span onmouseout="hideTip(event, 'fs53', 119)" onmouseover="showTip(event, 'fs53', 119)" class="id">concat</span> <span class="s">&quot;&quot;</span>
           <span class="o">|&gt;</span> <span class="k">function</span> <span class="pn">|</span> <span class="s">&quot;&quot;</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs36', 120)" onmouseover="showTip(event, 'fs36', 120)" class="fn">string</span><span class="pn">(</span><span onmouseout="hideTip(event, 'fs47', 121)" onmouseover="showTip(event, 'fs47', 121)" class="id">number</span><span class="pn">)</span>
                       <span class="pn">|</span> <span onmouseout="hideTip(event, 'fs54', 122)" onmouseover="showTip(event, 'fs54', 122)" class="id">s</span> <span class="k">-&gt;</span> <span onmouseout="hideTip(event, 'fs54', 123)" onmouseover="showTip(event, 'fs54', 123)" class="id">s</span>
+
+    <span class="c">//test cases from exercism</span>
     <span onmouseout="hideTip(event, 'fs46', 124)" onmouseover="showTip(event, 'fs46', 124)" class="fn">convert</span> <span class="n">49</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;Plong&quot;</span>
     <span onmouseout="hideTip(event, 'fs46', 125)" onmouseover="showTip(event, 'fs46', 125)" class="fn">convert</span> <span class="n">105</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;PlingPlangPlong&quot;</span>
     <span onmouseout="hideTip(event, 'fs46', 126)" onmouseover="showTip(event, 'fs46', 126)" class="fn">convert</span> <span class="n">52</span> <span class="o">|&gt;</span> <span class="id">should</span> <span class="id">equal</span> <span class="s">&quot;52&quot;</span>
