@@ -1,14 +1,14 @@
 namespace FSharp.Interop.NullOptAble
-  /// **Description *
+  ///**Description**
   ///
-  /// Optional Operators that you can use for defaults, bindings and mapping.
-  /// See [examples](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorldOperators.html) for usage.
+  ///Optional Operators that you can use for defaults, bindings and mapping.
+  ///See [examples](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorldOperators.html) for usage.
   ///
   module Operators = begin
 
     ///**Description**
     ///
-    /// Overloaded defaultWith operator
+    ///Overloaded defaultWith operator
     ///
     ///**Parameters**
     ///
