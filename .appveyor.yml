@@ -1,6 +1,7 @@
 image: Visual Studio 2017
 
 version: "{build}" #until it gets updated at install
+configuration: Debug
 
 environment:
   base_version: 0.9.0
