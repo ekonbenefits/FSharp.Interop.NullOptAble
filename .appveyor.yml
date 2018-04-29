@@ -1,11 +1,16 @@
 image: Visual Studio 2017
 
-version: 0.9.0-alpha{build}
+environment:
+  base_version: 0.9.0
+  github_deploy: false 
+  is_prerelease: true
+  package_version: $(BASE_VERSION)-alpha$(APPVEYOR_BUILD_NUMBER)
 
 build: off
 test: off
 
 install:
+  - ps: Update-AppveyorBuild -Version "$env:PACKAGE_VERSION"
   - ps: dotnet restore /p:Version=$Env:APPVEYOR_BUILD_VERSION
 
 test_script:
@@ -16,10 +21,38 @@ artifacts:
     name: NuGet
 
 deploy:
-  provider: NuGet
-  server: https://www.myget.org/F/ci-fsharp-optionbuilder/api/v2/package
-  api_key:
-    secure: kuAmus0VoO5L9Vcqkh9n9hCZCcHnl1Q0+UsM5KX8uGpAftmkiMwtwRCrqDw1oBLR
-  skip_symbols: false
-  symbol_server: https://www.myget.org/F/ci-fsharp-optionbuilder/symbols/api/v2/package       
-  artifact: /.*\.nupkg/
+  - provider: NuGet
+    server: https://www.myget.org/F/ci-fsharp-optionbuilder/api/v2/package
+    api_key:
+      secure: kuAmus0VoO5L9Vcqkh9n9hCZCcHnl1Q0+UsM5KX8uGpAftmkiMwtwRCrqDw1oBLR
+    skip_symbols: false
+    symbol_server: https://www.myget.org/F/ci-fsharp-optionbuilder/symbols/api/v2/package       
+    artifact: /.*\.nupkg/
+  - provider: GitHub
+    artifact: /.*\.nupkg/           # upload all NuGet packages to release assets
+    tag: v$(PACKAGE_VERSION)
+    description: 'Release description'
+    auth_token: 
+      secure: JyJYSgeJYFmkaFy7Gro2dQyv/fqZwz1EzJmp2Nf99H6HUpxNR7ilA/OGPcQk0pA8 #jay's public repo token
+    draft: true
+    prerelease: $(is_prerelease)
+    on:
+      githubdeploy: true
+
+
+for:
+  - branches:
+      only:
+        - /deploy-v.*-beta.*/
+    environment:
+      package_version: $(BASE_VERSION)-beta$(APPVEYOR_BUILD_NUMBER)
+      is_prerelease: true
+      github_deploy: true
+  - branches:
+      only:
+        - /deploy-v[\d,.]*/
+    configuration: Release
+    environment:
+      package_version: $(BASE_VERSION).$(APPVEYOR_BUILD_NUMBER)
+      is_prerelease: false
+      github_deploy: true

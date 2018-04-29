@@ -17,7 +17,6 @@ let applyExecutionPermissionUnix _ = ()
 open System
 open System.IO
 open System.Diagnostics
-open System.IO
 
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 
@@ -64,13 +63,22 @@ printfn "Finished Paket install."
 open FSharp.Formatting.Razor
 open FSharp.Data
 
+/// variables
+type FsProj = XmlProvider<"../src/FSharp.Interop.NullOptAble/FSharp.Interop.NullOptAble.fsproj">
+let fsProj = FsProj.GetSample()
+let projName = "FSharp.Interop.NullOptAble"
+let configuration = "Debug"
 let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
+let srcDir =  Path.Combine(root, "src")
+let testDir = Path.Combine(root, "tests", sprintf "%s.Tests" projName)
+let docContent = "doc-content"
+let outputDir = Path.Combine(root, "docs")
+///end variables
 
 printfn "Copy Doc Content."
-let outputDir = Path.Combine(root, "docs")
+
 createDir outputDir
 
-let docContent = "doc-content"
 let docStyles = Path.Combine(docContent, "styles")
 let baseOutput = Path.Combine(outputDir, "content")
 createDir docStyles
@@ -82,66 +90,59 @@ for dir in Directory.GetDirectories(docStyles) do
 for file in Directory.GetFiles(docStyles) do
     File.Copy(file, Path.Combine(baseOutput, Path.GetFileName(file)), overwrite = true)
 
-let dll = Path.Combine(root, 
-                        "src",
-                        "FSharp.Interop.NullOptAble",
-                        "bin",
-                        "Debug",
-                        "netstandard1.6", 
-                        "FSharp.Interop.NullOptAble.dll")
 
-let options = sprintf "--reference:\"%s\"" dll
 
 let template = "docpage.cshtml"
 let templateDirs = [ Path.Combine(docContent, "templates");
         Path.Combine(docContent, "templates", "reference") ]
 
-type FsProj = XmlProvider<"../src/FSharp.Interop.NullOptAble/FSharp.Interop.NullOptAble.fsproj">
-
-let fsProj = FsProj.GetSample()
-
 let projInfo =
     [ "project-author",  fsProj.PropertyGroup.Authors
       "project-summary", fsProj.PropertyGroup.Description
       "project-github",  fsProj.PropertyGroup.PackageProjectUrl
-      "project-nuget", "nugetUrl"
-      "project-name", "FSharp.Interop.NullOptAble"
-      "root", "/FSharp.Interop.NullOptAble"
+      "project-nuget", sprintf "https://www.nuget.org/packages/%s" projName
+      "project-name", projName
+      "root", sprintf "/%s" projName
       ]
 
+let targetFramework = fsProj.PropertyGroup.TargetFramework
+let dll = Path.Combine(srcDir,
+                        projName,
+                        "bin",
+                        configuration,
+                        targetFramework, 
+                        sprintf "%s.dll" projName)
+let options = sprintf "--reference:\"%s\"" dll
+
+let processMdFile input output =
+    RazorLiterate.ProcessMarkdown(
+          Path.Combine(root,input),
+          templateFile = template,
+          output = Path.Combine(outputDir, output),
+          replacements = projInfo,
+          compilerOptions = options,
+          layoutRoots = templateDirs,
+          includeSource = true )
+let processFsFile input output =
+    RazorLiterate.ProcessScriptFile(
+          input,
+          templateFile = template,
+          output = Path.Combine(outputDir, output),
+          replacements = projInfo,
+          compilerOptions = options,
+          layoutRoots = templateDirs,
+          includeSource = true )
+
+//custom files
 printfn "Generate Readme."
 
-RazorLiterate.ProcessMarkdown(
-      Path.Combine(root,"Readme.md"),
-      templateFile = template,
-      output = Path.Combine(outputDir, "index.html"),
-      replacements = projInfo,
-      compilerOptions = options,
-      layoutRoots = templateDirs,
-      includeSource = true )
+processMdFile (Path.Combine(root,"README.md")) "index.html"
 
 printfn "Generate Other Docs."
-let testDir = Path.Combine(root, "tests", "FSharp.Interop.NullOptAble.Tests")
 
-RazorLiterate.ProcessScriptFile(
-      Path.Combine(testDir,"RealWorld.fs"),
-      templateFile = template,
-      output = Path.Combine(outputDir, "RealWorld.html"),
-      replacements = projInfo,
-      compilerOptions = options,
-      layoutRoots = templateDirs,
-      includeSource = true )
-
-RazorLiterate.ProcessScriptFile(
-      Path.Combine(testDir,"RealWorldOperators.fs"),
-      templateFile = template,
-      output = Path.Combine(outputDir, "RealWorldOperators.html"),
-      replacements = projInfo,
-      compilerOptions = options,
-      layoutRoots = templateDirs,
-      includeSource = true )
-
-
+processFsFile (Path.Combine(testDir,"RealWorld.fs")) "RealWorld.html"
+processFsFile (Path.Combine(testDir,"RealWorldOperators.fs")) "RealWorldOperators.html"
+//end custom files
 let refDir = Path.Combine(outputDir, "reference")
 printfn "Generate API Reference."
 createDir(refDir)
