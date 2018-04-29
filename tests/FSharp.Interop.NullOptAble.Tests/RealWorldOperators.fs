@@ -12,7 +12,7 @@ open Xunit
 open FsUnit.Xunit
 
 (**
-    DefaultWith operator. Handy abbreviation of matching a null/nullable/none case.
+DefaultWith operator. Handy abbreviation of matching a null/nullable/none case.
 *)
 [<Fact>] 
 let ``null defaultWith`` () =
@@ -23,8 +23,8 @@ let `` defaultWith not called if not needed`` () =
     x |?-> lazy (failwith "doesn't get run") |> should equal 3
 
 (**
-    Binding operator means function isn't applied if a `None` parameter. 
-    However I suggest using [computational expressions](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html) over the bind operators
+Binding operator means function isn't applied if a `None` parameter. 
+However I suggest using [computational expressions](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html) over the bind operators
 *)
 [<Fact>]          
 let ``Basic concat`` () =
@@ -38,7 +38,7 @@ let ``Basic concat none`` () =
     (x,y) ||>? ( + ) |> should equal (None)
 
 (**
-    Binding doesn't work if function returns a non-`_:null or Nullable<_> or Option<_>`. You can use map operator instead `|>?@` but becareful don't use it on something that could be null.
+Binding doesn't work if function returns a non-`_:null or Nullable<_> or Option<_>`. You can use map operator instead `|>?@` but becareful don't use it on something that could be null.
 *)
 [<Fact>]
 let ``Basic nullable math`` () =
