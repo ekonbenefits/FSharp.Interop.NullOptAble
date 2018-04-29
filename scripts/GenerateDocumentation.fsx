@@ -73,6 +73,19 @@ let srcDir =  Path.Combine(root, "src")
 let testDir = Path.Combine(root, "tests", sprintf "%s.Tests" projName)
 let docContent = "doc-content"
 let outputDir = Path.Combine(root, "docs")
+
+let targetFramework = fsProj.PropertyGroup.TargetFramework
+let binDir =Path.Combine(srcDir,
+                        projName,
+                        "bin",
+                        configuration,
+                        targetFramework)
+
+let getDllNamed name =
+    Path.Combine(binDir, sprintf "%s.dll" name)
+
+let dll = getDllNamed projName
+
 ///end variables
 
 printfn "Copy Doc Content."
@@ -105,13 +118,7 @@ let projInfo =
       "root", sprintf "/%s" projName
       ]
 
-let targetFramework = fsProj.PropertyGroup.TargetFramework
-let dll = Path.Combine(srcDir,
-                        projName,
-                        "bin",
-                        configuration,
-                        targetFramework, 
-                        sprintf "%s.dll" projName)
+
 let options = sprintf "--reference:\"%s\"" dll
 
 let processMdFile input output =
@@ -131,7 +138,7 @@ let processFsFile input output =
           replacements = projInfo,
           compilerOptions = options,
           layoutRoots = templateDirs,
-          includeSource = true )
+          includeSource = true)
 
 //custom files
 printfn "Generate Readme."
@@ -152,6 +159,7 @@ RazorMetadataFormat.Generate( dll,
                               templateDirs,
                               parameters = projInfo,
                               sourceRepo = sourceRepo,
-                              sourceFolder = root)
+                              sourceFolder = root,
+                              libDirs = [binDir])
 
 printfn "Finished Generating Docs."
