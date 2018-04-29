@@ -11,7 +11,7 @@ This project creates an `option { }` computational expression and `chooseSeq { }
 With `chooseSeq` if you `yield!` a sequence it will flatten/collect it. If you want a sequence of sequences use `let! s = nullPossibleSequence;; yield s` or `yield! Some notNullSeq`
 
 General Example:
-```
+```fsharp
 let x = Nullable(3)
 let y = Nullable(3)
 option {
