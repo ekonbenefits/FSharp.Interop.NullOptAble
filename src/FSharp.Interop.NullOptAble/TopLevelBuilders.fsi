@@ -41,6 +41,10 @@ module TopLevelBuilders =
     ///
     val option : OptionBuilder
 
+    ///**Description**
+    ///
+    /// Module to help with chooseSeq expressions.
+    ///
     module ChooseSeq =
       ///**Description**
       ///
@@ -85,10 +89,12 @@ module TopLevelBuilders =
 
     ///**Description**
     ///
-    /// choose sequence computation expression
-    /// ! will bind types that accept null, nullables, and options.
-    /// yield only chooses values.
-    /// yield a sequence will flatten it.
+    ///choose sequence computation expression
+    //
+    ///  * ! will bind types that accept null, nullables, and options.
+    ///  * yield only chooses values.
+    ///  * yield a sequence will flatten it.
+    ///  * seq is delayed evaluation
     ///
     ///**Output Type**
     ///

@@ -24,7 +24,7 @@ let `` defaultWith not called if not needed`` () =
 
 (**
 Binding operator means function isn't applied if a `None` parameter. 
-However I suggest using [computational expressions](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html) over the bind operators
+However I suggest using [computational expressions](https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html) over these bind operators in most cases.
 *)
 [<Fact>]          
 let ``Basic concat`` () =
