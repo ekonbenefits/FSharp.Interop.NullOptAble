@@ -67,7 +67,13 @@ module TopLevelBuilders =
             let m' = m |> Option.ofObj
             this.Bind(m', f)
 
-        member __.Combine(a, b) =  Seq.append a b
+        member __.Combine(a:seq<'T>, b:seq<'T>) : seq<'T>= 
+            let list =
+                match a with
+                    | :? System.Collections.Generic.List<'T> as l -> l
+                    | _ -> System.Linq.Enumerable.ToList(a) 
+            list.AddRange(b)
+            upcast list
 
         member __.Delay(f: unit -> _) = Seq.delay f
 
