@@ -35,25 +35,21 @@ module TopLevelBuilders =
     module ChooseSeq =
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
 
+    type private CombineOptimized<'T>() =
+        inherit System.Collections.Generic.List<'T>()
+
     type ChooseSeqBuilder() =
         member __.Zero<'T>() = Seq.empty<'T>
 
         member __.Yield(x: 'T) = Seq.singleton x
 
-        member this.YieldFrom(m: 'T option) =  m |> function | None -> this.Zero ()
-                                                             | Some x -> this.Yield(x)
-        member this.YieldFrom(m: 'T Nullable) =  m |> Option.ofNullable
-                                                   |> this.YieldFrom
-        member this.YieldFrom(m: 'T when 'T:null) = m |> Option.ofObj
-                                                      |> this.YieldFrom
-        member this.YieldFrom(m: 'T seq) = m |> Option.ofObj
-                                             |> Option.defaultValue (this.Zero<'T>())
-
-        //mrg special casing string, is this really okay,
-        //it's a strange type, or is this a design issue manifesting?
-        member this.YieldFrom(m: string) = m |> Option.ofObj
-                                             |> Option.map(Seq.toArray >> Seq.ofArray)
-                                             |> Option.defaultValue (this.Zero<char>())
+        member this.YieldFrom(m: 'T option) : 'T seq = 
+                m |> function | None -> this.Zero ()
+                              | Some x -> this.Yield(x)
+    
+        member this.YieldFrom(m: 'T seq) :'T seq =
+                m |> Option.ofObj
+                  |> Option.defaultValue (this.Zero<'T>())
 
         member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
             match m with
@@ -70,8 +66,10 @@ module TopLevelBuilders =
         member __.Combine(a:seq<'T>, b:seq<'T>) : seq<'T>= 
             let list =
                 match a with
-                    | :? System.Collections.Generic.List<'T> as l -> l
-                    | _ -> System.Linq.Enumerable.ToList(a) 
+                    | :? CombineOptimized<'T> as l -> l
+                    | _ -> let l = CombineOptimized<'T>()
+                           l.AddRange(a)
+                           l
             list.AddRange(b)
             upcast list
 

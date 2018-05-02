@@ -30,6 +30,12 @@ let ``Basic None empty sequence`` () =
         yield! None
     } |> Seq.length |> should equal 0
 
+[<Fact>]
+let ``Basic string yield`` () =
+    chooseSeq {
+        yield! "123"
+    } |> List.ofSeq |> should equal ['1';'2';'3']
+
 
 [<Fact>]
 let ``Yield Sequence`` () =
@@ -81,9 +87,8 @@ let ``Yield Sequence ever other`` () =
 let ``Rainbow int none Sequence`` () =
     let newSeq = chooseSeq {
         yield 1
-        yield! Nullable 2
         yield! Some 3
-        yield! [4]
+        yield! [4;5]
         yield! None
     }
     newSeq |> Seq.length |> should equal 4
@@ -146,3 +151,14 @@ let ``Cleaning up disposables when throwing exception`` () =
         } |> List.ofSeq |> ignore
     delayedExceptionThrow |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
+
+[<Fact>]
+let ``Mutable List Double Check`` () =  
+    let mutList = System.Collections.Generic.List<int>()
+    mutList.Add(1)
+    mutList.Add(2)
+    chooseSeq{
+        yield! mutList
+        yield! mutList
+        yield! mutList
+    } |> Seq.length |> should equal 6
