@@ -161,3 +161,11 @@ let ``Mutable List Double Check`` () =
         yield! mutList
         yield! mutList
     } |> Seq.length |> should equal 6
+
+
+[<Fact>]
+let ``Stack Safe check`` () =  
+    chooseSeq{
+       for i in 1..100000 do
+          yield i
+    } |> Seq.length |> should equal 100000
