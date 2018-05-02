@@ -30,12 +30,6 @@ let ``Basic None empty sequence`` () =
         yield! None
     } |> Seq.length |> should equal 0
 
-[<Fact>]
-let ``Basic string yield`` () =
-    chooseSeq {
-        yield! "123"
-    } |> List.ofSeq |> should equal ['1';'2';'3']
-
 
 [<Fact>]
 let ``Yield Sequence`` () =
@@ -49,7 +43,9 @@ let ``Yield Sequence`` () =
 [<Fact>]
 let ``Yield Sequence 2`` () =
     let newSeq = chooseSeq {
-        for i in 1..10 do yield! Some(i)
+        for i in 1..10 do
+            let! i' = Some(i)
+            yield i'
     }
     newSeq |> should contain 3
     newSeq |> should contain 4
@@ -58,7 +54,9 @@ let ``Yield Sequence 2`` () =
 [<Fact>]
 let ``Yield Sequence None`` () =
     let newSeq = chooseSeq {
-        for _ in 1..10 do yield! None
+        for _ in 1..10 do 
+            let! i' = None
+            yield i'
     }
     newSeq |> Seq.length |> should equal 0
  
@@ -78,7 +76,7 @@ let ``Yield Sequence ever other`` () =
             match i % 3 with
                 | 0 -> yield! None
                 | 1 -> yield! Some(3)
-                | 2 -> yield! [1..3]
+                | 2 -> yield! ([1..3] |> Seq.map Nullable)
                 | _ -> failwith "nope"
     }
     newSeq |> Seq.length |> should equal 16
@@ -88,10 +86,10 @@ let ``Rainbow int none Sequence`` () =
     let newSeq = chooseSeq {
         yield 1
         yield! Some 3
-        yield! [4;5]
+        yield! [Nullable(4)]
         yield! None
     }
-    newSeq |> Seq.length |> should equal 4
+    newSeq |> Seq.length |> should equal 3
 
 [<Fact>]
 let ``Rainbow string null Sequence`` () =
@@ -101,11 +99,12 @@ let ``Rainbow string null Sequence`` () =
         yield! None
         yield! Some "2"
         yield! ["3"]
+        yield! [Some("4");None;Some("5")]
         let! s' = s
         yield s'
     }
-    newSeq |> Seq.length |> should equal 3
-    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"]
+    newSeq |> Seq.length |> should equal 5
+    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"]
 
 
 [<Fact>]
@@ -154,9 +153,9 @@ let ``Cleaning up disposables when throwing exception`` () =
 
 [<Fact>]
 let ``Mutable List Double Check`` () =  
-    let mutList = System.Collections.Generic.List<int>()
-    mutList.Add(1)
-    mutList.Add(2)
+    let mutList = System.Collections.Generic.List<int option>()
+    mutList.Add(Some(1))
+    mutList.Add(Some(2))
     chooseSeq{
         yield! mutList
         yield! mutList

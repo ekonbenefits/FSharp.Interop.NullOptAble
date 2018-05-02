@@ -46,9 +46,19 @@ module TopLevelBuilders =
         member this.YieldFrom(m: 'T option) : 'T seq = 
                 m |> function | None -> this.Zero ()
                               | Some x -> this.Yield(x)
-    
-        member this.YieldFrom(m: 'T seq) :'T seq =
+        member this.YieldFrom(m: 'T Nullable seq) :'T seq =
                 m |> Option.ofObj
+                  |> Option.map (Seq.choose Option.ofNullable)
+                  |> Option.defaultValue (this.Zero<'T>())
+
+        member this.YieldFrom(m: 'T seq when 'T:null) :'T seq =
+                m |> Option.ofObj
+                  |> Option.map (Seq.choose Option.ofObj)
+                  |> Option.defaultValue (this.Zero<'T>())
+    
+        member this.YieldFrom(m: 'T option seq) :'T seq =
+                m |> Option.ofObj
+                  |> Option.map (Seq.choose id)
                   |> Option.defaultValue (this.Zero<'T>())
 
         member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 

@@ -71,7 +71,9 @@ let ``IsPrime Example`` ()=
             n <> 1 && (i > n/2 || (n % i <> 0 && check (i + 1)))
         if check 2 then Some n else None
 
-    let prime = chooseSeq { for n in 1..100 do yield! isprime n }
+    let prime = chooseSeq { for n in 1..100 do 
+                                let! p = isprime n
+                                yield p }
 
     //verified against list
     prime |> Seq.toList
@@ -112,9 +114,11 @@ let ``rain drops`` () =
     let convert (number: int): string =
         let drop x s = if number % x = 0 then Some s else None
         chooseSeq {
-            yield! drop 3 "Pling"
-            yield! drop 5 "Plang"
-            yield! drop 7 "Plong"
+            yield! [ 
+                    drop 3 "Pling"
+                    drop 5 "Plang"
+                    drop 7 "Plong"
+                   ]
         } |> String.concat ""
           |> function | "" -> string(number)
                       | s -> s

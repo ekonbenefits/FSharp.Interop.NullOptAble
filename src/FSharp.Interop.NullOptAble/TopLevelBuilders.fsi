@@ -79,7 +79,11 @@ module TopLevelBuilders =
         member While : guard:(unit -> bool) * delayedExpr:seq<'g> -> seq<'g>
         member Yield : x:'T -> seq<'T>
         member YieldFrom : m:'T option -> seq<'T>
-        member YieldFrom : m:seq<'T> -> seq<'T>
+        member YieldFrom : m:seq<'T option> -> seq<'T>
+        member YieldFrom : m:seq<System.Nullable<'T>> -> seq<'T>
+                when 'T : (new : unit -> 'T) and 'T : struct and
+                     'T :> System.ValueType
+        member YieldFrom : m:seq<'T> -> seq<'T> when 'T: null
         member Zero : unit -> seq<'T>
 
     ///**Description**
