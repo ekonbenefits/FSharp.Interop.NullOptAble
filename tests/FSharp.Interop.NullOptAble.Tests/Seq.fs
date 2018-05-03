@@ -87,9 +87,11 @@ let ``Rainbow int none Sequence`` () =
         yield 1
         yield! Some 3
         yield! [Nullable(4)]
+        yield! Option.ofTryTuple <| Int32.TryParse("5")
+        yield! Option.ofTryTuple <| Int32.TryParse("abfa")
         yield! None
     }
-    newSeq |> Seq.length |> should equal 3
+    newSeq |> Seq.length |> should equal 4
 
 [<Fact>]
 let ``Rainbow string null Sequence`` () =
@@ -100,11 +102,14 @@ let ``Rainbow string null Sequence`` () =
         yield! Some "2"
         yield! ["3"]
         yield! [Some("4");None;Some("5")]
+        yield! Option.ofStringWhenNot String.IsNullOrEmpty <| ""
+        yield! Option.ofStringWhenNot String.IsNullOrWhiteSpace <| "   "
+        yield! Option.ofStringWhenNot String.IsNullOrWhiteSpace <| "6"
         let! s' = s
         yield s'
     }
-    newSeq |> Seq.length |> should equal 5
-    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"]
+    newSeq |> Seq.length |> should equal 6
+    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"; "6"]
 
 
 [<Fact>]

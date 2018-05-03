@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Namespaces - FSharp.Interop.NullOptAble</title>
+    <title>Option - FSharp.Interop.NullOptAble</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Jay Tuley">
@@ -35,46 +35,95 @@
         <div class="span9" id="main">
           
 
-<h1>FSharp.Interop.NullOptAble</h1>
 
 
-  <h2>FSharp.Interop.NullOptAble Namespace</h2>
-    <div>
-      <table class="table table-bordered module-list">
+<h1>Option</h1>
+<p>
+  <span>Namespace: FSharp.Interop.NullOptAble</span><br />
+</p>
+<div class="xmldoc">
+</div>
+
+<!-- Render nested types and modules, if there are any -->
+
+  <h3>Functions and values</h3>
+  <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Module</td><td>Description</td></tr>
+      <tr><td>Function or value</td><td>Description</td></tr>
     </thead>
     <tbody>
-        <tr>
-          <td class="module-name">
-            <a href="fsharp-interop-nulloptable-operators.html">Operators</a>
-          </td>
-          <td class="xmldoc"><p><strong>Description</strong></p>
-<p>Optional Operators that you can use for defaults, bindings and mapping.
-See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorldOperators.html">examples</a> for usage.</p>
+      <tr>
+        <td class="member-name">
 
-</td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fsharp-interop-nulloptable-option.html">Option</a>
-          </td>
-          <td class="xmldoc"></td>
-        </tr>
-        <tr>
-          <td class="module-name">
-            <a href="fsharp-interop-nulloptable-toplevelbuilders.html">TopLevelBuilders</a>
-          </td>
-          <td class="xmldoc"><p><strong>Description</strong></p>
-<p>Computation expressions <code>option {}</code> and <code>chooseSeq {}</code>.
-See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html">examples</a> for usage.</p>
+          <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
+            ofStringWhen predicate str
+          </code>
+          <div class="tip" id="14">
+            <strong>Signature:</strong> predicate:(string -&gt; bool) -&gt; str:string -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L8-8" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p><strong>Description</strong></p>
+<p><strong>Parameters</strong>
+<em> <code>predicate</code> - parameter of type <code>string -&gt; bool</code>
+</em> <code>str</code> - parameter of type <code>string</code></p>
+<p><strong>Output Type</strong>
+* <code>string option</code></p>
 
-</td>
-        </tr>
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+            ofStringWhenNot predicate str
+          </code>
+          <div class="tip" id="15">
+            <strong>Signature:</strong> predicate:(string -&gt; bool) -&gt; str:string -&gt; string option<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L9-9" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p><strong>Description</strong></p>
+<p><strong>Parameters</strong>
+<em> <code>predicate</code> - parameter of type <code>string -&gt; bool</code>
+</em> <code>str</code> - parameter of type <code>string</code></p>
+<p><strong>Output Type</strong>
+* <code>string option</code></p>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+            ofTryTuple tryTuple
+          </code>
+          <div class="tip" id="16">
+            <strong>Signature:</strong> tryTuple:(bool * &#39;a) -&gt; &#39;a option<br />
+                          <strong>Type parameters:</strong> 'a          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L7-7" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p><strong>Description</strong></p>
+
+
+        </td>
+      </tr>
     </tbody>
   </table>
-
-    </div>
 
         </div>
         <div class="span3">
