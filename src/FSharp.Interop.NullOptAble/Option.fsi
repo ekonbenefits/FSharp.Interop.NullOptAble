@@ -1,41 +1,51 @@
 namespace FSharp.Interop.NullOptAble
+
+///Extended functions added to Option
 module Option =
+
     ///**Description**
     ///
     ///Convert a tuple result of a try method to an option type.
     ///
     ///**Parameters**
     ///
-    ///  * `tryTuple` - parameter of type `bool * 'a`
-    ///
-    val ofTryTuple : tryTuple:(bool * 'a) -> 'a option
+    ///  * `value` - parameter of type `bool * 'a`
+    [<CompiledName("OfTryTuple")>]
+    val ofTryTuple : value:(bool * 'a) -> 'a option
     
+  
     ///**Description**
     ///
-    ///Convert a string to an option type using a passed in predicate.
+    ///ofObj only when predicate returns true
     ///
     ///**Parameters**
     ///
-    ///  * `predicate` - parameter of type `string -> bool`
-    ///  * `str` - parameter of type `string`
+    ///  * `predicate` - parameter of type `'a -> bool`
+    ///  * `value` - parameter of type `'a`
     ///
     ///**Output Type**
+    ///  * `'a option`
     ///
-    ///  * `string option`
-    ///
-    val ofStringWhen : predicate:(string -> bool) -> str:string -> string option
+    [<CompiledName("OfObjWhen")>]
+    val ofObjWhen : predicate:('a -> bool) -> value:'a -> 'a option 
+            when 'a:null
     
+  
+   
+ 
     ///**Description**
     ///
-    ///Convert a string to an option type using then contrary of a passed in predicate.
+    ///ofObj only when predicate returns false
     ///
     ///**Parameters**
     ///
-    ///  * `predicate` - parameter of type `string -> bool`
-    ///  * `str` - parameter of type `string`
+    ///  * `predicate` - parameter of type `'a -> bool`
+    ///  * `value` - parameter of type `'a`
     ///
     ///**Output Type**
+    ///  * `'a option`
     ///
-    ///  * `string option`
-    val ofStringWhenNot : predicate:(string -> bool) -> str:string-> string option
+    [<CompiledName("OfObjWhenNot")>]
+    val ofObjWhenNot : predicate:('a -> bool) -> value:'a -> 'a option 
+            when 'a:null
 

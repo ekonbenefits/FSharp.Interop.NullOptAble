@@ -102,9 +102,9 @@ let ``Rainbow string null Sequence`` () =
         yield! Some "2"
         yield! ["3"]
         yield! [Some("4");None;Some("5")]
-        yield! Option.ofStringWhenNot String.IsNullOrEmpty <| ""
-        yield! Option.ofStringWhenNot String.IsNullOrWhiteSpace <| "   "
-        yield! Option.ofStringWhenNot String.IsNullOrWhiteSpace <| "6"
+        yield! Option.ofObjWhenNot String.IsNullOrEmpty <| ""
+        yield! Option.ofObjWhenNot String.IsNullOrWhiteSpace <| "   "
+        yield! Option.ofObjWhenNot String.IsNullOrWhiteSpace <| "6"
         let! s' = s
         yield s'
     }

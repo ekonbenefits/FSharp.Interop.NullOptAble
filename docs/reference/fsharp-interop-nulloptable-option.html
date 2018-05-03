@@ -42,6 +42,8 @@
   <span>Namespace: FSharp.Interop.NullOptAble</span><br />
 </p>
 <div class="xmldoc">
+<p>Extended functions added to Option</p>
+
 </div>
 
 <!-- Render nested types and modules, if there are any -->
@@ -56,11 +58,69 @@
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '14', 14)" onmouseover="showTip(event, '14', 14)">
-            ofStringWhen predicate str
+            ofObjWhen predicate value
           </code>
           <div class="tip" id="14">
-            <strong>Signature:</strong> predicate:(string -&gt; bool) -&gt; str:string -&gt; string option<br />
-                      </div>
+            <strong>Signature:</strong> predicate:(&#39;a -&gt; bool) -&gt; value:&#39;a -&gt; &#39;a option<br />
+                          <strong>Type parameters:</strong> 'a          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L10-10" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p><strong>Description</strong></p>
+<p>ofObj only when predicate returns true</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>predicate</code> - parameter of type <code>'a -&gt; bool</code></li>
+<li><code>value</code> - parameter of type <code>'a</code></li>
+</ul>
+<p><strong>Output Type</strong>
+* <code>'a option</code></p>
+
+
+              <p>CompiledName: <code>OfObjWhen</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
+            ofObjWhenNot predicate value
+          </code>
+          <div class="tip" id="15">
+            <strong>Signature:</strong> predicate:(&#39;a -&gt; bool) -&gt; value:&#39;a -&gt; &#39;a option<br />
+                          <strong>Type parameters:</strong> 'a          </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L12-12" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p><strong>Description</strong></p>
+<p>ofObj only when predicate returns false</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>predicate</code> - parameter of type <code>'a -&gt; bool</code></li>
+<li><code>value</code> - parameter of type <code>'a</code></li>
+</ul>
+<p><strong>Output Type</strong>
+* <code>'a option</code></p>
+
+
+              <p>CompiledName: <code>OfObjWhenNot</code></p>
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
+            ofTryTuple value
+          </code>
+          <div class="tip" id="16">
+            <strong>Signature:</strong> value:(bool * &#39;a) -&gt; &#39;a option<br />
+                          <strong>Type parameters:</strong> 'a          </div>
         </td>
         <td class="xmldoc">
             <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L8-8" class="github-link">
@@ -68,58 +128,14 @@
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
           <p><strong>Description</strong></p>
-<p><strong>Parameters</strong>
-<em> <code>predicate</code> - parameter of type <code>string -&gt; bool</code>
-</em> <code>str</code> - parameter of type <code>string</code></p>
-<p><strong>Output Type</strong>
-* <code>string option</code></p>
+<p>Convert a tuple result of a try method to an option type.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>value</code> - parameter of type <code>bool * 'a</code></li>
+</ul>
 
 
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '15', 15)" onmouseover="showTip(event, '15', 15)">
-            ofStringWhenNot predicate str
-          </code>
-          <div class="tip" id="15">
-            <strong>Signature:</strong> predicate:(string -&gt; bool) -&gt; str:string -&gt; string option<br />
-                      </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L9-9" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p><strong>Description</strong></p>
-<p><strong>Parameters</strong>
-<em> <code>predicate</code> - parameter of type <code>string -&gt; bool</code>
-</em> <code>str</code> - parameter of type <code>string</code></p>
-<p><strong>Output Type</strong>
-* <code>string option</code></p>
-
-
-        </td>
-      </tr>
-      <tr>
-        <td class="member-name">
-
-          <code onmouseout="hideTip(event, '16', 16)" onmouseover="showTip(event, '16', 16)">
-            ofTryTuple tryTuple
-          </code>
-          <div class="tip" id="16">
-            <strong>Signature:</strong> tryTuple:(bool * &#39;a) -&gt; &#39;a option<br />
-                          <strong>Type parameters:</strong> 'a          </div>
-        </td>
-        <td class="xmldoc">
-            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/Option.fs#L7-7" class="github-link">
-              <img src="../content/img/github.png" class="normal" />
-              <img src="../content/img/github-blue.png" class="hover" />
-            </a>
-          <p><strong>Description</strong></p>
-
-
+              <p>CompiledName: <code>OfTryTuple</code></p>
         </td>
       </tr>
     </tbody>
