@@ -4,6 +4,7 @@ open System
 open Xunit
 open FsUnit.Xunit
 open FSharp.Interop.NullOptAble.Operators
+open FSharp.Interop.NullOptAble.Experimental
 
 [<Fact>]
 let ``Basic Nulled Nullable`` () =
@@ -106,7 +107,7 @@ let ``Basic Pipe Nullable Unwrap`` () =
     let x = Nullable(3)
     x 
      |>?@ (+) 3
-     |> should equal (Some 6)
+     |> should equal (VSome 6)
 
 [<Fact>]
 let ``Basic Pipe Nullable Null`` () =
@@ -120,52 +121,50 @@ let ``Basic Pipe Null ref Unwrap`` () =
     let x = " World"
     x 
      |>?@ (+) "Hello"
-     |> should equal (Some "Hello World")
+     |> should equal (VSome "Hello World")
 
 [<Fact>]
 let ``Basic Pipe Null ref Null`` () =
     let x = null
     x
      |>?@ (+) "Hello"
-     |> should equal None
+     |> should equal VNone
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap left pipe`` () =
     let x = " World"
     (+) "Hello" @?<| x
-     |> should equal (Some "Hello World")
+     |> should equal (VSome "Hello World")
 
 [<Fact>]
 let ``Basic Pipe Null ref Null left pipe`` () =
     let x = null
     (+) "Hello" @?<| x
-     |> should equal None
+     |> should equal VNone
 
 [<Fact>]
 let ``Basic left pipe bind null`` () =
     let x = null
-    Some ?<| x
-     |> should equal None
-    Some @?<| x
-     |> should equal None
+    VSome ?<| x
+     |> should equal VNone
     id @?<| x
-     |> should equal None
+     |> should equal VNone
 [<Fact>]
 let ``Basic left pipe bind`` () =
     let x = "Hello"
     Some ?<| x
-     |> should equal (Some "Hello")
+     |> should equal (VSome "Hello")
     Some @?<| x
-     |> should equal (Some (Some "Hello"))
+     |> should equal (VSome (Some "Hello"))
     id @?<| x
-     |> should equal (Some "Hello")
+     |> should equal (VSome "Hello")
 
 [<Fact>]
 let ``Basic nullable math (terrible)`` () =
     let x = Nullable(3)
     let y = Nullable(3)
     x |>? (fun x'-> y |>?@ (+) x')
-    |> should equal (Some 6)
+    |> should equal (VSome 6)
 
 [<AllowNullLiteral>]
 type Node (child:Node)=
@@ -182,7 +181,7 @@ let ``Safe Navigation Operator Example`` ()=
             |>? navChild
             |>? navChild
             |>? navChild
-    result |> should equal None
+    result |> should equal VNone
 
 [<Fact>]
 let ``Safe Navigation Operator Example found`` ()=
@@ -194,9 +193,9 @@ let ``Safe Navigation Operator Example found`` ()=
             |>? navChild
             |>? navChild
             |>? navChild
-    result |> should not' (equal None)
+    result |> should not' (equal VNone)
     result |>?@ should not' (equal null) |> ignore
-    result |>? navChild |> should equal None
+    result |>? navChild |> should equal VNone
 
 
 [<Fact>]
@@ -204,18 +203,18 @@ let ``Basic map homegenous ||>`` () =
     let y = Some <| Map.ofList [("Here", "Hello World")]
     let x = Some "Here"
     (x,y) ||>? Map.tryFind
-          |> should equal (Some "Hello World")
+          |> should equal (VSome "Hello World")
 
     (Some("nope"),y) 
         ||>? Map.tryFind
-        |> should equal None 
+        |> should equal VNone 
 
 [<Fact>]
 let ``Basic map heterogenous ||>`` () =
     let y = Some <| Map.ofList [("Here", "Hello World")]
     let x = "Here"
     (x,y) ||>? Map.tryFind
-          |> should equal (Some "Hello World")
+          |> should equal (VSome "Hello World")
 
     ("nope",y) 
         ||>? Map.tryFind
@@ -226,4 +225,4 @@ let ``Basic nullable math heterogenous`` () =
     let x = Nullable(3)
     let y = Some(3)
     (x,y) ||>?@ ( + )
-          |> should equal (Some 6)
+          |> should equal (VSome 6)

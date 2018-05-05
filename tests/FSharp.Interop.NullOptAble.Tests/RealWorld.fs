@@ -6,6 +6,7 @@ Real World-ish examples
 module RealWorldTests
 open System
 open System.Text
+open FSharp.Interop.NullOptAble.Experimental
 open FSharp.Interop.NullOptAble
 (*** hide ***)
 open Xunit
@@ -17,11 +18,11 @@ open FsUnit.Xunit
 let ``Basic nullable math`` () =
     let x = Nullable(3)
     let y = Nullable(3)
-    option {
+    voption {
         let! x' = x
         let! y' = y
         return (x' + y')
-    } |> should equal (Some 6)
+    } |> should equal (VSome 6)
 
 (*** hide ***)
 [<AllowNullLiteral>]
@@ -37,12 +38,12 @@ Doing the things found in this [MSDN Blog Post did with the Safe Nav operator](h
 let ``Safe Navigation Operator Example`` ()=
     
     let parent = Node()
-    option {
+    voption {
         let! a = parent.child
         let! b = a.child
         let! c = b.child
         return c
-    } |> should equal None
+    } |> should equal VNone
     
 [<Fact>] 
 let ``Safe Navigation Operator Seq Example`` ()=
@@ -69,7 +70,7 @@ let ``IsPrime Example`` ()=
     let isprime n =
         let rec check i =
             n <> 1 && (i > n/2 || (n % i <> 0 && check (i + 1)))
-        if check 2 then Some n else None
+        if check 2 then VSome n else VNone
 
     let prime = chooseSeq { for n in 1..100 do 
                                 let! p = isprime n
@@ -85,9 +86,9 @@ Solution using `option {}` for this [RNA Transcription problem from exercism](ht
 *)
 [<Fact>]
 let ``RNA transcriptions `` () =
-    let toRna (dna: string): string option = 
-        let combine (sb:StringBuilder option) =
-            let append (c:char) = option {
+    let toRna (dna: string): string voption = 
+        let combine (sb:StringBuilder voption) =
+            let append (c:char) = voption {
                     let! sb' = sb
                     return sb'.Append(c)
                 }
@@ -96,15 +97,15 @@ let ``RNA transcriptions `` () =
             | 'C' -> 'G' |> append
             | 'T' -> 'A' |> append
             | 'A' -> 'U' |> append
-            | ___ -> None
-        option {
+            | ___ -> VNone
+        voption {
             let! dna' = dna //handles if string is null
-            let! sb' = dna' |> Seq.fold combine (Some <| StringBuilder())
+            let! sb' = dna' |> Seq.fold combine (VSome <| StringBuilder())
             return sb'.ToString()
         }
         
     //test case from exercism
-    toRna "ACGTGGTCTTAA" |> should equal (Some "UGCACCAGAAUU")
+    toRna "ACGTGGTCTTAA" |> should equal (VSome "UGCACCAGAAUU")
 
 (** 
 Solution using `chooseSeq {}` for this [Rain Drops (Fizz buzz) problem from exercism](http://exercism.io/exercises/fsharp/raindrops/readme).
