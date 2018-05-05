@@ -46,11 +46,14 @@ module Run =
         sigWriter.WriteLine("""
 ///**Description**
 /// Overloads used as the basis for operators
+open FSharp.Interop.NullOptAble.Experimental
 type NullOptAble =
     class
         (* DefaultWith overloads *)
 
         static member DefaultWith : 'a option * System.Lazy<'a> -> 'a
+        
+        static member DefaultWith : 'a voption * System.Lazy<'a> -> 'a
 
         static member DefaultWith : System.Nullable<'a> * System.Lazy<'a> -> 'a
                 when 'a : (new : unit -> 'a) and 'a : struct and 'a :> System.ValueType
@@ -59,20 +62,23 @@ type NullOptAble =
 
         fsWriter.WriteLine("""
 open System
-
+open FSharp.Interop.NullOptAble.Experimental
 type NullOptAble =
         (* DefaultWith overloads *)
+        static member DefaultWith(a: 'a voption, b: 'a Lazy) =
+            a |> ValueOption.defaultWith b.Force
 
         static member DefaultWith(a: 'a option, b: 'a Lazy) =
-            a |> Option.defaultWith b.Force
+            a |> ValueOption.ofOption 
+              |> ValueOption.defaultWith b.Force
 
         static member DefaultWith(a: 'a Nullable, b: 'a Lazy) = 
-            a |> Option.ofNullable 
-              |> Option.defaultWith b.Force
+            a |> ValueOption.ofNullable 
+              |> ValueOption.defaultWith b.Force
 
         static member DefaultWith(a: 'a when 'a:null, b: 'a Lazy) =
-            a |> Option.ofObj 
-              |> Option.defaultWith b.Force"""
+            a |> ValueOption.ofObj 
+              |> ValueOption.defaultWith b.Force"""
         )
 
 //Write Map Overloads
@@ -81,11 +87,14 @@ type NullOptAble =
                 None,
                 sprintf "%s option" letter,
                 None
+            sprintf "%s voption" letter,
+                None,
+                sprintf "%s voption" letter,
+                None
             sprintf "%s Nullable" letter,
                 None,
                 sprintf "System.Nullable<%s>" letter,
                 Some <| sprintf "%s : (new : unit -> %s) and %s : struct and %s :> System.ValueType" letter letter letter letter
-                
             sprintf "%s" letter,
                 Some <| sprintf "%s:null" letter,
                 sprintf "%s" letter, 
@@ -107,11 +116,11 @@ type NullOptAble =
 
         for a, _, sa, sw in aTypes do
             sigWriter.WriteLine(sprintf """
-        static member Map : %s * (%s -> %s) -> %s option
+        static member Map : %s * (%s -> %s) -> %s voption
                %s""" sa A C C (When.And(sw)))
             fsWriter.WriteLine(sprintf """
         static member Map(a: %s, f: %s -> %s) =
-            option { 
+            voption { 
                 let! a' = a 
                 return f a'
             }""" a A C)
@@ -130,14 +139,14 @@ type NullOptAble =
                 //signature
                 sigWriter.WriteLine(
                     sprintf """
-        static member Map2 : (%s * %s) * (%s -> %s -> %s) -> %s option
+        static member Map2 : (%s * %s) * (%s -> %s -> %s) -> %s voption
                %s""" sa sb A B C C (When.And(swa,swb)))
                 //implementation
                 fsWriter.WriteLine(
                     sprintf """
-        static member Map2((a: %s, b: %s), f: %s -> %s -> %s) : %s option
+        static member Map2((a: %s, b: %s), f: %s -> %s -> %s) : %s voption
                %s =
-            option { 
+            voption { 
                 let! a' = a 
                 let! b' = b
                 return f a' b'
@@ -158,14 +167,14 @@ type NullOptAble =
                     //signature
                     sigWriter.WriteLine(
                         sprintf """
-        static member Map3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s option
+        static member Map3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s voption
                %s""" sa sb sc A B C D D (When.And(swa,swb,swc)))
                     //implementation
                     fsWriter.WriteLine(
                         sprintf """
-        static member Map3((a: %s, b: %s, c: %s), f: %s -> %s -> %s -> %s) : %s option
+        static member Map3((a: %s, b: %s, c: %s), f: %s -> %s -> %s -> %s) : %s voption
                %s =
-            option { 
+            voption { 
                 let! a' = a 
                 let! b' = b
                 let! c' = c
@@ -184,13 +193,13 @@ type NullOptAble =
             for c,_,sc,swc in cTypes do
                 //Signature
                 sigWriter.WriteLine(sprintf """
-        static member Bind : a:%s * (%s -> %s) -> %s option
+        static member Bind : a:%s * (%s -> %s) -> %s voption
                %s""" sa A sc C (When.And(swa,swc)))
                 //Implementation
                 fsWriter.WriteLine(
                     sprintf """        
         static member Bind(a: %s, f: %s -> %s) = 
-            option {
+            voption {
                 let! a' = a
                 return! f a'
             }""" a A c)
@@ -207,14 +216,14 @@ type NullOptAble =
                 for c,wc,sc,swc in cTypes do
                     //Signature
                     sigWriter.WriteLine(sprintf """
-        static member Bind2 : (%s * %s) * (%s -> %s -> %s) -> %s option
+        static member Bind2 : (%s * %s) * (%s -> %s -> %s) -> %s voption
                %s""" sa sb A B sc C (When.And(swa,swb,swc)))
                     //Implementation
                     fsWriter.WriteLine(
                         sprintf """
-        static member Bind2((a: %s, b: %s), f: %s -> %s -> %s) : %s option
+        static member Bind2((a: %s, b: %s), f: %s -> %s -> %s) : %s voption
                %s =
-            option { 
+            voption { 
                 let! a' = a 
                 let! b' = b
                 return! f a' b'
@@ -236,13 +245,13 @@ type NullOptAble =
                     for d,wd,sd,swd in dTypes do
                         //Signature
                         sigWriter.WriteLine(sprintf """
-        static member Bind3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s option
+        static member Bind3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s voption
                %s""" sa sb sc A B C sd D (When.And(swa,swb,swc,swd)))
                         //Implementation
                         fsWriter.WriteLine(sprintf """
-        static member Bind3((a: %s, b: %s, c: %s), f: %s -> %s -> %s -> %s) : %s option
+        static member Bind3((a: %s, b: %s, c: %s), f: %s -> %s -> %s -> %s) : %s voption
                %s =
-            option { 
+            voption { 
                 let! a' = a 
                 let! b' = b
                 let! c' = c

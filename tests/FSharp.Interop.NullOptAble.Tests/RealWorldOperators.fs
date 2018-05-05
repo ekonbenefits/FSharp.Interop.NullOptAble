@@ -7,6 +7,7 @@ module RealWorldOperatorsTests
 open System
 open System.Text
 open FSharp.Interop.NullOptAble.Operators
+open FSharp.Interop.NullOptAble.Experimental
 (*** hide ***)
 open Xunit
 open FsUnit.Xunit
@@ -30,12 +31,12 @@ However I suggest using [computational expressions](https://ekonbenefits.github.
 let ``Basic concat`` () =
     let x = "Hello "
     let y = "World"
-    (x,y) ||>? ( + ) |> should equal (Some "Hello World")
+    (x,y) ||>? ( + ) |> should equal (VSome "Hello World")
 [<Fact>]
 let ``Basic concat none`` () =
     let x = "Hello "
     let y:string = null
-    (x,y) ||>? ( + ) |> should equal (None)
+    (x,y) ||>? ( + ) |> should equal (ValueOption<string>.VNone)
 
 (**
 Binding doesn't work if function returns a non-`_:null or Nullable<_> or Option<_>`. You can use map operator instead `|>?@` but becareful don't use it on something that could be null.
@@ -44,7 +45,7 @@ Binding doesn't work if function returns a non-`_:null or Nullable<_> or Option<
 let ``Basic nullable math`` () =
     let x = Nullable(3)
     let y = Nullable(3)
-    (x,y) ||>?@ ( + ) |> should equal (Some 6)
+    (x,y) ||>?@ ( + ) |> should equal (VSome 6)
 
 (*** hide ***)
 [<AllowNullLiteral>]
@@ -65,7 +66,7 @@ let ``Safe Navigation Operator Example`` ()=
         |>? getChild 
         |>? getChild
         |>? getChild
-        |> should equal None
+        |> should equal ValueOption<Node>.VNone
 
 [<Fact>] 
 let ``Safe Navigation Operator Seq Example`` ()=
@@ -83,7 +84,7 @@ let ``Safe Navigation Operator Seq Example`` ()=
                 |>? getChild
                 |>? getChild
     } 
-        |> Seq.choose id
+        |> Seq.choose Option.ofValueOption
         |> Seq.length |> should equal 1
 
 
@@ -94,8 +95,8 @@ Solution using `|>?` for this [RNA Transcription problem from exercism](http://e
 *)
 [<Fact>]
 let ``RNA transcriptions `` () =
-    let toRna (dna: string): string option = 
-        let combine (sb:StringBuilder option) =
+    let toRna (dna: string): string voption = 
+        let combine (sb:StringBuilder voption) =
             let append (c:char) = 
                 sb |>? (fun (s:StringBuilder) -> s.Append(c))       
             function
@@ -103,10 +104,10 @@ let ``RNA transcriptions `` () =
             | 'C' -> 'G' |> append
             | 'T' -> 'A' |> append
             | 'A' -> 'U' |> append
-            | ___ -> None
+            | ___ -> VNone
         dna
-           |>? Seq.fold combine (Some <| StringBuilder())
+           |>? Seq.fold combine (VSome <| StringBuilder())
            |>? string
 
     //test case from exercism
-    toRna "ACGTGGTCTTAA" |> should equal (Some "UGCACCAGAAUU")
+    toRna "ACGTGGTCTTAA" |> should equal (VSome "UGCACCAGAAUU")
