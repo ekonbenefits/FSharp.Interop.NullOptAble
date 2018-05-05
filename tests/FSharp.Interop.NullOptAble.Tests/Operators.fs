@@ -94,7 +94,7 @@ let ``Basic Pipe Option None`` () =
     let x = None
     x
      |>?@ (+) 3
-     |> should equal None
+     |> should equal ValueOption<int>.VNone
 [<Fact>]
 let ``Basic Pipe Option None Don't Runn`` () =
     let x = None
@@ -114,7 +114,7 @@ let ``Basic Pipe Nullable Null`` () =
     let x = Nullable()
     x
      |>?@ (+) 3
-     |> should equal None
+     |> should equal ValueOption<int>.VNone
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap`` () =
@@ -128,7 +128,7 @@ let ``Basic Pipe Null ref Null`` () =
     let x = null
     x
      |>?@ (+) "Hello"
-     |> should equal VNone
+     |> should equal ValueOption<string>.VNone
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap left pipe`` () =
@@ -140,7 +140,7 @@ let ``Basic Pipe Null ref Unwrap left pipe`` () =
 let ``Basic Pipe Null ref Null left pipe`` () =
     let x = null
     (+) "Hello" @?<| x
-     |> should equal VNone
+     |> should equal ValueOption<string>.VNone
 
 [<Fact>]
 let ``Basic left pipe bind null`` () =
@@ -181,7 +181,7 @@ let ``Safe Navigation Operator Example`` ()=
             |>? navChild
             |>? navChild
             |>? navChild
-    result |> should equal VNone
+    result |> should equal ValueOption<Node>.VNone
 
 [<Fact>]
 let ``Safe Navigation Operator Example found`` ()=
@@ -193,9 +193,9 @@ let ``Safe Navigation Operator Example found`` ()=
             |>? navChild
             |>? navChild
             |>? navChild
-    result |> should not' (equal VNone)
+    result |> should not' (equal ValueOption<Node>.VNone)
     result |>?@ should not' (equal null) |> ignore
-    result |>? navChild |> should equal VNone
+    result |>? navChild |> should equal ValueOption<Node>.VNone
 
 
 [<Fact>]
@@ -207,7 +207,7 @@ let ``Basic map homegenous ||>`` () =
 
     (Some("nope"),y) 
         ||>? Map.tryFind
-        |> should equal VNone 
+        |> should equal ValueOption<string>.VNone 
 
 [<Fact>]
 let ``Basic map heterogenous ||>`` () =
@@ -218,7 +218,7 @@ let ``Basic map heterogenous ||>`` () =
 
     ("nope",y) 
         ||>? Map.tryFind
-        |> should equal None 
+        |> should equal ValueOption<string>.VNone 
 
 [<Fact>]
 let ``Basic nullable math heterogenous`` () =

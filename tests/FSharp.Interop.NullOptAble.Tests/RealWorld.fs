@@ -43,7 +43,7 @@ let ``Safe Navigation Operator Example`` ()=
         let! b = a.child
         let! c = b.child
         return c
-    } |> should equal VNone
+    } |> should equal ValueOption<Node>.VNone
     
 [<Fact>] 
 let ``Safe Navigation Operator Seq Example`` ()=

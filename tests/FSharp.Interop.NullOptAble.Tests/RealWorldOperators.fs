@@ -36,7 +36,7 @@ let ``Basic concat`` () =
 let ``Basic concat none`` () =
     let x = "Hello "
     let y:string = null
-    (x,y) ||>? ( + ) |> should equal (None)
+    (x,y) ||>? ( + ) |> should equal (ValueOption<string>.VNone)
 
 (**
 Binding doesn't work if function returns a non-`_:null or Nullable<_> or Option<_>`. You can use map operator instead `|>?@` but becareful don't use it on something that could be null.
@@ -66,7 +66,7 @@ let ``Safe Navigation Operator Example`` ()=
         |>? getChild 
         |>? getChild
         |>? getChild
-        |> should equal VNone
+        |> should equal ValueOption<Node>.VNone
 
 [<Fact>] 
 let ``Safe Navigation Operator Seq Example`` ()=
