@@ -2,20 +2,30 @@
 
 open System
 open System.Text
-open BenchmarkDotNet.Attributes
+open BenchmarkDotNet.Attributes;
+open BenchmarkDotNet.Attributes.Columns
+open BenchmarkDotNet.Attributes.Exporters
+open BenchmarkDotNet.Attributes.Jobs
 open BenchmarkDotNet.Running
 open FSharp.Interop.NullOptAble
 open FSharp.Interop.NullOptAble.Experimental.ValueOption
 
+[<RPlotExporter; RankColumn;MemoryDiagnoser>]
 type BenchmarkValueOption () =
-    let n = 100000;
+
     let r = Random();
     let nucleo = ['G';'C';'T';'A']
-    let data =
-        Array.init n (fun _-> nucleo.[r.Next(0, nucleo.Length)])
-        |> System.String
+    let mutable data = ""
 
-    [<Benchmark>]
+    [<Params(1000, 10_000, 100_000)>]
+    member val N = 0 with get,set
+
+    [<GlobalSetup>]
+    member this.Setup() =
+        data <- Array.init this.N (fun _-> nucleo.[r.Next(0, nucleo.Length)])
+                |> System.String
+
+    [<Benchmark(Baseline = true)>]
     member __.RefOption()=
         let toRna (dna: string): string option = 
             let combine (sb:StringBuilder option) =
