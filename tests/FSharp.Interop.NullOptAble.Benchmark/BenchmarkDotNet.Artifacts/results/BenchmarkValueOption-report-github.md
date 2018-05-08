@@ -8,7 +8,7 @@ Intel Core i5-4288U CPU 2.60GHz (Haswell), 1 CPU, 4 logical and 2 physical cores
 
 
 ```
-|      Method |     Mean |    Error |   StdDev |
-|------------ |---------:|---------:|---------:|
-|   RefOption | 450.1 us | 1.884 us | 1.762 us |
-| ValueOption | 639.9 us | 3.004 us | 2.810 us |
+|      Method |     Mean |     Error |    StdDev |
+|------------ |---------:|----------:|----------:|
+|   RefOption | 4.678 ms | 0.0511 ms | 0.0453 ms |
+| ValueOption | 7.023 ms | 0.0706 ms | 0.0590 ms |

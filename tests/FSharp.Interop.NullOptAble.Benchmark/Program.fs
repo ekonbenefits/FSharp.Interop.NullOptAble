@@ -8,7 +8,7 @@ open FSharp.Interop.NullOptAble
 open FSharp.Interop.NullOptAble.Experimental.ValueOption
 
 type BenchmarkValueOption () =
-    let n = 10000;
+    let n = 100000;
     let r = Random();
     let nucleo = ['G';'C';'T';'A']
     let data =
