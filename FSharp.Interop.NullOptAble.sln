@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{76DBD9CB
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.NullOptAble.Tests", "tests\FSharp.Interop.NullOptAble.Tests\FSharp.Interop.NullOptAble.Tests.fsproj", "{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.Nulloptable.Benchmark", "tests\FSharp.Interop.Nulloptable.Benchmark\FSharp.Interop.Nulloptable.Benchmark.fsproj", "{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,9 +50,22 @@ Global
 		{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}.Release|x64.Build.0 = Release|x64
 		{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}.Release|x86.ActiveCfg = Release|x86
 		{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}.Release|x86.Build.0 = Release|x86
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Debug|x64.ActiveCfg = Debug|x64
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Debug|x64.Build.0 = Debug|x64
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Debug|x86.ActiveCfg = Debug|x86
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Debug|x86.Build.0 = Debug|x86
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Release|x64.ActiveCfg = Release|x64
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Release|x64.Build.0 = Release|x64
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Release|x86.ActiveCfg = Release|x86
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D727B067-0AC1-4DAD-AF78-252369DD3A14} = {CE986D9F-81D4-4B51-B1E7-5B63BA6A4AB4}
 		{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4} = {76DBD9CB-C5B4-4692-9937-509DDDA6CFE9}
+		{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD} = {76DBD9CB-C5B4-4692-9937-509DDDA6CFE9}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <Description>option &amp; chooseSeq computational expressions that work with Null/Option/Nullable</Description>
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
@@ -15,8 +15,27 @@
     <DisableImplicitFSharpCoreReference>True</DisableImplicitFSharpCoreReference>
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>FSharp.Interop.NullOptAble.Experimental</PackageId > 
+     <!-- Add the myget feed, without altering any other configurations. -->
+    <RestoreAdditionalProjectSources>https://dotnet.myget.org/F/dotnet-core/api/v3/index.json</RestoreAdditionalProjectSources>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'== 'net45'">
+    <!-- Make .NET 4.5 reference assemblies available even on Linux -->
+    <FrameworkPathOverride>$(NuGetPackageRoot)microsoft.targetingpack.netframework.v4.5/1.0.1/lib/net45/</FrameworkPathOverride>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'== 'net45'">
+      <!-- Make sure the reference assemblies are available -->
+      <PackageReference Include="Microsoft.TargetingPack.NETFramework.v4.5"
+                        Version="1.0.1" ExcludeAssets="All" PrivateAssets="All" />
+      <!-- The DLL case has changed between 4.5 and 4.6; this avoids a warning. -->
+      <Reference Include="System.XML" />
+  </ItemGroup>
+
   <ItemGroup>
+    <Compile Include="Experimental/Microsoft.fs"/>
+    <Compile Include="Experimental/ValueOption.fs"/>
     <Compile Include="Option.fsi" />
     <Compile Include="Option.fs" />
     <Compile Include="TopLevelBuilders.fsi" />
