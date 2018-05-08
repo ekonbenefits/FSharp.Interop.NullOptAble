@@ -69,7 +69,7 @@ let ``IsPrime Example`` ()=
     let isprime n =
         let rec check i =
             n <> 1 && (i > n/2 || (n % i <> 0 && check (i + 1)))
-        if check 2 then Some n else None
+        Option.ofTryTuple (check 2, n)
 
     let prime = chooseSeq { for n in 1..100 do 
                                 let! p = isprime n
@@ -112,7 +112,7 @@ Solution using `chooseSeq {}` for this [Rain Drops (Fizz buzz) problem from exer
 [<Fact>]
 let ``rain drops`` () =
     let convert (number: int): string =
-        let drop x s = if number % x = 0 then Some s else None
+        let drop x s = Option.ofTryTuple (number % x = 0, s)
         chooseSeq {
             yield! [ 
                     drop 3 "Pling"
