@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{76DBD9CB
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.NullOptAble.Tests", "tests\FSharp.Interop.NullOptAble.Tests\FSharp.Interop.NullOptAble.Tests.fsproj", "{366DAE10-F93B-45EB-B4C1-6B3AAEACDCD4}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.NullOptAble.Benchmark", "tests\FSharp.Interop.Nulloptable.Benchmark\FSharp.Interop.NullOptAble.Benchmark.fsproj", "{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FSharp.Interop.NullOptAble.Benchmark", "tests\FSharp.Interop.NullOptAble.Benchmark\FSharp.Interop.NullOptAble.Benchmark.fsproj", "{E7DC51BD-4DB0-4676-9757-C1D87E5F95CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
