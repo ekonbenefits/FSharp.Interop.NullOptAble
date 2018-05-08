@@ -32,7 +32,7 @@ module TopLevelBuilder =
         member __.Bind(m: 'T when 'T:null, f) = m |> ValueOption.ofObj |> ValueOption.bind f
 
         member __.Delay(f: unit -> _) = f
-        member __.Run(f) = f() |> Option.ofValueOption
+        member __.Run(f) = f()
 
         member this.TryWith(delayedExpr, handler) =
             try this.Run(delayedExpr)
@@ -42,4 +42,4 @@ module TopLevelBuilder =
             finally compensation()
         member this.Using(resource:#IDisposable, body) =
             this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
-    let option = ValueOptionBuilder()
+    let voption = ValueOptionBuilder()

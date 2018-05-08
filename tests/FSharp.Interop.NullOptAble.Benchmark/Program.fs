@@ -7,9 +7,6 @@ open BenchmarkDotNet.Running
 open FSharp.Interop.NullOptAble
 open FSharp.Interop.NullOptAble.Experimental.ValueOption
 
-let option = FSharp.Interop.NullOptAble.TopLevelBuilders.option
-let voption = FSharp.Interop.NullOptAble.Experimental.ValueOption.TopLevelBuilder.option
-
 type BenchmarkValueOption () =
     let n = 10000;
     let r = Random();
@@ -41,8 +38,8 @@ type BenchmarkValueOption () =
 
     [<Benchmark>]
     member __.ValueOption()=
-        let toRna (dna: string): string option = 
-            let combine (sb:StringBuilder option) =
+        let toRna (dna: string): string voption = 
+            let combine (sb:StringBuilder voption) =
                 let append (c:char) = voption {
                         let! sb' = sb
                         return sb'.Append(c)
@@ -52,13 +49,13 @@ type BenchmarkValueOption () =
                 | 'C' -> 'G' |> append
                 | 'T' -> 'A' |> append
                 | 'A' -> 'U' |> append
-                | ___ -> None
+                | ___ -> VNone
             voption {
                 let! dna' = dna //handles if string is null
-                let! sb' = dna' |> Seq.fold combine (Some <| StringBuilder())
+                let! sb' = dna' |> Seq.fold combine (VSome <| StringBuilder())
                 return sb'.ToString()
             }
-        data |> toRna |> Option.defaultValue ""
+        data |> toRna |> ValueOption.defaultValue ""
 
 [<EntryPoint>]
 let main _ =
