@@ -127,3 +127,41 @@ let ``rain drops`` () =
     convert 49 |> should equal "Plong"
     convert 105 |> should equal "PlingPlangPlong"
     convert 52 |> should equal "52"
+
+(** 
+Example using `option {}` for this All Your Base problem from exercism](http://exercism.io/exercises/fsharp/all-your-base/readme).
+*)
+[<Fact>]
+let ``All your Base`` () = 
+    let toBase b n =
+        let baseNList =
+            Seq.initInfinite id
+            |> Seq.scan (fun (_,n) _ -> n % b, n / b) (0,n)
+            |> Seq.pairwise
+            |> Seq.takeWhile (fst >> (fun (_,n) -> n > 0))
+            |> Seq.map snd
+            |> Seq.fold (fun acc (digit,_) -> digit::acc) [] 
+        match baseNList with
+        | [] -> Some [0]
+        | digits -> Some digits
+
+    let fromBase b nums =
+        let foldToBase10 (acc:int option) digit = option {
+                if digit >= 0 && digit < b then
+                    let! acc' = acc
+                    return (acc' * b + digit)
+        }
+        nums |> List.fold foldToBase10 (Some 0)
+
+    let rebase digits inputBase outputBase =
+        option {
+            if inputBase >= 2 && outputBase >= 2 then
+                let! base10 =
+                    digits
+                        |> List.skipWhile ((=) 0) //strip prefixes
+                        |> fromBase inputBase
+                return! base10 |> (toBase outputBase)
+        }
+    
+    rebase [1; 1; 2; 0] 3 16 |> should equal (Some [2; 10])
+    rebase [1; 2; 1; 0; 1; 0] 2 10 |> should equal None
