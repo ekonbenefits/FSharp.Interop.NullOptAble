@@ -129,38 +129,35 @@ let ``rain drops`` () =
     convert 52 |> should equal "52"
 
 (** 
-Example using `option {}` for this All Your Base problem from exercism](http://exercism.io/exercises/fsharp/all-your-base/readme).
+Example using `option {}` for [All Your Base problem from exercism](http://exercism.io/exercises/fsharp/all-your-base/readme).
 *)
 [<Fact>]
 let ``All your Base`` () = 
-    let toBase b n =
-        let baseNList =
-            Seq.initInfinite id
-            |> Seq.scan (fun (_,n) _ -> n % b, n / b) (0,n)
-            |> Seq.pairwise
-            |> Seq.takeWhile (fst >> (fun (_,n) -> n > 0))
-            |> Seq.map snd
-            |> Seq.fold (fun acc (digit,_) -> digit::acc) [] 
-        match baseNList with
-        | [] -> Some [0]
-        | digits -> Some digits
 
-    let fromBase b nums =
-        let foldToBase10 (acc:int option) digit = option {
-                if digit >= 0 && digit < b then
+    let rebase digits inputBase outputBase = 
+        let fromBase b digits' =
+            let foldToBase10 (acc:int option) d = option {
+                if d >= 0 && d < b then
                     let! acc' = acc
-                    return (acc' * b + digit)
+                    return (acc' * b + d)
+            }
+            digits' |> List.fold foldToBase10 (Some 0)
+        let toBase b n = option {
+            return Seq.initInfinite ignore
+                   |> Seq.scan (fun (n', _) _ ->  n' / b, n' % b) (n, 0)
+                   |> Seq.pairwise
+                   |> Seq.takeWhile (fst >> (fun  (n', _) -> n' > 0))
+                   |> Seq.map snd
+                   |> Seq.fold (fun acc (_, d) -> d::acc) [] 
+                   |> function [] -> [0] | x -> x
         }
-        nums |> List.fold foldToBase10 (Some 0)
-
-    let rebase digits inputBase outputBase =
         option {
             if inputBase >= 2 && outputBase >= 2 then
                 let! base10 =
                     digits
-                        |> List.skipWhile ((=) 0) //strip prefixes
-                        |> fromBase inputBase
-                return! base10 |> (toBase outputBase)
+                    |> List.skipWhile ((=) 0) //strip prefixes
+                    |> fromBase inputBase
+                return! base10 |> toBase outputBase
         }
     
     rebase [1; 1; 2; 0] 3 16 |> should equal (Some [2; 10])
