@@ -10,7 +10,7 @@
     <PackageTags>fsharp option seq null nullable monads</PackageTags>
     <IncludeSymbols Condition="'$(OS)' == 'Windows_NT'">True</IncludeSymbols>
     <IncludeSource Condition="'$(OS)' == 'Windows_NT'">True</IncludeSource>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition="'$(APPVEYOR)' == 'True'">True</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <DisableImplicitFSharpCoreReference>True</DisableImplicitFSharpCoreReference>
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
