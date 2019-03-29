@@ -31,6 +31,34 @@ module TopLevelBuilders =
             this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
     let option = OptionBuilder()
 
+    type GuardBuilder() =
+        member __.Zero() = None
+
+        member __.Return(x: 'T) = Some x
+
+        member __.ReturnFrom(m: 'T option) = m
+        member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
+        member __.ReturnFrom(m: 'T when 'T:null) = Option.ofObj m
+
+        member __.Bind(m: 'T option, f) = Option.bind f m
+        member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
+        member __.Bind(m: 'T when 'T:null, f) = m |> Option.ofObj |> Option.bind f
+
+        member __.Delay(f: unit -> _) = f
+        member __.Run(f) = f() |> ignore
+
+        member this.TryWith(delayedExpr, handler) =
+            try this.Run(delayedExpr)
+            with exn -> handler exn
+        member this.TryFinally(delayedExpr, compensation) =
+            try this.Run(delayedExpr)
+            finally compensation()
+        member this.Using(resource:#IDisposable, body) =
+            this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
+            
+    let guard = GuardBuilder()
+
+    
 
     module ChooseSeq =
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
@@ -85,7 +113,7 @@ module TopLevelBuilders =
 
         member __.Delay(f: unit -> _) = Seq.delay f
 
-        member __.Run(f:seq<_>) = f //make this a delayed sequence
+        member __.Run(f:seq<_>) = f //makes this a delayed sequence
 
         member this.While(guard, delayedExpr) =
             let mutable result = this.Zero()

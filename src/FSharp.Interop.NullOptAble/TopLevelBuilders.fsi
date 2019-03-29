@@ -41,6 +41,40 @@ module TopLevelBuilders =
     ///
     val option : OptionBuilder
 
+    type GuardBuilder =
+        new : unit -> GuardBuilder
+        member Bind : m:'T option * f:('T -> 'i option) -> 'i option
+        member Bind : m:System.Nullable<'T> * f:('T -> 'h option) -> 'h option
+                   when 'T : (new : unit -> 'T) and 'T : struct and
+                        'T :> System.ValueType
+        member Bind : m:'T * f:('T -> 'g option) -> 'g option when 'T : null
+        member Delay : f:(unit -> 'f) -> (unit -> 'f)
+        member Return : x:'T -> 'T option
+        member ReturnFrom : m:'T option -> 'T option
+        member ReturnFrom : m:System.Nullable<'T> -> 'T option
+                         when 'T : (new : unit -> 'T) and 'T : struct and
+                              'T :> System.ValueType
+        member ReturnFrom : m:'T -> 'T option when 'T : null
+        member Run : f:(unit -> 'e) -> unit
+        member TryFinally : delayedExpr:(unit -> 'c) * compensation:(unit -> unit) ->
+                         unit
+        member TryWith : delayedExpr:(unit -> 'd) * handler:(exn -> unit) -> unit
+        member Using : resource:'a * body:('a -> 'b) -> unit
+                    when 'a :> System.IDisposable
+        member Zero : unit -> 'j option
+    
+    ///**Description**
+    ///
+    /// `option` computation expression
+    /// ! will bind types that accept null, nullables, and options
+    ///
+    ///**Output Type**
+    ///
+    ///  * `_ option`
+    ///
+    val guard : GuardBuilder
+
+
     ///**Description**
     ///
     /// Module to help with chooseSeq expressions.
