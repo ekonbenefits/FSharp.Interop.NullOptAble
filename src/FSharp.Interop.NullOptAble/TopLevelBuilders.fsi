@@ -65,7 +65,7 @@ module TopLevelBuilders =
     
     ///**Description**
     ///
-    /// `option` computation expression
+    /// `guard` computation expression
     /// ! will bind types that accept null, nullables, and options
     ///
     ///**Output Type**
