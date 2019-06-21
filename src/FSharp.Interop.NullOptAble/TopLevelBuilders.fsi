@@ -70,7 +70,7 @@ module TopLevelBuilders =
     ///
     ///**Output Type**
     ///
-    ///  * `_ option`
+    ///  * `unit`
     ///
     val guard : GuardBuilder
 
