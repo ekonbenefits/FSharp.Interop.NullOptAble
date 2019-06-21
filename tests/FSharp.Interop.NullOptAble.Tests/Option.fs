@@ -76,3 +76,43 @@ let ``Cleaning up disposables when throwing exception`` () =
         } |> ignore
     delayedExceptionThrow |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
+
+
+    (*** basic guard mutation ***)
+[<Fact>]
+let ``Basic Guard don't mutate`` () =
+    let mutable test = false
+    let x = Nullable<int>();
+    let setTrue _ = test <- true
+    guard {
+        let! x' = x
+        
+        setTrue x'
+    }
+
+    test |> should be False
+
+[<Fact>]
+let ``Basic Guard do mutate`` () =
+    let mutable test = false
+    let x = Nullable<int>(3);
+    let setTrue _ = test <- true
+    guard {
+        let! x' = x
+        
+        setTrue x'
+    }
+
+    test |> should be True
+
+
+[<Fact>]
+let ``Guard Cleaning up disposables when throwing exception`` () =   
+    let resource = new Resource()
+    let delayedExceptionThrow () =
+        guard {
+            use! d = Some(resource)
+            raise <| Exception()
+        } |> ignore
+    delayedExceptionThrow |> should throw typeof<Exception>
+    resource.Disposed() |> should equal true

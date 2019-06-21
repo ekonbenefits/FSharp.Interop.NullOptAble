@@ -46,12 +46,12 @@ module TopLevelBuilders =
 
         member __.Delay(f: unit -> _) = f
         member __.Run(f) = f() |> ignore
-
-        member this.TryWith(delayedExpr, handler) =
-            try this.Run(delayedExpr)
+        
+        member __.TryWith(delayedExpr, handler) =
+            try delayedExpr()
             with exn -> handler exn
-        member this.TryFinally(delayedExpr, compensation) =
-            try this.Run(delayedExpr)
+        member __.TryFinally(delayedExpr, compensation) =
+            try delayedExpr()
             finally compensation()
         member this.Using(resource:#IDisposable, body) =
             this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())

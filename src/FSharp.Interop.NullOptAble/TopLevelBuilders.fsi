@@ -57,9 +57,9 @@ module TopLevelBuilders =
         member ReturnFrom : m:'T -> 'T option when 'T : null
         member Run : f:(unit -> 'e) -> unit
         member TryFinally : delayedExpr:(unit -> 'c) * compensation:(unit -> unit) ->
-                         unit
-        member TryWith : delayedExpr:(unit -> 'd) * handler:(exn -> unit) -> unit
-        member Using : resource:'a * body:('a -> 'b) -> unit
+                         'c
+        member TryWith : delayedExpr:(unit -> 'd) * handler:(exn -> 'd) -> 'd
+        member Using : resource:'a * body:('a -> 'b) -> 'b
                     when 'a :> System.IDisposable
         member Zero : unit -> 'j option
     

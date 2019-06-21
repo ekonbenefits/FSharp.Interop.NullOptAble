@@ -12,32 +12,8 @@ open Xunit
 open FsUnit.Xunit
 
 
-(*** basic guard mutation ***)
-[<Fact>]
-let ``Basic Guard don't mutate`` () =
-    let mutable test = false
-    let x = Nullable<int>();
-    let setTrue _ = test <- true
-    guard {
-        let! x' = x
-        
-        setTrue x'
-    }
 
-    test |> should be False
 
-[<Fact>]
-let ``Basic Guard do mutate`` () =
-    let mutable test = false
-    let x = Nullable<int>(3);
-    let setTrue _ = test <- true
-    guard {
-        let! x' = x
-        
-        setTrue x'
-    }
-
-    test |> should be True
 (*** hide ***)
 [<Fact>]
 let ``Basic nullable math`` () =
