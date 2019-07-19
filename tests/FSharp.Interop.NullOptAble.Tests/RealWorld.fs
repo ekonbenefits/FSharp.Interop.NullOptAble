@@ -116,11 +116,9 @@ let ``rain drops`` () =
     let convert (number: int): string =
         let drop x s = Option.ofTryTuple (number % x = 0, s)
         chooseSeq {
-            yield! [ 
-                    drop 3 "Pling"
-                    drop 5 "Plang"
-                    drop 7 "Plong"
-                   ]
+            yield! drop 3 "Pling"
+            yield! drop 5 "Plang"
+            yield! drop 7 "Plong"
         } |> String.concat ""
           |> function | "" -> string(number)
                       | s -> s

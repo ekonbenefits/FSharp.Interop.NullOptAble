@@ -58,8 +58,6 @@ module TopLevelBuilders =
             
     let guard = GuardBuilder()
 
-    
-    
     type NotNullSeq<'T> (source:'T seq) =
         interface Collections.Generic.IEnumerable<'T> with
             member __.GetEnumerator() =
@@ -74,10 +72,6 @@ module TopLevelBuilders =
                 |> Option.map (fun x->(x :> Collections.IEnumerable).GetEnumerator())
                 |> Option.defaultWith (fun ()-> (Seq.empty :> Collections.IEnumerable).GetEnumerator())
     
-    module NotNullSeq =
-        let empty<'T> = Seq.empty<'T> |> NotNullSeq
-
-
     module ChooseSeq =
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
 
@@ -93,23 +87,29 @@ module TopLevelBuilders =
                 m |> function | None -> this.Zero ()
                               | Some x -> this.Yield(x)
 
-        member this.YieldFrom(m: 'T Nullable) : 'T NotNullSeq = 
+        member this.YieldFrom(m: 'T Nullable) : 'T seq = 
                 m |> Option.ofNullable
                   |> this.YieldFrom
 
-        member this.YieldFrom(m: 'T when 'T:null) : 'T NotNullSeq = 
+        member this.YieldFrom(m: 'T when 'T:null) : 'T seq = 
                     m |> Option.ofObj
                       |> this.YieldFrom
 
-        member this.YieldFrom(m: 'T NotNullSeq) :'T NotNullSeq =
-                m
+        member this.YieldFrom(m: 'T NotNullSeq) :'T seq =
+                upcast m
+
+        member this.YieldFrom(m: 'T list) :'T seq =
+                      upcast m
+
+        member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
             match m with
-                     | Some x -> f x
-                     | None -> this.Zero<'S>()
+                | Some x -> f x
+                | None -> this.Zero<'S>()
 
         member this.Bind(m: 'T Nullable, f) = 
             let m' = m |> Option.ofNullable 
             this.Bind(m', f)
+
         member this.Bind(m: 'T when 'T:null, f) = 
             let m' = m |> Option.ofObj
             this.Bind(m', f)
@@ -126,7 +126,7 @@ module TopLevelBuilders =
 
         member __.Delay(f: unit -> _) = Seq.delay f
 
-        member __.Run(f:seq<_>) = f //makes this a delayed sequence
+        member __.Run(f:seq<_>) = NotNullSeq f //makes this a delayed sequence by not running
 
         member this.While(guard, delayedExpr) =
             let mutable result = this.Zero()
