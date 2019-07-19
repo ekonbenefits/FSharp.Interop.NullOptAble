@@ -62,6 +62,23 @@ let ``Safe Navigation Operator Seq Example`` ()=
             yield c
     } |> Seq.length |> should equal 1
 
+(*** hide ***)
+type Setup = { ShouldWriteFile:bool}
+(**
+Guard is just an easy wait for nulloptable binding while dealing with mutations and external state.
+*)
+[<Fact>]
+let ``Guard Example, for dealing with non functional statey things`` () =
+    let overrideSetup : Setup option  = None
+    let randoFilename = "2713157a-4333-462e-b9e1-c03e0ca6d5af.txt"
+    let existsActual = System.IO.File.Exists(randoFilename)
+    guard{
+        let! setup = overrideSetup
+        if setup.ShouldWriteFile then
+            use f = System.IO.File.Open(randoFilename, IO.FileMode.CreateNew)  //Never gets run
+            ()
+    }
+    System.IO.File.Exists(randoFilename) |> should equal existsActual
 
 (** 
 Modified this recursive prime fucntion from F# docs [example](https://docs.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences#examples).
