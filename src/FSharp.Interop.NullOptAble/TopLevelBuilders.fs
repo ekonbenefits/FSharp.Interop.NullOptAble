@@ -76,7 +76,20 @@ module TopLevelBuilders =
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
 
     type private CombineOptimized<'T>() =
-        inherit System.Collections.Generic.List<'T>()
+        let source = ResizeArray<'T seq> ()
+        interface Collections.Generic.IEnumerable<'T> with
+            member __.GetEnumerator() =
+                source 
+                |> Seq.collect id
+                |>  (fun x->x.GetEnumerator())
+        interface Collections.IEnumerable with
+            member __.GetEnumerator(): Collections.IEnumerator = 
+                source 
+                |> Seq.collect id
+                |> fun x->(x :> Collections.IEnumerable).GetEnumerator()
+        
+        member __.AddRange(add:'T seq)=
+            source.Add(add)
 
     type ChooseSeqBuilder() =
         member __.Zero<'T>() = Seq.empty<'T>
