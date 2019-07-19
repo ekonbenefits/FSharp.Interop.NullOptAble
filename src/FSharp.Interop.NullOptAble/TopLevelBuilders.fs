@@ -95,11 +95,14 @@ module TopLevelBuilders =
                     m |> Option.ofObj
                       |> this.YieldFrom
 
-        member this.YieldFrom(m: 'T NotNullSeq) :'T seq =
-                upcast m
+        member _defaultArg.YieldFrom(m: 'T NotNullSeq) :'T seq =
+            upcast m
 
-        member this.YieldFrom(m: 'T list) :'T seq =
-                      upcast m
+        member __.YieldFrom(m: 'T list) :'T seq =
+            upcast m
+
+        member __.YieldFrom(m: 'T Set) :'T seq =
+            upcast m
 
         member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
             match m with

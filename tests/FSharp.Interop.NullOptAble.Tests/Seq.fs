@@ -105,11 +105,14 @@ let ``Rainbow string null Sequence`` () =
         yield! Option.ofObjWhenNot String.IsNullOrEmpty <| ""
         yield! Option.ofObjWhenNot String.IsNullOrWhiteSpace <| "   "
         yield! Option.ofObjWhenNot String.IsNullOrWhiteSpace <| "6"
+        yield! [|"7" ; "8"|] |> NotNullSeq
+        yield! Set(["9";"9"])
+        yield! ["10"; null] |> Seq.choose Option.ofObj |> NotNullSeq
         let! s' = s
         yield s'
     }
-    newSeq |> Seq.length |> should equal 6
-    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"; "6"]
+    newSeq |> Seq.length |> should equal 10
+    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"; "6" ;"7" ;"8"; "9" ; "10" ]
 
 
 [<Fact>]
