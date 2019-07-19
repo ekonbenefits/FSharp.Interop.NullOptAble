@@ -59,6 +59,24 @@ module TopLevelBuilders =
     let guard = GuardBuilder()
 
     
+    
+    type NotNullSeq<'T> (source:'T seq) =
+        interface Collections.Generic.IEnumerable<'T> with
+            member __.GetEnumerator() =
+                source 
+                |> Option.ofObj 
+                |> Option.map (fun x->x.GetEnumerator())
+                |> Option.defaultWith (fun ()-> Seq.empty.GetEnumerator())
+        interface Collections.IEnumerable with
+            member __.GetEnumerator(): Collections.IEnumerator = 
+                source 
+                |> Option.ofObj 
+                |> Option.map (fun x->(x :> Collections.IEnumerable).GetEnumerator())
+                |> Option.defaultWith (fun ()-> (Seq.empty :> Collections.IEnumerable).GetEnumerator())
+    
+    module NotNullSeq =
+        let empty<'T> = Seq.empty<'T> |> NotNullSeq
+
 
     module ChooseSeq =
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
@@ -74,22 +92,17 @@ module TopLevelBuilders =
         member this.YieldFrom(m: 'T option) : 'T seq = 
                 m |> function | None -> this.Zero ()
                               | Some x -> this.Yield(x)
-        member this.YieldFrom(m: 'T Nullable seq) :'T seq =
-                m |> Option.ofObj
-                  |> Option.map (Seq.choose Option.ofNullable)
-                  |> Option.defaultValue (this.Zero<'T>())
 
-        member this.YieldFrom(m: 'T seq when 'T:null) :'T seq =
-                m |> Option.ofObj
-                  |> Option.map (Seq.choose Option.ofObj)
-                  |> Option.defaultValue (this.Zero<'T>())
-    
-        member this.YieldFrom(m: 'T option seq) :'T seq =
-                m |> Option.ofObj
-                  |> Option.map (Seq.choose id)
-                  |> Option.defaultValue (this.Zero<'T>())
+        member this.YieldFrom(m: 'T Nullable) : 'T NotNullSeq = 
+                m |> Option.ofNullable
+                  |> this.YieldFrom
 
-        member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
+        member this.YieldFrom(m: 'T when 'T:null) : 'T NotNullSeq = 
+                    m |> Option.ofObj
+                      |> this.YieldFrom
+
+        member this.YieldFrom(m: 'T NotNullSeq) :'T NotNullSeq =
+                m
             match m with
                      | Some x -> f x
                      | None -> this.Zero<'S>()
