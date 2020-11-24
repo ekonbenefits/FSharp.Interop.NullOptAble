@@ -72,8 +72,8 @@ let ``Cleaning up disposables when throwing exception`` () =
         option {
             use! d = Some(resource)
             raise <| Exception()
-            return d.Disposed
-        } |> ignore
+            return d.Disposed()
+        }
     delayedExceptionThrow |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
 
