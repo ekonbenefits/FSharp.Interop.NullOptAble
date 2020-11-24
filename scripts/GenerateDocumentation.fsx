@@ -68,27 +68,29 @@ type FsProj = XmlProvider<"../src/FSharp.Interop.NullOptAble/FSharp.Interop.Null
 let fsProj = FsProj.GetSample()
 let projName = "FSharp.Interop.NullOptAble"
 let configuration = "Debug"
-let root = Path.Combine(__SOURCE_DIRECTORY__, "..")
+let root = Path.Combine(__SOURCE_DIRECTORY__, "..") |> Path.GetFullPath
 let srcDir =  Path.Combine(root, "src")
 let testDir = Path.Combine(root, "tests", sprintf "%s.Tests" projName)
-let docContent = "doc-content"
+let docContent = Path.Combine(root, "scripts", "doc-content")
 let outputDir = Path.Combine(root, "docs")
 
-let targetFramework = fsProj.PropertyGroup.TargetFramework
+let targetFramework = fsProj.PropertyGroup.TargetFrameworks.Split(";") |> Seq.rev |> Seq.head
 let binDir =Path.Combine(srcDir,
                         projName,
                         "bin",
                         configuration,
                         targetFramework)
-
+            
+printfn "%s" binDir
 let getDllNamed name =
     Path.Combine(binDir, sprintf "%s.dll" name)
 
 let dll = getDllNamed projName
+printfn "%s" dll
 
 ///end variables
 
-printfn "Copy Doc Content."
+printfn "Copy Doc Content. %s " docContent
 
 createDir outputDir
 

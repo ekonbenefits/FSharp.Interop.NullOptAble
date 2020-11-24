@@ -31,12 +31,65 @@ module TopLevelBuilders =
             this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
     let option = OptionBuilder()
 
+    type GuardBuilder() =
+        member __.Zero() = None
 
+        member __.Return(x: 'T) = Some x
+
+        member __.ReturnFrom(m: 'T option) = m
+        member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
+        member __.ReturnFrom(m: 'T when 'T:null) = Option.ofObj m
+
+        member __.Bind(m: 'T option, f) = Option.bind f m
+        member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
+        member __.Bind(m: 'T when 'T:null, f) = m |> Option.ofObj |> Option.bind f
+
+        member __.Delay(f: unit -> _) = f
+        member __.Run(f) = f() |> ignore
+        
+        member __.TryWith(delayedExpr, handler) =
+            try delayedExpr()
+            with exn -> handler exn
+        member __.TryFinally(delayedExpr, compensation) =
+            try delayedExpr()
+            finally compensation()
+        member this.Using(resource:#IDisposable, body) =
+            this.TryFinally(this.Delay(fun ()->body resource), fun () -> match box resource with null -> () | _ -> resource.Dispose())
+            
+    let guard = GuardBuilder()
+
+    type NotNullSeq<'T> (source:'T seq) =
+        interface Collections.Generic.IEnumerable<'T> with
+            member __.GetEnumerator() =
+                source 
+                |> Option.ofObj 
+                |> Option.map (fun x->x.GetEnumerator())
+                |> Option.defaultWith (fun ()-> Seq.empty.GetEnumerator())
+        interface Collections.IEnumerable with
+            member __.GetEnumerator(): Collections.IEnumerator = 
+                source 
+                |> Option.ofObj 
+                |> Option.map (fun x->(x :> Collections.IEnumerable).GetEnumerator())
+                |> Option.defaultWith (fun ()-> (Seq.empty :> Collections.IEnumerable).GetEnumerator())
+    
     module ChooseSeq =
         let forceRun delayedSeq = delayedSeq |> List.ofSeq :> 'T seq 
 
     type private CombineOptimized<'T>() =
-        inherit System.Collections.Generic.List<'T>()
+        let source = ResizeArray<'T seq> ()
+        interface Collections.Generic.IEnumerable<'T> with
+            member __.GetEnumerator() =
+                source 
+                |> Seq.collect id
+                |>  (fun x->x.GetEnumerator())
+        interface Collections.IEnumerable with
+            member __.GetEnumerator(): Collections.IEnumerator = 
+                source 
+                |> Seq.collect id
+                |> fun x->(x :> Collections.IEnumerable).GetEnumerator()
+        
+        member __.AddRange(add:'T seq)=
+            source.Add(add)
 
     type ChooseSeqBuilder() =
         member __.Zero<'T>() = Seq.empty<'T>
@@ -46,29 +99,33 @@ module TopLevelBuilders =
         member this.YieldFrom(m: 'T option) : 'T seq = 
                 m |> function | None -> this.Zero ()
                               | Some x -> this.Yield(x)
-        member this.YieldFrom(m: 'T Nullable seq) :'T seq =
-                m |> Option.ofObj
-                  |> Option.map (Seq.choose Option.ofNullable)
-                  |> Option.defaultValue (this.Zero<'T>())
 
-        member this.YieldFrom(m: 'T seq when 'T:null) :'T seq =
-                m |> Option.ofObj
-                  |> Option.map (Seq.choose Option.ofObj)
-                  |> Option.defaultValue (this.Zero<'T>())
-    
-        member this.YieldFrom(m: 'T option seq) :'T seq =
-                m |> Option.ofObj
-                  |> Option.map (Seq.choose id)
-                  |> Option.defaultValue (this.Zero<'T>())
+        member this.YieldFrom(m: 'T Nullable) : 'T seq = 
+                m |> Option.ofNullable
+                  |> this.YieldFrom
+
+        member this.YieldFrom(m: 'T when 'T:null) : 'T seq = 
+                    m |> Option.ofObj
+                      |> this.YieldFrom
+
+        member _defaultArg.YieldFrom(m: 'T NotNullSeq) :'T seq =
+            upcast m
+
+        member __.YieldFrom(m: 'T list) :'T seq =
+            upcast m
+
+        member __.YieldFrom(m: 'T Set) :'T seq =
+            upcast m
 
         member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
             match m with
-                     | Some x -> f x
-                     | None -> this.Zero<'S>()
+                | Some x -> f x
+                | None -> this.Zero<'S>()
 
         member this.Bind(m: 'T Nullable, f) = 
             let m' = m |> Option.ofNullable 
             this.Bind(m', f)
+
         member this.Bind(m: 'T when 'T:null, f) = 
             let m' = m |> Option.ofObj
             this.Bind(m', f)
@@ -85,7 +142,7 @@ module TopLevelBuilders =
 
         member __.Delay(f: unit -> _) = Seq.delay f
 
-        member __.Run(f:seq<_>) = f //make this a delayed sequence
+        member __.Run(f:seq<_>) = NotNullSeq f //makes this a delayed sequence by not running
 
         member this.While(guard, delayedExpr) =
             let mutable result = this.Zero()

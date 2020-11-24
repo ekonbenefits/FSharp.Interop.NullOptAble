@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>ChooseSeq - FSharp.Interop.NullOptAble</title>
+    <title>NotNullSeq<'T> - FSharp.Interop.NullOptAble</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Jay Tuley">
@@ -37,52 +37,39 @@
 
 
 
-<h1>ChooseSeq</h1>
+<h1>NotNullSeq<'T></h1>
 <p>
   <span>Namespace: FSharp.Interop.NullOptAble</span><br />
   <span>Parent Module: <a href="fsharp-interop-nulloptable-toplevelbuilders.html">TopLevelBuilders</a></span>
 </p>
 <div class="xmldoc">
 <p><strong>Description</strong></p>
-<p>Module to help with chooseSeq expressions.</p>
+<p>A sequence that does not allow Null.</p>
 
 </div>
-
-<!-- Render nested types and modules, if there are any -->
-
-  <h3>Functions and values</h3>
+  <h3>Constructors</h3>
   <table class="table table-bordered member-list">
     <thead>
-      <tr><td>Function or value</td><td>Description</td></tr>
+      <tr><td>Constructor</td><td>Description</td></tr>
     </thead>
     <tbody>
       <tr>
         <td class="member-name">
 
-          <code onmouseout="hideTip(event, '20', 20)" onmouseover="showTip(event, '20', 20)">
-            forceRun delayedSeq
+          <code onmouseout="hideTip(event, '21', 21)" onmouseover="showTip(event, '21', 21)">
+            new(source)
           </code>
-          <div class="tip" id="20">
-            <strong>Signature:</strong> delayedSeq:seq&lt;&#39;T&gt; -&gt; seq&lt;&#39;T&gt;<br />
-                          <strong>Type parameters:</strong> 'T          </div>
+          <div class="tip" id="21">
+            <strong>Signature:</strong> source:seq&lt;&#39;T&gt; -&gt; NotNullSeq&lt;&#39;T&gt;<br />
+                      </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/TopLevelBuilders.fs#L76-76" class="github-link">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/TopLevelBuilders.fs#L61-61" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <p><strong>Description</strong></p>
-<p>forces a chooseSeq to run. normally delayed if not used.</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>delayedSeq</code> - parameter of type <code>seq&lt;'T&gt;</code></li>
-</ul>
-<p><strong>Output Type</strong></p>
-<ul>
-<li><code>seq&lt;'T&gt;</code></li>
-</ul>
-
-
+          
+              <p>CompiledName: <code>.ctor</code></p>
         </td>
       </tr>
     </tbody>

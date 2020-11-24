@@ -76,7 +76,7 @@ let ``Yield Sequence ever other`` () =
             match i % 3 with
                 | 0 -> yield! None
                 | 1 -> yield! Some(3)
-                | 2 -> yield! ([1..3] |> Seq.map Nullable)
+                | 2 -> yield! [1..3]
                 | _ -> failwith "nope"
     }
     newSeq |> Seq.length |> should equal 16
@@ -86,7 +86,7 @@ let ``Rainbow int none Sequence`` () =
     let newSeq = chooseSeq {
         yield 1
         yield! Some 3
-        yield! [Nullable(4)]
+        yield! chooseSeq { yield! Nullable(4) }
         yield! Option.ofTryTuple <| Int32.TryParse("5")
         yield! Option.ofTryTuple <| Int32.TryParse("abfa")
         yield! None
@@ -101,15 +101,18 @@ let ``Rainbow string null Sequence`` () =
         yield! None
         yield! Some "2"
         yield! ["3"]
-        yield! [Some("4");None;Some("5")]
+        yield! chooseSeq { yield! Some("4"); yield! None; yield! Some("5");}
         yield! Option.ofObjWhenNot String.IsNullOrEmpty <| ""
         yield! Option.ofObjWhenNot String.IsNullOrWhiteSpace <| "   "
         yield! Option.ofObjWhenNot String.IsNullOrWhiteSpace <| "6"
+        yield! [|"7" ; "8"|] |> NotNullSeq
+        yield! Set(["9";"9"])
+        yield! ["10"; null] |> Seq.choose Option.ofObj |> NotNullSeq
         let! s' = s
         yield s'
     }
-    newSeq |> Seq.length |> should equal 6
-    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"; "6"]
+    newSeq |> Seq.length |> should equal 10
+    newSeq |> Seq.toList |> should equal ["1" ; "2"; "3"; "4"; "5"; "6" ;"7" ;"8"; "9" ; "10" ]
 
 
 [<Fact>]
@@ -158,15 +161,25 @@ let ``Cleaning up disposables when throwing exception`` () =
 
 [<Fact>]
 let ``Mutable List Double Check`` () =  
-    let mutList = System.Collections.Generic.List<int option>()
-    mutList.Add(Some(1))
-    mutList.Add(Some(2))
+    let mutList = System.Collections.Generic.List<int>()
+    mutList.Add(1)
+    mutList.Add(2)
     chooseSeq{
-        yield! mutList
-        yield! mutList
-        yield! mutList
+        yield! mutList |> NotNullSeq
+        yield! mutList |> NotNullSeq
+        yield! mutList |> NotNullSeq
     } |> Seq.length |> should equal 6
 
+[<Fact>]
+let ``Mutable List Double Check NotNullSeq choose`` () =  
+    let mutList = System.Collections.Generic.List<int option>()
+    mutList.Add(Some 1)
+    mutList.Add(None)
+    chooseSeq{
+        yield! mutList |> Seq.choose id |> NotNullSeq
+        yield! mutList |> Seq.choose id |> NotNullSeq
+        yield! mutList |> Seq.choose id |> NotNullSeq
+    } |> Seq.length |> should equal 3
 
 [<Fact>]
 let ``Stack Safe check`` () =  
