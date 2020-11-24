@@ -16,7 +16,7 @@ There are more C# devs relying on the safe nav operator `?.` and so nulls will o
 
 This project creates an `option { }` computational expression and `chooseSeq { }` computational expression that allows binding `'T option`/`'T Nullable`/`'T:null` thus either returns an option or a sequence respectively.
 
-With `chooseSeq` if you `yield!` a sequence it will flatten/collect it. If you want a sequence of sequences use `let! s = nullPossibleSequence;; yield s` or `yield! Some notNullSeq`. `yield!` works with `'T option` and `'T seq`, not nulls or nullables, but `let!` works with `'T option`/`'T Nullable`/`'T:null`
+With `chooseSeq` if you `yield!` another chooseSeq it will work recursively flatten or any sequence of `NonNullSeq`, list, or Set type. Any other sequence will be treated like a `T:null` object `yield!` and `let!` work with `'T option`/`'T Nullable`/`'T:null`
 
 ### Examples
 

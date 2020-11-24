@@ -47,7 +47,7 @@ It works with Nulls, Options, Nullables.</p>
 <h2>Basic Info</h2>
 <p>There are more C# devs relying on the safe nav operator <code>?.</code> and so nulls will only get worse on the C# side, making it more likely null's are going to drop out of APIs.</p>
 <p>This project creates an <code>option { }</code> computational expression and <code>chooseSeq { }</code> computational expression that allows binding <code>'T option</code>/<code>'T Nullable</code>/<code>'T:null</code> thus either returns an option or a sequence respectively.</p>
-<p>With <code>chooseSeq</code> if you <code>yield!</code> a sequence it will flatten/collect it. If you want a sequence of sequences use <code>let! s = nullPossibleSequence;; yield s</code> or <code>yield! Some notNullSeq</code>. <code>yield!</code> works with <code>'T option</code> and <code>'T seq</code>, not nulls or nullables, but <code>let!</code> works with <code>'T option</code>/<code>'T Nullable</code>/<code>'T:null</code></p>
+<p>With <code>chooseSeq</code> if you <code>yield!</code> another chooseSeq it will work recursively flatten or any sequence of <code>NonNullSeq</code>, list, or Set type. Any other sequence will be treated like a <code>T:null</code> object <code>yield!</code> and <code>let!</code> work with <code>'T option</code>/<code>'T Nullable</code>/<code>'T:null</code></p>
 <h3>Examples</h3>
 <table class="pre"><tr><td class="lines"><pre class="fssnip"><span class="l">1: </span>
 <span class="l">2: </span>

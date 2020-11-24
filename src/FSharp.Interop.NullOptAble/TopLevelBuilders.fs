@@ -108,7 +108,7 @@ module TopLevelBuilders =
                     m |> Option.ofObj
                       |> this.YieldFrom
 
-        member _defaultArg.YieldFrom(m: 'T NotNullSeq) :'T seq =
+        member __.YieldFrom(m: 'T NotNullSeq) :'T seq =
             upcast m
 
         member __.YieldFrom(m: 'T list) :'T seq =
