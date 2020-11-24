@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <LangVersion>4.7</LangVersion>
+    <LangVersion>5.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\FSharp.Interop.NullOptAble\FSharp.Interop.NullOptAble.fsproj" />
