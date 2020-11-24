@@ -11,6 +11,7 @@ open FSharp.Interop.NullOptAble.Operators
 open Xunit
 open FsUnit.Xunit
 
+#if !disable_nullable
 (**
 DefaultWith operator. Handy abbreviation of matching a null/nullable/none case.
 *)
@@ -21,6 +22,7 @@ let ``null defaultWith`` () =
 let `` defaultWith not called if not needed`` () =
     let x = Nullable(3)
     x |?-> lazy (failwith "doesn't get run") |> should equal 3
+#endif
 
 (**
 Binding operator means function isn't applied if a `None` parameter. 
@@ -37,6 +39,7 @@ let ``Basic concat none`` () =
     let y:string = null
     (x,y) ||>? ( + ) |> should equal (None)
 
+#if !disable_nullable
 (**
 Binding doesn't work if function returns a non-`_:null or Nullable<_> or Option<_>`. You can use map operator instead `|>?@` but becareful don't use it on something that could be null.
 *)
@@ -45,6 +48,7 @@ let ``Basic nullable math`` () =
     let x = Nullable(3)
     let y = Nullable(3)
     (x,y) ||>?@ ( + ) |> should equal (Some 6)
+#endif
 
 (*** hide ***)
 [<AllowNullLiteral>]

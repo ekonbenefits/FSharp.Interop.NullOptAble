@@ -13,7 +13,7 @@ open FsUnit.Xunit
 
 
 
-
+#if !disable_nullable
 (*** hide ***)
 [<Fact>]
 let ``Basic nullable math`` () =
@@ -24,13 +24,32 @@ let ``Basic nullable math`` () =
         let! y' = y
         return (x' + y')
     } |> should equal (Some 6)
+#endif
 
 (*** hide ***)
 [<AllowNullLiteral>]
 type Node (child:Node)=
     new() = new Node(null)
     member val child:Node = child with get,set
- 
+
+(*** hide ***)
+type FSharpNode (child:FSharpNode option)=
+    new() = new FSharpNode(None)
+    member val child:FSharpNode option = child with get,set
+
+
+(*** hide ***)
+[<Fact>]
+let ``Safe Navigation Operator Example FSharp option`` ()=
+        
+    let parent = FSharpNode()
+    option {
+        let! a = parent.child
+        let! b = a.child
+        let! c = b.child
+        return c
+    } |> should equal None
+
 (**
 Doing the things found in this [MSDN Blog Post did with the Safe Nav operator](https://blogs.msdn.microsoft.com/jerrynixon/2014/02/26/at-last-c-is-getting-sometimes-called-the-safe-navigation-operator/)
 

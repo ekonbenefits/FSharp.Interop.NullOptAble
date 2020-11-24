@@ -8,9 +8,11 @@ type NullOptAble =
         static member DefaultWith(a: 'a option, b: 'a Lazy) =
             a |> Option.defaultWith b.Force
 
+#if !disable_nullable
         static member DefaultWith(a: 'a Nullable, b: 'a Lazy) = 
             a |> Option.ofNullable 
               |> Option.defaultWith b.Force
+#endif
 
         static member DefaultWith(a: 'a when 'a:null, b: 'a Lazy) =
             a |> Option.ofObj 
@@ -23,12 +25,14 @@ type NullOptAble =
                 let! a' = a 
                 return f a'
             }
+#if !disable_nullable
 
         static member Map(a: 'a Nullable, f: 'a -> 'c) =
             option { 
                 let! a' = a 
                 return f a'
             }
+#endif
 
         static member Map(a: 'a, f: 'a -> 'c) =
             option { 
@@ -45,6 +49,7 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#if !disable_nullable
 
         static member Map2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
                 =
@@ -53,6 +58,7 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#endif
 
         static member Map2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c) : 'c option
                 when 'b:null =
@@ -61,6 +67,7 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#if !disable_nullable
 
         static member Map2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
                 =
@@ -69,6 +76,8 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#endif
+#if !disable_nullable
 
         static member Map2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
                 =
@@ -77,6 +86,8 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#endif
+#if !disable_nullable
 
         static member Map2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c) : 'c option
                 when 'b:null =
@@ -85,6 +96,7 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#endif
 
         static member Map2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
                 when 'a:null =
@@ -93,6 +105,7 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#if !disable_nullable
 
         static member Map2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
                 when 'a:null =
@@ -101,6 +114,7 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }
+#endif
 
         static member Map2((a: 'a, b: 'b), f: 'a -> 'b -> 'c) : 'c option
                 when 'a:null
@@ -121,6 +135,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -130,6 +145,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null =
@@ -139,6 +155,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -148,6 +165,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -157,6 +176,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null =
@@ -166,6 +187,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null =
@@ -175,6 +197,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null =
@@ -184,6 +207,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -194,6 +218,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -203,6 +228,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -212,6 +239,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null =
@@ -221,6 +250,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -230,6 +261,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 =
@@ -239,6 +272,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null =
@@ -248,6 +283,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null =
@@ -257,6 +294,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null =
@@ -266,6 +305,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -276,6 +317,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null =
@@ -285,6 +327,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null =
@@ -294,6 +337,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -304,6 +348,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null =
@@ -313,6 +358,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null =
@@ -322,6 +369,8 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
+#if !disable_nullable
 
         static member Map3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -332,6 +381,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -342,6 +392,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#if !disable_nullable
 
         static member Map3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -352,6 +403,7 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }
+#endif
 
         static member Map3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -371,48 +423,58 @@ type NullOptAble =
                 let! a' = a
                 return! f a'
             }
+#if !disable_nullable
         
         static member Bind(a: 'a option, f: 'a -> 'c Nullable) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#endif
         
         static member Bind(a: 'a option, f: 'a -> 'c) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#if !disable_nullable
         
         static member Bind(a: 'a Nullable, f: 'a -> 'c option) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#endif
+#if !disable_nullable
         
         static member Bind(a: 'a Nullable, f: 'a -> 'c Nullable) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#endif
+#if !disable_nullable
         
         static member Bind(a: 'a Nullable, f: 'a -> 'c) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#endif
         
         static member Bind(a: 'a, f: 'a -> 'c option) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#if !disable_nullable
         
         static member Bind(a: 'a, f: 'a -> 'c Nullable) = 
             option {
                 let! a' = a
                 return! f a'
             }
+#endif
         
         static member Bind(a: 'a, f: 'a -> 'c) = 
             option {
@@ -429,6 +491,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c Nullable) : 'c option
                 =
@@ -437,6 +500,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a option, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
                 when 'c:null =
@@ -445,6 +509,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c option) : 'c option
                 =
@@ -453,6 +518,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) : 'c option
                 =
@@ -461,6 +528,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a option, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
                 when 'c:null =
@@ -469,6 +538,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c option) : 'c option
                 when 'b:null =
@@ -477,6 +547,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c Nullable) : 'c option
                 when 'b:null =
@@ -485,6 +556,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a option, b: 'b), f: 'a -> 'b -> 'c) : 'c option
                 when 'b:null
@@ -494,6 +566,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c option) : 'c option
                 =
@@ -502,6 +575,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c Nullable) : 'c option
                 =
@@ -510,6 +585,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
                 when 'c:null =
@@ -518,6 +595,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c option) : 'c option
                 =
@@ -526,6 +605,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) : 'c option
                 =
@@ -534,6 +615,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
                 when 'c:null =
@@ -542,6 +625,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c option) : 'c option
                 when 'b:null =
@@ -550,6 +635,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c Nullable) : 'c option
                 when 'b:null =
@@ -558,6 +645,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a Nullable, b: 'b), f: 'a -> 'b -> 'c) : 'c option
                 when 'b:null
@@ -567,6 +656,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c option) : 'c option
                 when 'a:null =
@@ -575,6 +665,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c Nullable) : 'c option
                 when 'a:null =
@@ -583,6 +674,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a, b: 'b option), f: 'a -> 'b -> 'c) : 'c option
                 when 'a:null
@@ -592,6 +684,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c option) : 'c option
                 when 'a:null =
@@ -600,6 +693,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c Nullable) : 'c option
                 when 'a:null =
@@ -608,6 +703,8 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind2((a: 'a, b: 'b Nullable), f: 'a -> 'b -> 'c) : 'c option
                 when 'a:null
@@ -617,6 +714,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a, b: 'b), f: 'a -> 'b -> 'c option) : 'c option
                 when 'a:null
@@ -626,6 +724,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#if !disable_nullable
 
         static member Bind2((a: 'a, b: 'b), f: 'a -> 'b -> 'c Nullable) : 'c option
                 when 'a:null
@@ -635,6 +734,7 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } 
+#endif
 
         static member Bind2((a: 'a, b: 'b), f: 'a -> 'b -> 'c) : 'c option
                 when 'a:null
@@ -656,6 +756,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -665,6 +766,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -674,6 +776,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -683,6 +786,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -692,6 +797,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -701,6 +808,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'c:null =
@@ -710,6 +818,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'c:null =
@@ -719,6 +828,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null
@@ -729,6 +839,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -738,6 +849,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -747,6 +860,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -756,6 +871,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -765,6 +882,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -774,6 +893,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -783,6 +904,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'c:null =
@@ -792,6 +915,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'c:null =
@@ -801,6 +926,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null
@@ -811,6 +938,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'b:null =
@@ -820,6 +948,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'b:null =
@@ -829,6 +958,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -839,6 +969,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'b:null =
@@ -848,6 +979,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'b:null =
@@ -857,6 +990,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -867,6 +1002,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'b:null
@@ -877,6 +1013,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'b:null
@@ -887,6 +1024,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a option, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -898,6 +1036,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -907,6 +1046,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -916,6 +1057,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -925,6 +1068,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -934,6 +1079,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -943,6 +1090,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -952,6 +1101,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'c:null =
@@ -961,6 +1112,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'c:null =
@@ -970,6 +1123,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null
@@ -980,6 +1135,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -989,6 +1146,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -998,6 +1157,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -1007,6 +1168,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 =
@@ -1016,6 +1179,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 =
@@ -1025,6 +1190,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'd:null =
@@ -1034,6 +1201,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'c:null =
@@ -1043,6 +1212,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'c:null =
@@ -1052,6 +1223,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'c:null
@@ -1062,6 +1235,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'b:null =
@@ -1071,6 +1246,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'b:null =
@@ -1080,6 +1257,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -1090,6 +1269,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'b:null =
@@ -1099,6 +1280,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'b:null =
@@ -1108,6 +1291,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -1118,6 +1303,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'b:null
@@ -1128,6 +1315,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'b:null
@@ -1138,6 +1327,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a Nullable, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'b:null
@@ -1149,6 +1340,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null =
@@ -1158,6 +1350,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null =
@@ -1167,6 +1360,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b option, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1177,6 +1371,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null =
@@ -1186,6 +1381,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null =
@@ -1195,6 +1392,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b option, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1205,6 +1404,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null
@@ -1215,6 +1415,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null
@@ -1225,6 +1426,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b option, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1236,6 +1438,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null =
@@ -1245,6 +1448,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null =
@@ -1254,6 +1459,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1264,6 +1471,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null =
@@ -1273,6 +1482,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null =
@@ -1282,6 +1493,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1292,6 +1505,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null
@@ -1302,6 +1517,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null
@@ -1312,6 +1529,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b Nullable, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1323,6 +1542,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null
@@ -1333,6 +1553,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null
@@ -1343,6 +1564,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b, c: 'c option), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1354,6 +1576,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null
@@ -1364,6 +1587,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null
@@ -1374,6 +1599,8 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b, c: 'c Nullable), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null
@@ -1385,6 +1612,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd option) : 'd option
                 when 'a:null
@@ -1396,6 +1624,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#if !disable_nullable
 
         static member Bind3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd Nullable) : 'd option
                 when 'a:null
@@ -1407,6 +1636,7 @@ type NullOptAble =
                 let! c' = c
                 return! f a' b' c'
             } 
+#endif
 
         static member Bind3((a: 'a, b: 'b, c: 'c), f: 'a -> 'b -> 'c -> 'd) : 'd option
                 when 'a:null

@@ -11,12 +11,15 @@ module TopLevelBuilders =
         member __.Return(x: 'T) = Some x
 
         member __.ReturnFrom(m: 'T option) = m
-        member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
         member __.ReturnFrom(m: 'T when 'T:null) = Option.ofObj m
 
         member __.Bind(m: 'T option, f) = Option.bind f m
-        member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
         member __.Bind(m: 'T when 'T:null, f) = m |> Option.ofObj |> Option.bind f
+
+#if !disable_nullable
+        member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
+        member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
+#endif
 
         member __.Delay(f: unit -> _) = f
         member __.Run(f) = f()
@@ -37,13 +40,15 @@ module TopLevelBuilders =
         member __.Return(x: 'T) = Some x
 
         member __.ReturnFrom(m: 'T option) = m
-        member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
         member __.ReturnFrom(m: 'T when 'T:null) = Option.ofObj m
 
         member __.Bind(m: 'T option, f) = Option.bind f m
-        member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
         member __.Bind(m: 'T when 'T:null, f) = m |> Option.ofObj |> Option.bind f
-
+        
+#if !disable_nullable
+        member __.ReturnFrom(m: 'T Nullable) = Option.ofNullable m
+        member __.Bind(m: 'T Nullable, f) = m |> Option.ofNullable |> Option.bind f
+#endif
         member __.Delay(f: unit -> _) = f
         member __.Run(f) = f() |> ignore
         
@@ -100,13 +105,31 @@ module TopLevelBuilders =
                 m |> function | None -> this.Zero ()
                               | Some x -> this.Yield(x)
 
-        member this.YieldFrom(m: 'T Nullable) : 'T seq = 
-                m |> Option.ofNullable
-                  |> this.YieldFrom
+
+
 
         member this.YieldFrom(m: 'T when 'T:null) : 'T seq = 
                     m |> Option.ofObj
                       |> this.YieldFrom
+        member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
+              match m with
+                  | Some x -> f x
+                  | None -> this.Zero<'S>()
+
+#if !disable_nullable
+
+        member this.YieldFrom(m: 'T Nullable) : 'T seq = 
+                m |> Option.ofNullable
+                |> this.YieldFrom
+
+        member this.Bind(m: 'T Nullable, f) = 
+            let m' = m |> Option.ofNullable 
+            this.Bind(m', f)
+#endif
+
+        member this.Bind(m: 'T when 'T:null, f) = 
+            let m' = m |> Option.ofObj
+            this.Bind(m', f)
 
         member __.YieldFrom(m: 'T NotNullSeq) :'T seq =
             upcast m
@@ -117,18 +140,8 @@ module TopLevelBuilders =
         member __.YieldFrom(m: 'T Set) :'T seq =
             upcast m
 
-        member this.Bind(m: 'T option, f:'T->seq<'S>) : seq<'S> = 
-            match m with
-                | Some x -> f x
-                | None -> this.Zero<'S>()
 
-        member this.Bind(m: 'T Nullable, f) = 
-            let m' = m |> Option.ofNullable 
-            this.Bind(m', f)
 
-        member this.Bind(m: 'T when 'T:null, f) = 
-            let m' = m |> Option.ofObj
-            this.Bind(m', f)
 
         member __.Combine(a:seq<'T>, b:seq<'T>) : seq<'T>= 
             let list =

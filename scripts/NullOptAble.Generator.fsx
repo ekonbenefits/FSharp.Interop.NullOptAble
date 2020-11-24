@@ -8,6 +8,8 @@ open System
 open System.IO
 open System.Text
 
+type NullableType = Yes | No
+
 type When =
     static member And ([<ParamArray>] ws)  =
             let vals = ws |> Array.toList |> List.choose id
@@ -45,15 +47,19 @@ module Run =
 //Write Type and DefaultWith Overloads
         sigWriter.WriteLine("""
 ///**Description**
-/// Overloads used as the basis for operators
+/// 
+/// Overloads used as the basis for the operators
+/// 
 type NullOptAble =
     class
         (* DefaultWith overloads *)
 
         static member DefaultWith : 'a option * System.Lazy<'a> -> 'a
 
+#if !disable_nullable
         static member DefaultWith : System.Nullable<'a> * System.Lazy<'a> -> 'a
                 when 'a : (new : unit -> 'a) and 'a : struct and 'a :> System.ValueType
+#endif
 
         static member DefaultWith : 'a * System.Lazy<'a> -> 'a when 'a : null""")
 
@@ -66,9 +72,11 @@ type NullOptAble =
         static member DefaultWith(a: 'a option, b: 'a Lazy) =
             a |> Option.defaultWith b.Force
 
+#if !disable_nullable
         static member DefaultWith(a: 'a Nullable, b: 'a Lazy) = 
             a |> Option.ofNullable 
               |> Option.defaultWith b.Force
+#endif
 
         static member DefaultWith(a: 'a when 'a:null, b: 'a Lazy) =
             a |> Option.ofObj 
@@ -80,16 +88,20 @@ type NullOptAble =
             sprintf "%s option" letter,
                 None,
                 sprintf "%s option" letter,
-                None
+                None,
+                NullableType.No
+
             sprintf "%s Nullable" letter,
                 None,
                 sprintf "System.Nullable<%s>" letter,
-                Some <| sprintf "%s : (new : unit -> %s) and %s : struct and %s :> System.ValueType" letter letter letter letter
+                Some <| sprintf "%s : (new : unit -> %s) and %s : struct and %s :> System.ValueType" letter letter letter letter,
+                NullableType.Yes
                 
             sprintf "%s" letter,
                 Some <| sprintf "%s:null" letter,
                 sprintf "%s" letter, 
-                Some <| sprintf "%s : null" letter
+                Some <| sprintf "%s : null" letter,
+                NullableType.No
         ]
 
         let A = "'a"
@@ -105,7 +117,10 @@ type NullOptAble =
         sigWriter.WriteLine(mapHeader)
         fsWriter.WriteLine(mapHeader)
 
-        for a, _, sa, sw in aTypes do
+        for a, _, sa, sw, ne in aTypes do
+            if ne = Yes then
+                sigWriter.WriteLine("#if !disable_nullable")
+                fsWriter.WriteLine("#if !disable_nullable")
             sigWriter.WriteLine(sprintf """
         static member Map : %s * (%s -> %s) -> %s option
                %s""" sa A C C (When.And(sw)))
@@ -115,7 +130,10 @@ type NullOptAble =
                 let! a' = a 
                 return f a'
             }""" a A C)
-        
+            if ne = Yes then
+                sigWriter.WriteLine("#endif")
+                fsWriter.WriteLine("#endif")
+                
 //map2
         let bTypes = createTypes B
       
@@ -125,8 +143,11 @@ type NullOptAble =
         sigWriter.WriteLine(map2Header)
         fsWriter.WriteLine(map2Header)
 
-        for a, wa, sa, swa in aTypes do
-            for b, wb, sb, swb in bTypes do
+        for a, wa, sa, swa, nea in aTypes do
+            for b, wb, sb, swb, neb in bTypes do
+                if nea = Yes || neb = Yes then
+                    fsWriter.WriteLine("#if !disable_nullable")
+                    sigWriter.WriteLine("#if !disable_nullable")
                 //signature
                 sigWriter.WriteLine(
                     sprintf """
@@ -142,7 +163,9 @@ type NullOptAble =
                 let! b' = b
                 return f a' b'
             }""" a b A B C C (When.And(wa,wb)))
-
+                if nea = Yes || neb = Yes then
+                    fsWriter.WriteLine("#endif")
+                    sigWriter.WriteLine("#endif")
 //map3
         let cTypes = createTypes C
       
@@ -152,9 +175,14 @@ type NullOptAble =
         sigWriter.WriteLine(map3Header)
         fsWriter.WriteLine(map3Header)
 
-        for a, wa, sa, swa in aTypes do
-            for b, wb, sb, swb in bTypes do
-                for c, wc, sc, swc in cTypes do
+        for a, wa, sa, swa, nea in aTypes do
+            for b, wb, sb, swb, neb in bTypes do
+                for c, wc, sc, swc, nec in cTypes do
+
+                    if nea = Yes || neb = Yes || nec = Yes then
+                        fsWriter.WriteLine("#if !disable_nullable")
+                        sigWriter.WriteLine("#if !disable_nullable")
+
                     //signature
                     sigWriter.WriteLine(
                         sprintf """
@@ -171,7 +199,9 @@ type NullOptAble =
                 let! c' = c
                 return f a' b' c'
             }""" a b c A B C D D (When.And(wa,wb,wc)))
-
+                    if nea = Yes || neb = Yes || nec = Yes then
+                        fsWriter.WriteLine("#endif")
+                        sigWriter.WriteLine("#endif")
 //bind
        
         let bindHeader ="""
@@ -180,8 +210,11 @@ type NullOptAble =
         sigWriter.WriteLine(bindHeader)
         fsWriter.WriteLine(bindHeader)
 
-        for a,_,sa,swa in aTypes do
-            for c,_,sc,swc in cTypes do
+        for a,_,sa,swa,nea in aTypes do
+            for c,_,sc,swc,nec in cTypes do
+                if nea = Yes || nec = Yes then
+                    fsWriter.WriteLine("#if !disable_nullable")
+                    sigWriter.WriteLine("#if !disable_nullable")
                 //Signature
                 sigWriter.WriteLine(sprintf """
         static member Bind : a:%s * (%s -> %s) -> %s option
@@ -194,7 +227,9 @@ type NullOptAble =
                 let! a' = a
                 return! f a'
             }""" a A c)
-
+                if nea = Yes || nec = Yes then
+                    fsWriter.WriteLine("#endif")
+                    sigWriter.WriteLine("#endif")
 //Bind2
         let bind2Header ="""
         (* bind2 overloads *)"""
@@ -202,9 +237,13 @@ type NullOptAble =
         sigWriter.WriteLine(bind2Header)
         fsWriter.WriteLine(bind2Header)
 
-        for a,wa,sa,swa in aTypes do
-            for b,wb,sb,swb in bTypes do
-                for c,wc,sc,swc in cTypes do
+        for a,wa,sa,swa,nea in aTypes do
+            for b,wb,sb,swb,neb in bTypes do
+                for c,wc,sc,swc,nec in cTypes do
+                    if nea = Yes || neb = Yes || nec = Yes then
+                        fsWriter.WriteLine("#if !disable_nullable")
+                        sigWriter.WriteLine("#if !disable_nullable")
+
                     //Signature
                     sigWriter.WriteLine(sprintf """
         static member Bind2 : (%s * %s) * (%s -> %s -> %s) -> %s option
@@ -219,7 +258,9 @@ type NullOptAble =
                 let! b' = b
                 return! f a' b'
             } """ a b A B c C (When.And(wa,wb,wc)))
-
+                    if nea = Yes || neb = Yes || nec = Yes then
+                        fsWriter.WriteLine("#endif")
+                        sigWriter.WriteLine("#endif")
 //Bind3
         let dTypes = createTypes D
 
@@ -230,10 +271,13 @@ type NullOptAble =
         fsWriter.WriteLine(bind3Header)
 
 
-        for a,wa,sa,swa in aTypes do
-            for b,wb,sb,swb in bTypes do
-                for c,wc,sc,swc in cTypes do
-                    for d,wd,sd,swd in dTypes do
+        for a,wa,sa,swa,nea in aTypes do
+            for b,wb,sb,swb,neb in bTypes do
+                for c,wc,sc,swc,nec in cTypes do
+                    for d,wd,sd,swd,ned in dTypes do
+                        if nea = Yes || neb = Yes || nec = Yes || ned = Yes then
+                            fsWriter.WriteLine("#if !disable_nullable")
+                            sigWriter.WriteLine("#if !disable_nullable")
                         //Signature
                         sigWriter.WriteLine(sprintf """
         static member Bind3 : (%s * %s * %s) * (%s -> %s -> %s -> %s) -> %s option
@@ -249,7 +293,9 @@ type NullOptAble =
                 return! f a' b' c'
             } """ 
                                               a b c A B C d D (When.And(wa,wb,wc,wd)))
-
+                        if nea = Yes || neb = Yes || nec = Yes || ned = Yes then
+                            fsWriter.WriteLine("#endif")
+                            sigWriter.WriteLine("#endif")
 //end
         sigWriter.WriteLine("""
     end""")

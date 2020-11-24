@@ -4,7 +4,7 @@ version: "{build}" #until it gets updated at install
 configuration: Debug
 
 environment:
-  base_version: 0.11.0
+  base_version: 0.12.0
   github_deploy: false 
   is_prerelease: true
   package_version: $(BASE_VERSION)-alpha$(APPVEYOR_BUILD_NUMBER)

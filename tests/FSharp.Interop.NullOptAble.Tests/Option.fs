@@ -19,6 +19,7 @@ let ``Basic Option None`` () =
         return x + 3
     } |> should equal None
 
+#if !disable_nullable
 [<Fact>]
 let ``Basic Nullable`` () =
     option {
@@ -32,7 +33,7 @@ let ``Basic None `` () =
         let! x = Nullable()
         return x + 3
     } |> should equal None
-
+#endif
 [<Fact>]
 let ``Basic Null allowed`` () =
     option {
@@ -72,12 +73,12 @@ let ``Cleaning up disposables when throwing exception`` () =
         option {
             use! d = Some(resource)
             raise <| Exception()
-            return d.Disposed
-        } |> ignore
-    delayedExceptionThrow |> should throw typeof<Exception>
+            return d.Disposed()
+        } 
+    (delayedExceptionThrow >> ignore) |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
 
-
+#if !disable_nullable
     (*** basic guard mutation ***)
 [<Fact>]
 let ``Basic Guard don't mutate`` () =
@@ -104,7 +105,7 @@ let ``Basic Guard do mutate`` () =
     }
 
     test |> should be True
-
+#endif
 
 [<Fact>]
 let ``Guard Cleaning up disposables when throwing exception`` () =   
@@ -113,6 +114,6 @@ let ``Guard Cleaning up disposables when throwing exception`` () =
         guard {
             use! d = Some(resource)
             raise <| Exception()
-        } |> ignore
+        }
     delayedExceptionThrow |> should throw typeof<Exception>
     resource.Disposed() |> should equal true

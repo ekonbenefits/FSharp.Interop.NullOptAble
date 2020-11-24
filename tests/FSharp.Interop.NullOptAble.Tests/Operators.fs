@@ -5,6 +5,9 @@ open Xunit
 open FsUnit.Xunit
 open FSharp.Interop.NullOptAble.Operators
 
+
+#if !disable_nullable
+
 [<Fact>]
 let ``Basic Nulled Nullable`` () =
     let x = Nullable()
@@ -26,6 +29,8 @@ let ``Basic not null delay test Nullable`` () =
     let x = Nullable(3)
     let x' = x |?-> lazy (delayRunTest ())
     x' |> should equal  3
+
+#endif
 
 [<Fact>]
 let ``Basic None Option`` () =
@@ -101,6 +106,7 @@ let ``Basic Pipe Option None Don't Runn`` () =
      |>?@ (+) 3
      |>?@ (fun _ -> raise (Exception "Don't Run") |> ignore)
 
+#if !disable_nullable
 [<Fact>]
 let ``Basic Pipe Nullable Unwrap`` () =
     let x = Nullable(3)
@@ -114,6 +120,7 @@ let ``Basic Pipe Nullable Null`` () =
     x
      |>?@ (+) 3
      |> should equal None
+#endif
 
 [<Fact>]
 let ``Basic Pipe Null ref Unwrap`` () =
@@ -160,12 +167,14 @@ let ``Basic left pipe bind`` () =
     id @?<| x
      |> should equal (Some "Hello")
 
+#if !disable_nullable
 [<Fact>]
 let ``Basic nullable math (terrible)`` () =
     let x = Nullable(3)
     let y = Nullable(3)
     x |>? (fun x'-> y |>?@ (+) x')
     |> should equal (Some 6)
+#endif
 
 [<AllowNullLiteral>]
 type Node (child:Node)=
@@ -220,10 +229,11 @@ let ``Basic map heterogenous ||>`` () =
     ("nope",y) 
         ||>? Map.tryFind
         |> should equal None 
-
+#if !disable_nullable
 [<Fact>]
 let ``Basic nullable math heterogenous`` () =
     let x = Nullable(3)
     let y = Some(3)
     (x,y) ||>?@ ( + )
           |> should equal (Some 6)
+#endif

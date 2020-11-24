@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
-    <LangVersion>4.7</LangVersion>
+    <TargetFramework>net5.0</TargetFramework>
+    <LangVersion>5.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\FSharp.Interop.NullOptAble\FSharp.Interop.NullOptAble.fsproj" />
