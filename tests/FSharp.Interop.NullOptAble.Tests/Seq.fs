@@ -155,8 +155,8 @@ let ``Cleaning up disposables when throwing exception`` () =
             use! d = Some(resource)
             raise <| Exception()
             yield d.Disposed()
-        } |> List.ofSeq
-    delayedExceptionThrow |> should throw typeof<Exception>
+        } |> Seq.toArray 
+    (delayedExceptionThrow >> ignore) |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
 
 [<Fact>]

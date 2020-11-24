@@ -73,8 +73,8 @@ let ``Cleaning up disposables when throwing exception`` () =
             use! d = Some(resource)
             raise <| Exception()
             return d.Disposed()
-        }
-    delayedExceptionThrow |> should throw typeof<Exception>
+        } 
+    (delayedExceptionThrow >> ignore) |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
 
 
@@ -113,6 +113,6 @@ let ``Guard Cleaning up disposables when throwing exception`` () =
         guard {
             use! d = Some(resource)
             raise <| Exception()
-        } |> ignore
+        }
     delayedExceptionThrow |> should throw typeof<Exception>
     resource.Disposed() |> should equal true
