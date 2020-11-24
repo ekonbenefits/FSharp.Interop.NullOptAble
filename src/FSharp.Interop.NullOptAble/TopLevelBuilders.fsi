@@ -11,18 +11,21 @@ namespace FSharp.Interop.NullOptAble
       class
         new : unit -> OptionBuilder
         member Bind : m:'T option * f:('T -> 'i option) -> 'i option
+#if !disable_nullable
         member
           Bind : m:System.Nullable<'T> * f:('T -> 'h option) -> 'h option
                    when 'T : (new : unit -> 'T) and 'T : struct and
                         'T :> System.ValueType
-        member Bind : m:'T * f:('T -> 'g option) -> 'g option when 'T : null
-        member Delay : f:(unit -> 'f) -> (unit -> 'f)
-        member Return : x:'T -> 'T option
-        member ReturnFrom : m:'T option -> 'T option
         member
           ReturnFrom : m:System.Nullable<'T> -> 'T option
                          when 'T : (new : unit -> 'T) and 'T : struct and
                               'T :> System.ValueType
+#endif
+        member Bind : m:'T * f:('T -> 'g option) -> 'g option when 'T : null
+        member Delay : f:(unit -> 'f) -> (unit -> 'f)
+        member Return : x:'T -> 'T option
+        member ReturnFrom : m:'T option -> 'T option
+
         member ReturnFrom : m:'T -> 'T option when 'T : null
         member Run : f:(unit -> 'e) -> 'e
         member
@@ -48,18 +51,21 @@ namespace FSharp.Interop.NullOptAble
       class
         new : unit -> GuardBuilder
         member Bind : m:'T option * f:('T -> 'i option) -> 'i option
+#if !disable_nullable
         member
           Bind : m:System.Nullable<'T> * f:('T -> 'h option) -> 'h option
                    when 'T : (new : unit -> 'T) and 'T : struct and
                         'T :> System.ValueType
+        member
+            ReturnFrom : m:System.Nullable<'T> -> 'T option
+                            when 'T : (new : unit -> 'T) and 'T : struct and
+                                'T :> System.ValueType
+#endif
         member Bind : m:'T * f:('T -> 'g option) -> 'g option when 'T : null
         member Delay : f:(unit -> 'f) -> (unit -> 'f)
         member Return : x:'T -> 'T option
         member ReturnFrom : m:'T option -> 'T option
-        member
-          ReturnFrom : m:System.Nullable<'T> -> 'T option
-                         when 'T : (new : unit -> 'T) and 'T : struct and
-                              'T :> System.ValueType
+
         member ReturnFrom : m:'T -> 'T option when 'T : null
         member Run : f:(unit -> 'e) -> unit
         member
@@ -121,10 +127,17 @@ namespace FSharp.Interop.NullOptAble
       class
         new : unit -> ChooseSeqBuilder
         member Bind : m:'T option * f:('T -> seq<'S>) -> seq<'S>
+#if !disable_nullable
         member
           Bind : m:System.Nullable<'T> * f:('T -> seq<'k>) -> seq<'k>
                    when 'T : (new : unit -> 'T) and 'T : struct and
                         'T :> System.ValueType
+        member
+         YieldFrom : m:System.Nullable<'T> -> seq<'T>
+                       when 'T : (new : unit -> 'T) and 'T : struct and
+                            'T :> System.ValueType
+#endif
+
         member Bind : m:'T * f:('T -> seq<'j>) -> seq<'j> when 'T : null
         member Combine : a:seq<'T> * b:seq<'T> -> seq<'T>
         member Delay : f:(unit -> seq<'i>) -> seq<'i>
@@ -141,10 +154,7 @@ namespace FSharp.Interop.NullOptAble
         member While : guard:(unit -> bool) * delayedExpr:seq<'g> -> seq<'g>
         member Yield : x:'T -> seq<'T>
         member YieldFrom : m:'T option -> seq<'T>
-        member
-          YieldFrom : m:System.Nullable<'T> -> seq<'T>
-                        when 'T : (new : unit -> 'T) and 'T : struct and
-                             'T :> System.ValueType
+       
         member YieldFrom : m:'T -> seq<'T> when 'T : null
         member YieldFrom : m:NotNullSeq<'T> -> seq<'T>
         member YieldFrom : m:'T list -> seq<'T>

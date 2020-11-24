@@ -81,6 +81,7 @@ let ``Yield Sequence ever other`` () =
     }
     newSeq |> Seq.length |> should equal 16
 
+#if !disable_nullable
 [<Fact>]
 let ``Rainbow int none Sequence`` () =
     let newSeq = chooseSeq {
@@ -92,6 +93,7 @@ let ``Rainbow int none Sequence`` () =
         yield! None
     }
     newSeq |> Seq.length |> should equal 4
+#endif
 
 [<Fact>]
 let ``Rainbow string null Sequence`` () =

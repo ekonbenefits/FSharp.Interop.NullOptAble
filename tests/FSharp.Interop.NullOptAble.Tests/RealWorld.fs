@@ -13,7 +13,7 @@ open FsUnit.Xunit
 
 
 
-
+#if !disable_nullable
 (*** hide ***)
 [<Fact>]
 let ``Basic nullable math`` () =
@@ -24,12 +24,14 @@ let ``Basic nullable math`` () =
         let! y' = y
         return (x' + y')
     } |> should equal (Some 6)
+#endif
 
 (*** hide ***)
 [<AllowNullLiteral>]
 type Node (child:Node)=
     new() = new Node(null)
     member val child:Node = child with get,set
+
 (*** hide ***)
 type FSharpNode (child:FSharpNode option)=
     new() = new FSharpNode(None)
