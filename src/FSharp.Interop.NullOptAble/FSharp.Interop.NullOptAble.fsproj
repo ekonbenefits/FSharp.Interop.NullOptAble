@@ -19,6 +19,7 @@
   <ItemGroup>
     <Compile Include="Option.fsi" />
     <Compile Include="Option.fs" />
+    <Compile Include="TopLevelBuilders.fsi" />
     <Compile Include="TopLevelBuilders.fs" />
     <Compile Include="NullOptAble.fsi" />
     <Compile Include="NullOptAble.fs" />
