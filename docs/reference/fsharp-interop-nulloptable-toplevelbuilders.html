@@ -43,7 +43,7 @@
 </p>
 <div class="xmldoc">
 <p><strong>Description</strong></p>
-<p>Computation expressions <code>option {}</code> and <code>chooseSeq {}</code>.
+<p>Computation expressions <code>option {}</code> , <code>chooseSeq {}</code>, and <code>guard {}</code>.
 See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld.html">examples</a> for usage.</p>
 
 </div>
@@ -51,7 +51,23 @@ See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld
 <!-- Render nested types and modules, if there are any -->
   <h2>Nested types and modules</h2>
   <div>
-      <table class="table table-bordered module-list">
+      <table class="table table-bordered type-list">
+    <thead>
+      <tr><td>Type</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td class="type-name">
+            <a href="fsharp-interop-nulloptable-toplevelbuilders-notnullseq-1.html">NotNullSeq<'T></a>
+          </td>
+          <td class="xmldoc"><p><strong>Description</strong></p>
+<p>A sequence that does not allow Null.</p>
+
+</td>
+        </tr>
+    </tbody>
+  </table>
+  <table class="table table-bordered module-list">
     <thead>
       <tr><td>Module</td><td>Description</td></tr>
     </thead>
@@ -87,16 +103,16 @@ See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld
                       </div>
         </td>
         <td class="xmldoc">
-            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/TopLevelBuilders.fs#L108-108" class="github-link">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/TopLevelBuilders.fs#L165-165" class="github-link">
               <img src="../content/img/github.png" class="normal" />
               <img src="../content/img/github-blue.png" class="hover" />
             </a>
-          <ul>
-<li>! will bind types that accept null, nullables, and options.</li>
-<li>yield only chooses values.</li>
-<li>yield a sequence will flatten it.</li>
-<li>seq is delayed evaluation</li>
-</ul>
+          <p><strong>Description</strong></p>
+<p>choose sequence computation expression
+<em> ! will bind types that accept null, nullables, and options.
+</em> yield only chooses values.
+<em> yield a sequence will flatten it.
+</em> seq is delayed evaluation</p>
 <p><strong>Output Type</strong></p>
 <ul>
 <li><code>_ seq</code></li>
@@ -109,9 +125,35 @@ See <a href="https://ekonbenefits.github.io/FSharp.Interop.NullOptAble/RealWorld
         <td class="member-name">
 
           <code onmouseout="hideTip(event, '18', 18)" onmouseover="showTip(event, '18', 18)">
-            option 
+            guard 
           </code>
           <div class="tip" id="18">
+            <strong>Signature:</strong> GuardBuilder<br />
+                      </div>
+        </td>
+        <td class="xmldoc">
+            <a href="https://github.com/ekonbenefits/FSharp.Interop.NullOptAble/tree/master//src/FSharp.Interop.NullOptAble/TopLevelBuilders.fs#L59-59" class="github-link">
+              <img src="../content/img/github.png" class="normal" />
+              <img src="../content/img/github-blue.png" class="hover" />
+            </a>
+          <p><strong>Description</strong></p>
+<p><code>guard</code> computation expression
+! will bind types that accept null, nullables, and options</p>
+<p><strong>Output Type</strong></p>
+<ul>
+<li><code>unit</code></li>
+</ul>
+
+
+        </td>
+      </tr>
+      <tr>
+        <td class="member-name">
+
+          <code onmouseout="hideTip(event, '19', 19)" onmouseover="showTip(event, '19', 19)">
+            option 
+          </code>
+          <div class="tip" id="19">
             <strong>Signature:</strong> OptionBuilder<br />
                       </div>
         </td>
