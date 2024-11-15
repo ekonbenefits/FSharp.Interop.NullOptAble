@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net45;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
     <Description>option &amp; chooseSeq computational expressions that work with Null/Option/Nullable</Description>
     <Company>Ekon Benefits</Company>
     <Authors>Jay Tuley</Authors>
@@ -15,6 +15,7 @@
     <DisableImplicitFSharpCoreReference>True</DisableImplicitFSharpCoreReference>
     <DisableImplicitSystemValueTupleReference>true</DisableImplicitSystemValueTupleReference>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <LangVersion>Latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Option.fsi" />
